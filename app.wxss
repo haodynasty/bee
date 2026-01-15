@@ -25,3 +25,6 @@ page,view,image,input {
 .block-btn {
   padding: 0 32rpx;
 }
+.hidden {
+  display: none !important;
+}

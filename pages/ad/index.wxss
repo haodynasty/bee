@@ -5,6 +5,14 @@ page {
 } 
 
 /* ========== 空地址状态 ========== */
+.empty-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
 .content-1 {
   font-size: 32rpx;
   text-align: center;

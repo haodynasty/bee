@@ -22,13 +22,13 @@
             <text class="uid-label">{{ $t.my.uid }}</text>
             <text class="uid-value">{{ apiUserInfoMap.base.id }}</text>
           </view>
-          <view class="vip-badge" bindtap="govip">
+          <view class="vip-badge hidden" bindtap="govip">
             <text wx:if="{{apiUserInfoMap.userLevel}}" class="vip-text">{{apiUserInfoMap.userLevel.name}}</text>
             <text wx:else class="vip-text">{{ $t.vip.notVIP }}</text>
           </view>
         </view>
         
-        <view class="qr-section" bindtap="goUserCode">
+        <view class="qr-section hidden" bindtap="goUserCode">
           <view class="qr-icon-wrapper">
             <van-icon name="qr" size="48rpx" color="#8B7355" />
           </view>
@@ -39,7 +39,7 @@
   </view>
 
   <!-- 资产卡片区域 -->
-  <view wx:if="{{apiUserInfoMap}}" class="assets-section">
+  <view wx:if="{{apiUserInfoMap}}" class="assets-section hidden">
     <view class="asset-card" bindtap="goCoupons">
       <view class="asset-icon coupon-icon">
         <van-icon name="coupon-o" size="48rpx" color="#FF9800" />
@@ -71,18 +71,12 @@
   <!-- 功能菜单区域 -->
   <view class="menu-section">
     <!-- 常用功能 -->
-    <view class="menu-group">
+    <view class="menu-group hidden">
       <view class="menu-title">
         <view class="title-dot"></view>
         <text>常用功能</text>
       </view>
       <view class="menu-grid">
-        <view class="menu-item" bindtap="scanOrderCode" wx:if="{{canHX}}">
-          <view class="menu-icon-wrapper scan-icon">
-            <van-icon name="scan" size="44rpx" />
-          </view>
-          <text class="menu-text">{{ $t.my.scanHx }}</text>
-        </view>
         <view class="menu-item" url="/pages/sign/index">
           <navigator url="/pages/sign/index" hover-class="none">
             <view class="menu-icon-wrapper sign-icon">
@@ -112,12 +106,12 @@
 
     <!-- 我的服务 -->
     <view class="menu-group">
-      <view class="menu-title">
+      <view class="menu-title" style="margin-top: 24rpx;">
         <view class="title-dot"></view>
         <text>我的服务</text>
       </view>
       <view class="menu-list">
-        <navigator url="/pages/member-center/index" hover-class="none">
+        <navigator url="/pages/member-center/index" hover-class="none" class="hidden">
           <view class="menu-list-item">
             <view class="item-left">
               <view class="list-icon vip-icon">
@@ -160,6 +154,15 @@
         <text>其他设置</text>
       </view>
       <view class="menu-list">
+        <view class="menu-list-item" wx:if="{{true}}" bindtap="scanOrderCode">
+          <view class="item-left">
+            <view class="list-icon scan-icon">
+              <van-icon name="scan" size="40rpx" />
+            </view>
+            <text class="list-text">{{ $t.my.scanHx }}</text>
+          </view>
+          <van-icon name="arrow" size="32rpx" color="#999" />
+        </view>
         <navigator url="/pages/about/index" hover-class="none">
           <view class="menu-list-item">
             <view class="item-left">

@@ -21,39 +21,23 @@ function $t(){
 
 function setTabBarLanguage(){
   const $t = this.$t()
+  // 仅设置当前显示的三个 Tab：点餐 / 取餐 / 我的
   wx.setTabBarItem({
     index: 0,
-    pagePath: "pages/home/index",
-    iconPath: "images/nav/home-off.png",
-    selectedIconPath: "images/nav/home-on.png",
-    text: $t.index.home
-  })
-  wx.setTabBarItem({
-    index: 1,
     pagePath: "pages/index/index",
     iconPath: "images/nav/index-off.png",
     selectedIconPath: "images/nav/index-on.png",
     text: $t.index.order
   })
-
   wx.setTabBarItem({
-    index: 2,
-    pagePath: "pages/queue/index",
-    iconPath: "images/nav/qh-off.png",
-    selectedIconPath: "images/nav/qh-on.png",
-    text: $t.queue.t
-  })
-
-  wx.setTabBarItem({
-    index: 3,
+    index: 1,
     pagePath: "pages/order-details/doing",
     iconPath: "images/nav/qc-off.png",
     selectedIconPath: "images/nav/qc-on.png",
     text: $t.index.PickingUp
   })
-
   wx.setTabBarItem({
-    index: 4,
+    index: 2,
     pagePath: "pages/my/index",
     iconPath: "images/nav/my-off.png",
     selectedIconPath: "images/nav/my-on.png",

@@ -1,5 +1,5 @@
-<!-- 语言切换悬浮按钮 -->
-<view wx:if="{{ language }}" class="float-lang-btn" bind:tap="changeLang">
+<!-- 语言切换悬浮按钮（隐藏） -->
+<view wx:if="{{ false }}" class="float-lang-btn" bind:tap="changeLang">
   <image class="lang-icon" src="/images/lang/{{language}}.png" mode="aspectFill"></image>
 </view>
 

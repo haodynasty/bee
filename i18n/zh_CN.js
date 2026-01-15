@@ -189,7 +189,7 @@ module.exports = {
     pingtuanNoOpen: '拼团功能未开启',
     pickup: '自取',
     Delivery: '外卖',
-    shopDetail: '查看门店信息',
+    shopDetail: '查看食堂信息',
     minPrice: '到手价',
     noStart: '即将开抢',
     miaoshaEnd: '秒杀结束',
