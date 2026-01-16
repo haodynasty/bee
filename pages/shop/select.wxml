@@ -79,7 +79,7 @@
   </view>
 
   <!-- 底部申请入驻 -->
-  <view class="footer-btn">
+  <view class="footer-btn hidden">
     <button class="apply-btn" bindtap="joinApply">
       <van-icon name="add-o" size="32rpx" />
       <text>商家申请入驻</text>
