@@ -1,130 +1,36 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 /* eslint-disable */
 // 小程序开发api接口工具包，https://github.com/gooking/wxapi
-var API_BASE_URL = 'https://api.it120.cc';
-// var API_BASE_URL = 'http://127.0.0.1:8081';
-var subDomain = '-';
-var merchantId = '0';
+var API_BASE_URL = 'https://api.it120.cc'
+var COMMON_BASE_URL = 'https://common.apifm.com/'
+var subDomain = '-'
+var merchantId = '0'
 
-var request = function request(url, needSubDomain, method, data) {
-  var _url = API_BASE_URL + (needSubDomain ? '/' + subDomain : '') + url;
-  if (url.indexOf("http") == 0) {
-    _url = url;
+let request = (url, needSubDomain, method, data) => {
+  let _url = API_BASE_URL + (needSubDomain ? '/' + subDomain : '') + url
+  if (url.indexOf("http") == 0 ) {
+    _url = url
   }
-  var header = {
+  const header = {
     'Content-Type': 'application/x-www-form-urlencoded'
-  };
-  return new Promise(function (resolve, reject) {
+  }
+  return new Promise((resolve, reject) => {
     wx.request({
       url: _url,
       method: method,
       data: data,
-      header: header,
-      success: function success(request) {
-        resolve(request.data);
+      header,
+      success(request) {
+        resolve(request.data)
       },
-      fail: function fail(error) {
-        reject(error);
+      fail(error) {
+        reject(error)
       },
-      complete: function complete(aaa) {
+      complete(aaa) {
         // 加载完成
       }
-    });
-  });
-};
+    })
+  })
+}
 
 /**
  * 小程序的promise没有finally方法，自己扩展下
@@ -150,2180 +56,2359 @@ var request = function request(url, needSubDomain, method, data) {
 // }
 
 module.exports = {
-  init2: function init2(a, b) {
-    API_BASE_URL = a;
-    subDomain = b;
+  init2: (a, b) => {
+    API_BASE_URL = a
+    subDomain = b
   },
-  init: function init(b) {
-    subDomain = b;
+  init: (b) => {
+    subDomain = b
   },
-  setMerchantId: function setMerchantId(mchid) {
-    merchantId = mchid;
+  setMerchantId: (mchid) => {
+    merchantId = mchid
   },
-  init3: function init3(_ref) {
-    var _ref$apiBaseUrl = _ref.apiBaseUrl,
-        apiBaseUrl = _ref$apiBaseUrl === undefined ? API_BASE_URL : _ref$apiBaseUrl,
-        subD = _ref.subDomain,
-        req = _ref.request;
-
+  init3: ({
+    apiBaseUrl = API_BASE_URL,
+    subDomain: subD,
+    request: req,
+  }) => {
     // 某些需求需要定制化 request，需要保证传入自定义 reuqest 与默认 request 参数一致
     if (req) {
-      request = req;
+      request = req
     }
-    API_BASE_URL = apiBaseUrl;
-    subDomain = subD;
+    API_BASE_URL = apiBaseUrl
+    subDomain = subD
   },
-  request: request,
-  queryMobileLocation: function queryMobileLocation() {
-    var mobile = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/common/mobile-segment/location', false, 'get', { mobile: mobile });
+  request,
+  queryMobileLocation: (mobile = '') => {
+    return request('/common/mobile-segment/location', false, 'get', { mobile })
   },
-  nextMobileSegment: function nextMobileSegment(data) {
-    return request('/common/mobile-segment/next', false, 'post', data);
+  nextMobileSegment: (data) => {
+    return request('/common/mobile-segment/next', false, 'post', data)
   },
-  gpsDistance: function gpsDistance(data) {
-    return request('/common/map/qq/distance', false, 'post', data);
+  queryMobileLocationV2: (mobile = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/common/mobile-segment/location', false, 'get', { mobile })
   },
-  commonIP: function commonIP(ip) {
-    return request('/common/ip', false, 'get', { ip: ip });
+  nextMobileSegmentV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/common/mobile-segment/next', false, 'post', data)
   },
-  forexRate: function forexRate(fromCode, toCode) {
-    return request('/forex/rate', true, 'get', { fromCode: fromCode, toCode: toCode });
+  gpsDistance: (data) => {
+    return request('/common/map/qq/distance', false, 'post', data)
   },
-  queryConfigValue: function queryConfigValue(key) {
-    return request('/config/value', true, 'get', { key: key });
+  commonIP: (ip) => {
+    return request('/common/ip', false, 'get', { ip })
   },
-  queryConfigBatch: function queryConfigBatch(keys) {
-    return request('/config/values', true, 'get', { keys: keys });
+  commonIPV2: (ip = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/common/ip', false, 'get', { ip })
   },
-  scoreRules: function scoreRules(data) {
-    return request('/score/send/rule', true, 'post', data);
+  commonIPV3: (ip = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/common/ip/v2', false, 'get', { ip })
   },
-  scoreSignRules: function scoreSignRules() {
-    return request('/score/sign/rules', true, 'get', {});
+  forexRate: (fromCode, toCode) => {
+    return request('/forex/rate', true, 'get', { fromCode, toCode })
   },
-  scoreSign: function scoreSign(token) {
+  queryConfigValue: (key) => {
+    return request(COMMON_BASE_URL + subDomain + '/config/value', true, 'get', { key })
+  },
+  queryConfigBatch: (keys) => {
+    return request(COMMON_BASE_URL + subDomain + '/config/values', true, 'get', { keys })
+  },
+  scoreRules: (data) => {
+    return request('/score/send/rule', true, 'post', data)
+  },
+  scoreSignRules: () => {
+    return request('/score/sign/rules', true, 'get', {})
+  },
+  scoreSign: (token) => {
     return request('/score/sign', true, 'post', {
-      token: token
-    });
+      token
+    })
   },
-  scoreSignLogs: function scoreSignLogs(data) {
-    return request('/score/sign/logs', true, 'post', data);
+  scoreSignLogs: (data) => {
+    return request('/score/sign/logs', true, 'post', data)
   },
-  scoreTodaySignedInfo: function scoreTodaySignedInfo(token) {
+  scoreTodaySignedInfo: (token) => {
     return request('/score/today-signed', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  scoreExchange: function scoreExchange(token, number) {
+  scoreExchange: (token, number) => {
     return request('/score/exchange', true, 'post', {
-      number: number,
-      token: token
-    });
+      number,
+      token
+    })
   },
-  scoreExchangeCash: function scoreExchangeCash(token, deductionScore) {
-    return request('/score/exchange/cash', true, 'post', {
-      deductionScore: deductionScore,
-      token: token
-    });
+  scoreExchangeCash: (token, deductionScore) => {
+    return request(COMMON_BASE_URL + subDomain + '/score/exchange/cash', false, 'post', {
+      deductionScore,
+      token
+    })
   },
-  scoreLogs: function scoreLogs(data) {
-    return request('/score/logs', true, 'post', data);
+  scoreLogs: (data) => {
+    return request('/score/logs', true, 'post', data)
   },
-  scoreDynamics: function scoreDynamics() {
-    return request('/score/dynamics', true, 'get');
+  scoreDynamics: () => {
+    return request('/score/dynamics', true, 'get')
   },
-  shareGroupGetScore: function shareGroupGetScore(code, referrer, encryptedData, iv) {
+  shareGroupGetScore: (code, referrer, encryptedData, iv) => {
     return request('/score/share/wxa/group', true, 'post', {
-      code: code,
-      referrer: referrer,
-      encryptedData: encryptedData,
-      iv: iv
-    });
+      code,
+      referrer,
+      encryptedData,
+      iv
+    })
   },
-  scoreDeductionRules: function scoreDeductionRules() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/score/deduction/rules', true, 'get', { type: type });
+  scoreDeductionRules: (type = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/score/deduction/rules', false, 'get', { type })
   },
-  scoreDailyFixedNum: function scoreDailyFixedNum(token) {
-    return request('/score/dailyFixedNum', true, 'post', { token: token });
+  scoreDailyFixedNum: token => {
+    return request('/score/dailyFixedNum', true, 'post', { token })
   },
-  scoreRank: function scoreRank(data) {
-    return request('/score/rank', true, 'get', data);
+  scoreRank: (data) => {
+    return request('/score/rank', true, 'get', data)
   },
-  scoreRankBydate: function scoreRankBydate(data) {
-    return request('/score/rankBydate', true, 'get', data);
+  scoreRankBydate: (data) => {
+    return request('/score/rankBydate', true, 'get', data)
   },
-  scoreTaskList: function scoreTaskList(token) {
-    return request('/score/taskList', true, 'get', { token: token });
+  scoreMyStatistics: (data) => {
+    return request('/score/myStatistics', true, 'get', data)
   },
-  scoreTaskSuccess: function scoreTaskSuccess(token, type) {
-    return request('/score/taskSuccess', true, 'post', { token: token, type: type });
+  expireScorestatistics: (data) => {
+    return request('/score/expireScorestatistics', true, 'post', data)
   },
-  kanjiaSet: function kanjiaSet(goodsId) {
-    return request('/shop/goods/kanjia/set/v2', true, 'get', { goodsId: goodsId });
+  scoreTaskList: token => {
+    return request(COMMON_BASE_URL + subDomain + '/score/taskList', false, 'get', { token })
   },
-  kanjiaJoin: function kanjiaJoin(token, kjid) {
+  scoreTaskSuccess: (token, type) => {
+    return request(COMMON_BASE_URL + subDomain + '/score/taskSuccess', false, 'post', { token, type })
+  },
+  kanjiaSet: (goodsId) => {
+    return request('/shop/goods/kanjia/set/v2', true, 'get', { goodsId })
+  },
+  kanjiaJoin: (token, kjid) => {
     return request('/shop/goods/kanjia/join', true, 'post', {
-      kjid: kjid,
-      token: token
-    });
+      kjid,
+      token
+    })
   },
-  kanjiaDetail: function kanjiaDetail(kjid, joiner) {
+  kanjiaDetail: (kjid, joiner) => {
     return request('/shop/goods/kanjia/info', true, 'get', {
-      kjid: kjid,
-      joiner: joiner
-    });
+      kjid,
+      joiner
+    })
   },
-  kanjiaHelp: function kanjiaHelp(token, kjid, joiner) {
-    var remark = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  kanjiaHelp: (token, kjid, joiner, remark = '') => {
     return request('/shop/goods/kanjia/help', true, 'post', {
-      kjid: kjid,
+      kjid,
       joinerUser: joiner,
-      token: token,
-      remark: remark
-    });
+      token,
+      remark
+    })
   },
-  kanjiaClear: function kanjiaClear(token, kjid) {
+  kanjiaClear: (token, kjid) => {
     return request('/shop/goods/kanjia/clear', true, 'post', {
-      kjid: kjid,
-      token: token
-    });
+      kjid,
+      token
+    })
   },
-  kanjiaMyJoinInfo: function kanjiaMyJoinInfo(token, kjid) {
+  kanjiaMyJoinInfo: (token, kjid) => {
     return request('/shop/goods/kanjia/my', true, 'get', {
-      kjid: kjid,
-      token: token
-    });
+      kjid,
+      token
+    })
   },
-  kanjiaHelpDetail: function kanjiaHelpDetail(token, kjid, joiner) {
+  kanjiaHelpDetail: (token, kjid, joiner) => {
     return request('/shop/goods/kanjia/myHelp', true, 'get', {
-      kjid: kjid,
+      kjid,
       joinerUser: joiner,
-      token: token
-    });
+      token
+    })
   },
-  checkToken: function checkToken(token) {
+  checkToken: (token) => {
     return request('/user/check-token', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  checkReferrer: function checkReferrer(referrer) {
+  checkReferrer: (referrer) => {
     return request('/user/check-referrer', true, 'get', {
-      referrer: referrer
-    });
+      referrer
+    })
   },
-  addTempleMsgFormid: function addTempleMsgFormid(token, type, formId) {
+  addTempleMsgFormid: (token, type, formId) => {
     return request('/template-msg/wxa/formId', true, 'post', {
-      token: token, type: type, formId: formId
-    });
+      token, type, formId
+    })
   },
-  sendTempleMsg: function sendTempleMsg(data) {
-    return request('/template-msg/put', true, 'post', data);
+  sendTempleMsg: (data) => {
+    return request('/template-msg/put', true, 'post', data)
   },
-  payVariableUrl: function payVariableUrl(url, data) {
-    return request(url, true, 'post', data);
+  payVariableUrl: (url, data) => {
+    return request(url, true, 'post', data)
   },
-  wxpay: function wxpay(data) {
-    return request('/pay/wx/wxapp', true, 'post', data);
+  wxpay: (data) => {
+    return request('/pay/wx/wxapp', true, 'post', data)
   },
-  wxpayH5: function wxpayH5(data) {
+  wxpayH5: data => {
     return request('/pay/wx/h5', true, 'post', data);
   },
-  wxpayJsapi: function wxpayJsapi(data) {
-    return request('/pay/wx/jsapi', true, 'post', data);
+  wxpayJsapi: (data) => {
+    return request('/pay/wx/jsapi', true, 'post', data)
   },
-  wxpayQrcode: function wxpayQrcode(data) {
+  wxpayQrcode: data => {
     return request('/pay/wx/qrcode', true, 'post', data);
   },
-  wxpayCode: function wxpayCode(data) {
-    return request('/pay/wx/paymentCode', true, 'post', data);
+  wxpayCode: data => {
+    return request('/pay/wx/paymentCode', true, 'post', data)
   },
-  wxpayApp: function wxpayApp(data) {
+  wxpayApp: data => {
     return request('/pay/wx/app', true, 'post', data);
   },
-  wxpayFOMO: function wxpayFOMO(data) {
-    return request('/pay/fomo/wxapp', true, 'post', data);
+  wxpayRequestMerchantTransfer: data => {
+    return request('/pay/wx/requestMerchantTransfer', true, 'get', data);
   },
-  payNow: function payNow(data) {
-    return request('/pay/fomo/payNow', true, 'post', data);
+  wxpayFOMO: (data) => {
+    return request('/pay/fomo/wxapp', true, 'post', data)
   },
-  fomoCheckout: function fomoCheckout(data) {
-    return request('/pay/fomo/checkout', true, 'post', data);
+  payNow: (data) => {
+    return request('/pay/fomo/payNow', true, 'post', data)
   },
-  wxpayFWS: function wxpayFWS(data) {
-    return request('/pay/wxfws/wxapp', true, 'post', data);
+  fomoCheckout: (data) => {
+    return request('/pay/fomo/checkout', true, 'post', data)
   },
-  ttpay: function ttpay(data) {
-    return request('/pay/tt/microapp', true, 'post', data);
+  wxpayFWS: (data) => {
+    return request('/pay/wxfws/wxapp', true, 'post', data)
   },
-  ttEcpay: function ttEcpay(data) {
-    return request('/pay/tt/ecpay', true, 'post', data);
+  ttpay: (data) => {
+    return request('/pay/tt/microapp', true, 'post', data)
   },
-  payQuery: function payQuery(token, outTradeId) {
-    return request('/pay/query', true, 'get', { token: token, outTradeId: outTradeId });
+  ttEcpay: (data) => {
+    return request('/pay/tt/ecpay', true, 'post', data)
   },
-  wxpaySaobei: function wxpaySaobei(data) {
-    return request('/pay/lcsw/wxapp', true, 'post', data);
+  payQuery: (token, outTradeId) => {
+    return request('/pay/query', true, 'get', { token, outTradeId })
   },
-  wxpayWepayez: function wxpayWepayez(data) {
-    return request('/pay/wepayez/wxapp', true, 'post', data);
+  wxpaySaobei: (data) => {
+    return request('/pay/lcsw/wxapp', true, 'post', data)
   },
-  wxpayxpert: function wxpayxpert(data) {
-    return request('/pay/payxpert/wxapp', true, 'post', data);
+  wxpayWepayez: (data) => {
+    return request('/pay/wepayez/wxapp', true, 'post', data)
   },
-  wxpayIPaynow: function wxpayIPaynow(data) {
-    return request('/pay/ipaynow/wxapp', true, 'post', data);
+  wxpayxpert: (data) => {
+    return request('/pay/payxpert/wxapp', true, 'post', data)
   },
-  ccvvPayWxapp: function ccvvPayWxapp(data) {
-    return request('/pay/ccvv/wxapp', true, 'post', data);
+  wxpayIPaynow: (data) => {
+    return request('/pay/ipaynow/wxapp', true, 'post', data)
   },
-  wxpayAirwallex: function wxpayAirwallex(data) {
-    return request('/pay/airwallex/wxapp', true, 'post', data);
+  ccvvPayWxapp: (data) => {
+    return request('/pay/ccvv/wxapp', true, 'post', data)
   },
-  wxSphGetpaymentparams: function wxSphGetpaymentparams(token, orderId) {
-    return request('/pay/wxsph/getpaymentparams', true, 'post', { token: token, orderId: orderId });
+  wxpayAirwallex: (data) => {
+    return request('/pay/airwallex/wxapp', true, 'post', data)
   },
-  paypalCheckout: function paypalCheckout(data) {
-    return request('/pay/paypal/checkout', true, 'post', data);
+  wxSphGetpaymentparams: (token, orderId) => {
+    return request('/pay/wxsph/getpaymentparams', true, 'post', { token, orderId })
   },
-  alipay: function alipay(data) {
-    return request('/pay/alipay/semiAutomatic/payurl', true, 'post', data);
+  paypalCheckout: (data) => {
+    return request('/pay/paypal/checkout', true, 'post', data)
   },
-  alipayMP: function alipayMP(data) {
-    return request('/pay/alipay/gate/mp', true, 'post', data);
+  alipay: (data) => {
+    return request('/pay/alipay/semiAutomatic/payurl', true, 'post', data)
   },
-  alipayAPP: function alipayAPP(data) {
-    return request('/pay/alipay/gate/app', true, 'post', data);
+  alipayMP: (data) => {
+    return request('/pay/alipay/gate/mp', true, 'post', data)
   },
-  alipayQrcode: function alipayQrcode(data) {
-    return request('/pay/alipay/gate/qrcode', true, 'post', data);
+  alipayAPP: (data) => {
+    return request('/pay/alipay/gate/app', true, 'post', data)
   },
-  alipayQrcode2: function alipayQrcode2(data) {
-    return request('/pay/alipay/gate/paymentCode', true, 'post', data);
+  alipayQrcode: (data) => {
+    return request('/pay/alipay/gate/qrcode', true, 'post', data)
   },
-  alipayH5: function alipayH5(data) {
-    return request('/pay/alipay/gate/h5', true, 'post', data);
+  alipayQrcode2: (data) => {
+    return request('/pay/alipay/gate/paymentCode', true, 'post', data)
   },
-  alipayPC: function alipayPC(data) {
-    return request('/pay/alipay/gate/pc', true, 'post', data);
+  alipayH5: (data) => {
+    return request('/pay/alipay/gate/h5', true, 'post', data)
   },
-  kasipayH5: function kasipayH5(data) {
-    return request('/pay/kasipay/h5', true, 'post', data);
+  alipayPC: (data) => {
+    return request('/pay/alipay/gate/pc', true, 'post', data)
   },
-  hmpayJsapi: function hmpayJsapi(data) {
-    return request('/pay/sandpay/hmpay/jsapi', true, 'post', data);
+  kasipayH5: (data) => {
+    return request('/pay/kasipay/h5', true, 'post', data)
   },
-  login_wx: function login_wx(code) {
+  hmpayJsapi: (data) => {
+    return request('/pay/sandpay/hmpay/jsapi', true, 'post', data)
+  },
+  login_wx: (code) => {
     return request('/user/wxapp/login', true, 'post', {
-      code: code,
+      code,
       type: 2
-    });
+    })
   },
-  loginWxV2: function loginWxV2(code, appid) {
+  loginWxV2: (code, appid) => {
     return request('/user/wxapp/login/v2', true, 'post', {
-      code: code,
-      appid: appid
-    });
+      code,
+      appid
+    })
   },
-  login_tt: function login_tt(code) {
-    return request('/user/tt/microapp/login', true, 'post', {
-      code: code
-    });
+  login_tt: (code) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/tt/miniapp/login', false, 'post', {
+      code
+    })
   },
-  login_q: function login_q(code) {
-    return request('/user/q/login', true, 'post', {
-      code: code,
+  login_q: (code) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/q/login', false, 'post', {
+      code,
       type: 2
-    });
+    })
   },
-  loginWxaMobile: function loginWxaMobile(code, encryptedData, iv) {
+  loginWxaMobile: (code, encryptedData, iv) => {
     return request('/user/wxapp/login/mobile', true, 'post', {
-      code: code,
-      encryptedData: encryptedData,
-      iv: iv
-    });
+      code,
+      encryptedData,
+      iv
+    })
   },
-  loginWxaMobileV2: function loginWxaMobileV2(data) {
-    return request('/user/wxapp/login/mobile', true, 'post', data);
+  loginWxaMobileV2: data => {
+    return request('/user/wxapp/login/mobile', true, 'post', data)
   },
-  loginWxaMobileV3: function loginWxaMobileV3(data) {
-    return request('/user/wxapp/login/mobile/v2', true, 'post', data);
+  loginWxaMobileV3: data => {
+    return request('/user/wxapp/login/mobile/v2', true, 'post', data)
   },
-  fetchWxaMobile: function fetchWxaMobile(code) {
-    return request('/user/wxapp/getMobile', true, 'get', { code: code });
+  fetchWxaMobile: (code) => {
+    return request('/user/wxapp/getMobile', true, 'get', { code })
   },
-  login_username: function login_username(data) {
-    return request('/user/username/login', true, 'post', data);
+  login_username: (data) => {
+    return request('/user/username/login', true, 'post', data)
   },
-  bindUsername: function bindUsername(token, username) {
-    var pwd = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  bindUsername: (token, username, pwd = '') => {
     return request('/user/username/bindUsername', true, 'post', {
-      token: token, username: username, pwd: pwd
-    });
+      token, username, pwd
+    })
   },
-  login_mobile: function login_mobile(mobile, pwd) {
-    var deviceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    var deviceName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  login_mobile: (mobile, pwd, deviceId = '', deviceName = '') => {
     return request('/user/m/login', true, 'post', {
-      mobile: mobile, pwd: pwd, deviceId: deviceId, deviceName: deviceName
-    });
+      mobile, pwd, deviceId, deviceName
+    })
   },
-  loginMobileV2: function loginMobileV2(data) {
-    return request('/user/m/login', true, 'post', data);
+  loginMobileV2: data => {
+    return request('/user/m/login', true, 'post', data)
   },
-  loginMobileSmsCode: function loginMobileSmsCode(data) {
-    return request('/user/m/loginMobile', true, 'post', data);
+  loginMobileSmsCode: data => {
+    return request('/user/m/loginMobile', true, 'post', data)
   },
-  resetPwdUseMobileCode: function resetPwdUseMobileCode(mobile, pwd, code) {
+  resetPwdUseMobileCode: (mobile, pwd, code) => {
     return request('/user/m/reset-pwd', true, 'post', {
-      mobile: mobile, pwd: pwd, code: code
-    });
+      mobile, pwd, code
+    })
   },
-  resetPwdUseEmailCode: function resetPwdUseEmailCode(email, pwd, code) {
+  resetPwdUseEmailCode: (email, pwd, code) => {
     return request('/user/email/reset-pwd', true, 'post', {
-      email: email, pwd: pwd, code: code
-    });
+      email, pwd, code
+    })
   },
-  wxmpAuth: function wxmpAuth(data) {
-    return request('/user/wxmp/auth', true, 'post', data);
+  wxmpAuth: data => {
+    return request('/user/wxmp/auth', true, 'post', data)
   },
-  register_complex: function register_complex(data) {
-    return request('/user/wxapp/register/complex', true, 'post', data);
+  register_complex: (data) => {
+    return request('/user/wxapp/register/complex', true, 'post', data)
   },
-  register_tt: function register_tt(data) {
-    return request('/user/tt/microapp/register', true, 'post', data);
+  register_tt: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/tt/miniapp/register', false, 'post', data)
   },
-  registerQ: function registerQ(data) {
-    return request('/user/q/register', true, 'post', data);
+  registerQ: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/q/register', false, 'post', data)
   },
-  qqAuthorize: function qqAuthorize(data) {
-    return request('/user/q/authorize', true, 'post', data);
+  qqAuthorize: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/q/authorize', false, 'post', data)
   },
-  qqQrcode: function qqQrcode(content) {
-    return request('/user/q/qrcode', true, 'post', { content: content });
+  qqQrcode: (content) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/q/qrcode', false, 'post', { content })
   },
-  register_simple: function register_simple(data) {
-    return request('/user/wxapp/register/simple', true, 'post', data);
+  register_simple: (data) => {
+    return request('/user/wxapp/register/simple', true, 'post', data)
   },
-  authorize: function authorize(data) {
-    return request('/user/wxapp/authorize', true, 'post', data);
+  authorize: (data) => {
+    return request('/user/wxapp/authorize', true, 'post', data)
   },
-  ttAuthorize: function ttAuthorize(data) {
-    return request('/user/tt/microapp/authorize', true, 'post', data);
+  ttAuthorize: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/tt/miniapp/authorize', false, 'post', data)
   },
-  register_username: function register_username(data) {
-    return request('/user/username/register', true, 'post', data);
+  register_username: (data) => {
+    return request('/user/username/register', true, 'post', data)
   },
-  register_mobile: function register_mobile(data) {
-    return request('/user/m/register', true, 'post', data);
+  register_mobile: (data) => {
+    return request('/user/m/register', true, 'post', data)
   },
-  bannerTypes: function bannerTypes() {
-    return request('/banner/types', true, 'get');
+  bannerTypes: () => {
+    return request('/banner/types', true, 'get')
   },
-  banners: function banners(data) {
-    return request('/banner/list', true, 'get', data);
+  banners: (data) => {
+    return request('/banner/list', true, 'get', data)
   },
-  goodsCategory: function goodsCategory() {
-    return request('/shop/goods/category/all', true, 'get');
+  goodsCategory: () => {
+    return request('/shop/goods/category/all', true, 'get')
   },
-  goodsCategoryV2: function goodsCategoryV2() {
-    var shopId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/shop/goods/category/all', true, 'get', { shopId: shopId });
+  goodsCategoryV2: (shopId = '') => {
+    return request('/shop/goods/category/all', true, 'get', { shopId })
   },
-  goodsCategoryDetail: function goodsCategoryDetail(id) {
-    return request('/shop/goods/category/info', true, 'get', { id: id });
+  goodsCategoryDetail: (id) => {
+    return request('/shop/goods/category/info', true, 'get', { id })
   },
-  goods: function goods(data) {
+  goodsCategoryDetailV2: (data) => {
+    return request('/shop/goods/category/info', true, 'get', data)
+  },
+  goods: (data) => {
     if (!data) {
-      data = {};
+      data = {}
     }
-    var shopIds = wx.getStorageSync('shopIds');
+    const shopIds = wx.getStorageSync('shopIds')
     if (shopIds) {
-      data.shopId = shopIds;
+      data.shopId = shopIds
     }
-    return request('/shop/goods/list', true, 'post', data);
+    return request('/shop/goods/list', true, 'post', data)
   },
-  goodsv2: function goodsv2(data) {
+  goodsv2: (data) => {
     if (!data) {
-      data = {};
+      data = {}
     }
-    var shopIds = wx.getStorageSync('shopIds');
+    const shopIds = wx.getStorageSync('shopIds')
     if (shopIds) {
-      data.shopId = shopIds;
+      data.shopId = shopIds
     }
-    return request('/shop/goods/list/v2', true, 'post', data);
+    return request('/shop/goods/list/v2', true, 'post', data)
   },
-  goodsDetail: function goodsDetail(id) {
-    var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  goodsDetail: (id, token = '') => {
     return request('/shop/goods/detail', true, 'get', {
-      id: id, token: token
-    });
+      id, token
+    })
   },
-  goodsDetailV2: function goodsDetailV2(data) {
-    return request('/shop/goods/detail', true, 'get', data);
+  goodsDetailV2: data => {
+    return request('/shop/goods/detail', true, 'get', data)
   },
-  goodsLimitations: function goodsLimitations(goodsId) {
-    var priceId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  goodsLimitations: (goodsId, priceId = '') => {
     return request('/shop/goods/limitation', true, 'get', {
-      goodsId: goodsId, priceId: priceId
-    });
+      goodsId, priceId
+    })
   },
-  goodsLimitationsV2: function goodsLimitationsV2(goodsId) {
-    var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  goodsLimitationsV2: (goodsId, propertyChildIds = '') => {
     return request('/shop/goods/limitation', true, 'get', {
-      goodsId: goodsId, propertyChildIds: propertyChildIds
-    });
+      goodsId, propertyChildIds
+    })
   },
-  goodsAddition: function goodsAddition(goodsId) {
+  goodsAddition: (goodsId) => {
     return request('/shop/goods/goodsAddition', true, 'get', {
-      goodsId: goodsId
-    });
+      goodsId
+    })
   },
-  goodsVideoEpisodesList: function goodsVideoEpisodesList(goodsId) {
-    var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  goodsShopStores: (goodsId) => {
+    return request('/shop/goods/goodsShopStores', true, 'get', {
+      goodsId
+    })
+  },
+  goodsVideoEpisodesList: (goodsId, token = '') => {
     return request('/goodsVideoEpisodes/list', true, 'get', {
-      goodsId: goodsId, token: token
-    });
+      goodsId, token
+    })
   },
-  goodsVideoEpisodesBuy: function goodsVideoEpisodesBuy(goodsId, number, token) {
+  goodsVideoEpisodesBuy: (goodsId, number, token) => {
     return request('/goodsVideoEpisodes/buy', true, 'post', {
-      goodsId: goodsId, number: number, token: token
-    });
+      goodsId, number, token
+    })
   },
-  goodsStatistics: function goodsStatistics(data) {
-    return request('/shop/goods/statistics/days', true, 'post', data);
+  goodsStatistics: data => {
+    return request('/shop/goods/statistics/days', true, 'post', data)
   },
-  goodsUseless: function goodsUseless(data) {
-    return request('/shop/goods/useful', true, 'post', data);
+  goodsUseless: (data) => {
+    return request('/shop/goods/useful', true, 'post', data)
   },
-  pushNewGoods: function pushNewGoods(data) {
-    return request('/shop/goods/putOrUpdate', true, 'post', data);
+  pushNewGoods: data => {
+    return request('/shop/goods/putOrUpdate', true, 'post', data)
   },
-  deleteMyGoods: function deleteMyGoods(token, id) {
-    return request('/shop/goods/del', true, 'post', { token: token, id: id });
+  mygoods: data => {
+    return request('/shop/goods/mygoods', true, 'post', data)
   },
-  goodsPrice: function goodsPrice(goodsId, propertyChildIds) {
+  deleteMyGoods: (token, id) => {
+    return request('/shop/goods/del', true, 'post', { token, id })
+  },
+  goodsPrice: (goodsId, propertyChildIds) => {
     return request('/shop/goods/price', true, 'post', {
-      goodsId: goodsId, propertyChildIds: propertyChildIds
-    });
+      goodsId, propertyChildIds
+    })
   },
-  goodsPriceV2: function goodsPriceV2(data) {
-    return request('/shop/goods/price', true, 'post', data);
+  goodsPriceV2: data => {
+    return request('/shop/goods/price', true, 'post', data)
   },
-  goodsPriceDaily: function goodsPriceDaily(goodsId) {
-    var priceId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  goodsPriceDaily: (goodsId, priceId = '') => {
     return request('/shop/goods/price/day', true, 'get', {
-      goodsId: goodsId, priceId: priceId
-    });
+      goodsId, priceId
+    })
   },
-  goodsPriceFreight: function goodsPriceFreight(data) {
-    return request('/shop/goods/price/freight', true, 'get', data);
+  goodsPriceFreight: (data) => {
+    return request('/shop/goods/price/freight', true, 'get', data)
   },
-  goodsRebate: function goodsRebate(token, goodsId) {
+  goodsPriceMultilevels: (data) => {
+    return request('/shop/goods/priceMultilevels', true, 'get', data)
+  },
+  goodsRebate: (token, goodsId) => {
     return request('/shop/goods/rebate/v2', true, 'get', {
-      token: token, goodsId: goodsId
-    });
+      token, goodsId
+    })
   },
-  goodsReputation: function goodsReputation(data) {
-    return request('/shop/goods/reputation', true, 'post', data);
+  goodsReputation: (data) => {
+    return request('/shop/goods/reputation', true, 'post', data)
   },
-  goodsReputationV2: function goodsReputationV2(data) {
-    return request('/shop/goods/reputation/v2', true, 'post', data);
+  goodsReputationV2: (data) => {
+    return request('/shop/goods/reputation/v2', true, 'post', data)
   },
-  myBuyGoodsHis: function myBuyGoodsHis(data) {
-    return request('/shop/goods/his/list', true, 'post', data);
+  myBuyGoodsHis: (data) => {
+    return request('/shop/goods/his/list', true, 'post', data)
   },
-  myBuyGoodsHisDelete: function myBuyGoodsHisDelete(token) {
-    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  myBuyGoodsHisDelete: (token, id = '', goodsId = '') => {
     return request('/shop/goods/his/delete', true, 'post', {
-      token: token, id: id, goodsId: goodsId
-    });
+      token, id, goodsId
+    })
   },
-  goodsFavList: function goodsFavList(data) {
-    return request('/shop/goods/fav/list', true, 'post', data);
+  myBuyGoodsHisV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/shop/goods/his/list', false, 'post', data)
   },
-  goodsFavListV2: function goodsFavListV2(data) {
-    return request('/shop/goods/fav/list/v2', true, 'post', data);
+  myBuyGoodsHisDeleteV2: (token, id = '', goodsId = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/shop/goods/his/delete', false, 'post', {
+      token, id, goodsId
+    })
   },
-  goodsFavPut: function goodsFavPut(token, goodsId) {
+  goodsFavList: data => {
+    return request('/shop/goods/fav/list', true, 'post', data)
+  },
+  goodsFavListV2: data => {
+    return request('/shop/goods/fav/list/v2', true, 'post', data)
+  },
+  goodsFavPut: (token, goodsId) => {
     return request('/shop/goods/fav/add', true, 'post', {
-      token: token, goodsId: goodsId
-    });
+      token, goodsId
+    })
   },
-  goodsFavAdd: function goodsFavAdd(data) {
-    return request('/shop/goods/fav/add', true, 'post', data);
+  goodsFavAdd: data => {
+    return request('/shop/goods/fav/add', true, 'post', data)
   },
-  goodsFavCheck: function goodsFavCheck(token, goodsId) {
+  goodsFavCheck: (token, goodsId) => {
     return request('/shop/goods/fav/check', true, 'get', {
-      token: token, goodsId: goodsId
-    });
+      token, goodsId
+    })
   },
-  goodsFavCheckV2: function goodsFavCheckV2(data) {
-    return request('/shop/goods/fav/check', true, 'get', data);
+  goodsFavCheckV2: data => {
+    return request('/shop/goods/fav/check', true, 'get', data)
   },
-  goodsFavDelete: function goodsFavDelete(token) {
-    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  goodsFavDelete: (token, id = '', goodsId = '') => {
     return request('/shop/goods/fav/delete', true, 'post', {
-      token: token, id: id, goodsId: goodsId
-    });
+      token, id, goodsId
+    })
   },
-  goodsFavDeleteV2: function goodsFavDeleteV2(data) {
-    return request('/shop/goods/fav/delete', true, 'post', data);
+  goodsFavDeleteV2: data => {
+    return request('/shop/goods/fav/delete', true, 'post', data)
   },
-  goodsSeckillGrab: function goodsSeckillGrab(token, goodsId, seconds) {
-    return request('/goods/seckill/grab', true, 'post', { token: token, goodsId: goodsId, seconds: seconds });
+  goodsSeckillGrab: (token, goodsId, seconds) => {
+    return request('/goods/seckill/grab', true, 'post', { token, goodsId, seconds })
   },
-  coupons: function coupons(data) {
-    return request('/discounts/coupons', true, 'get', data);
+  coupons: (data) => {
+    return request('/discounts/coupons', true, 'get', data)
   },
-  couponDetail: function couponDetail(id) {
+  couponDetail: (id) => {
     return request('/discounts/detail', true, 'get', {
-      id: id
-    });
+      id
+    })
   },
-  couponStatistics: function couponStatistics(token) {
-    return request('/discounts/statistics', true, 'get', { token: token });
+  couponStatistics: (token) => {
+    return request('/discounts/statistics', true, 'get', { token});
   },
-  myCoupons: function myCoupons(data) {
-    return request('/discounts/my', true, 'get', data);
+  myCoupons: (data) => {
+    return request('/discounts/my', true, 'get', data)
   },
-  mergeCouponsRules: function mergeCouponsRules() {
-    return request('/discounts/merge/list', true, 'get');
+  mergeCouponsRules: () => {
+    return request('/discounts/merge/list', true, 'get')
   },
-  mergeCoupons: function mergeCoupons(data) {
-    return request('/discounts/merge', true, 'post', data);
+  mergeCoupons: (data) => {
+    return request('/discounts/merge', true, 'post', data)
   },
-  fetchCoupons: function fetchCoupons(data) {
-    return request('/discounts/fetch', true, 'post', data);
+  fetchCoupons: (data) => {
+    return request('/discounts/fetch', true, 'post', data)
   },
-  sendCoupons: function sendCoupons(data) {
-    return request('/discounts/send', true, 'post', data);
+  sendCoupons: (data) => {
+    return request('/discounts/send', true, 'post', data)
   },
-  exchangeCoupons: function exchangeCoupons(token, number, pwd) {
-    var extJsonStr = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  exchangeCoupons: (token, number, pwd, extJsonStr = '') => {
     return request('/discounts/exchange', true, 'post', {
-      token: token, number: number, pwd: pwd, extJsonStr: extJsonStr
-    });
+      token, number, pwd, extJsonStr
+    })
   },
-  couponsShareOpen: function couponsShareOpen(token, id) {
-    return request('/discounts/share/open', true, 'post', { token: token, id: id });
+  couponsShareOpen: (token, id) => {
+    return request('/discounts/share/open', true, 'post', { token, id })
   },
-  couponsShareClose: function couponsShareClose(token, id) {
-    return request('/discounts/share/close', true, 'post', { token: token, id: id });
+  couponsShareClose: (token, id) => {
+    return request('/discounts/share/close', true, 'post', { token, id })
   },
-  couponsShareFetch: function couponsShareFetch(token, id, shareToken) {
-    return request('/discounts/share/fetch', true, 'post', { token: token, id: id, shareToken: shareToken });
+  couponsShareFetch: (token, id, shareToken) => {
+    return request('/discounts/share/fetch', true, 'post', { token, id, shareToken })
   },
-  couponsHX: function couponsHX(data) {
-    return request('/discounts/hx', true, 'post', data);
+  couponsHX: data => {
+    return request('/discounts/hx', true, 'post', data)
   },
-  noticeList: function noticeList(data) {
-    return request('/notice/list', true, 'post', data);
+  noticeList: (data) => {
+    return request('/notice/list', true, 'post', data)
   },
-  noticeLastOne: function noticeLastOne() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
+  noticeLastOne: (type = '') => {
     return request('/notice/last-one', true, 'get', {
-      type: type
-    });
+      type
+    })
   },
-  noticeDetail: function noticeDetail(id) {
+  noticeDetail: (id) => {
     return request('/notice/detail', true, 'get', {
-      id: id
-    });
+      id
+    })
   },
-  addAddress: function addAddress(data) {
-    return request('/user/shipping-address/add', true, 'post', data);
+  addAddress: (data) => {
+    return request('/user/shipping-address/add', true, 'post', data)
   },
-  updateAddress: function updateAddress(data) {
-    return request('/user/shipping-address/update', true, 'post', data);
+  updateAddress: (data) => {
+    return request('/user/shipping-address/update', true, 'post', data)
   },
-  deleteAddress: function deleteAddress(token, id) {
+  deleteAddress: (token, id) => {
     return request('/user/shipping-address/delete', true, 'post', {
-      id: id,
-      token: token
-    });
+      id,
+      token
+    })
   },
-  queryAddress: function queryAddress(token) {
+  queryAddress: (token) => {
     return request('/user/shipping-address/list', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  queryAddressV2: function queryAddressV2(data) {
-    return request('/user/shipping-address/list/v2', true, 'post', data);
+  queryAddressV2: data => {
+    return request('/user/shipping-address/list/v2', true, 'post', data)
   },
-  defaultAddress: function defaultAddress(token) {
+  defaultAddress: (token) => {
     return request('/user/shipping-address/default/v2', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  addressDetail: function addressDetail(token, id) {
+  addressDetail: (token, id) => {
     return request('/user/shipping-address/detail/v2', true, 'get', {
-      id: id,
-      token: token
-    });
+      id,
+      token
+    })
   },
-  pingtuanSet: function pingtuanSet(goodsId) {
+  pingtuanSet: (goodsId) => {
     return request('/shop/goods/pingtuan/set', true, 'get', {
-      goodsId: goodsId
-    });
+      goodsId
+    })
   },
-  pingtuanSets: function pingtuanSets(goodsIdArray) {
+  pingtuanSets: (goodsIdArray) => {
     return request('/shop/goods/pingtuan/sets', true, 'get', {
       goodsId: goodsIdArray.join()
-    });
+    })
   },
-  goodsDefaultPingtuan: function goodsDefaultPingtuan(goodsId) {
+  goodsDefaultPingtuan: (goodsId) => {
     return request('/shop/goods/pingtuan/default', true, 'get', {
-      goodsId: goodsId
+      goodsId
     });
   },
-  pingtuanMultilevel: function pingtuanMultilevel(goodsId) {
+  pingtuanMultilevel: (goodsId) => {
     return request('/shop/goods/pingtuanMultilevel', true, 'get', {
-      goodsId: goodsId
+      goodsId
     });
   },
-  pingtuanOpen: function pingtuanOpen(token, goodsId) {
-    var extJsonStr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  pingtuanOpen: (token, goodsId, extJsonStr = '') => {
     return request('/shop/goods/pingtuan/open', true, 'post', {
-      goodsId: goodsId,
-      token: token,
-      extJsonStr: extJsonStr
-    });
+      goodsId,
+      token,
+      extJsonStr
+    })
   },
-  pingtuanTuanInfo: function pingtuanTuanInfo(tuanId) {
+  pingtuanTuanInfo: (tuanId) => {
     return request('/shop/goods/pingtuan/tuanInfo', true, 'get', {
-      tuanId: tuanId
+      tuanId
     });
   },
-  pingtuanList: function pingtuanList(data) {
-    return request('/shop/goods/pingtuan/list/v2', true, 'post', data);
+  pingtuanList: (data) => {
+    return request('/shop/goods/pingtuan/list/v2', true, 'post', data)
   },
-  pingtuanJoinUsers: function pingtuanJoinUsers(tuanId) {
-    return request('/shop/goods/pingtuan/joiner', true, 'get', { tuanId: tuanId });
+  pingtuanJoinUsers: (tuanId) => {
+    return request('/shop/goods/pingtuan/joiner', true, 'get', { tuanId })
   },
-  pingtuanMyJoined: function pingtuanMyJoined(data) {
-    return request('/shop/goods/pingtuan/my-join-list', true, 'post', data);
+  pingtuanMyJoined: (data) => {
+    return request('/shop/goods/pingtuan/my-join-list', true, 'post', data)
   },
-  friendlyPartnerList: function friendlyPartnerList() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
+  friendlyPartnerList: (type = '') => {
     return request('/friendly-partner/list', true, 'post', {
-      type: type
-    });
+      type
+    })
   },
-  friendList: function friendList(data) {
-    return request('/user/friend/list', true, 'post', data);
+  friendList: (data) => {
+    return request('/user/friend/list', true, 'post', data)
   },
-  addFriend: function addFriend(token, uid) {
-    return request('/user/friend/add', true, 'post', { token: token, uid: uid });
+  addFriend: (token, uid) => {
+    return request('/user/friend/add', true, 'post', { token, uid })
   },
-  deleteFriend: function deleteFriend(token, uid) {
-    return request('/user/friend/delete', true, 'post', { token: token, uid: uid });
+  deleteFriend: (token, uid) => {
+    return request('/user/friend/delete', true, 'post', { token, uid })
   },
-  friendUserDetail: function friendUserDetail(token, uid) {
-    return request('/user/friend/detail', true, 'get', { token: token, uid: uid });
+  friendUserDetail: (token, uid) => {
+    return request('/user/friend/detail', true, 'get', { token, uid })
   },
-  userImList: function userImList(data) {
-    return request('/userIm/list', true, 'post', data);
+  userImList: data => {
+    return request('/userIm/list', true, 'post', data)
   },
-  userImSendmessage: function userImSendmessage(token, uid, content) {
-    return request('/userIm/sendmessage', true, 'post', { token: token, uid: uid, content: content });
+  userImSendmessage: (token, uid, content) => {
+    return request('/userIm/sendmessage', true, 'post', { token, uid, content })
   },
-  userImEmpty: function userImEmpty(token, uid) {
-    return request('/userIm/empty', true, 'post', { token: token, uid: uid });
+  userImEmpty: (token, uid) => {
+    return request('/userIm/empty', true, 'post', { token, uid })
   },
-  videoDetail: function videoDetail(videoId) {
-    return request('/media/video/detail', true, 'get', {
-      videoId: videoId
-    });
+  videoDetail: (videoId) => {
+    return request(COMMON_BASE_URL + subDomain + '/media/video/detail', false, 'get', {
+      videoId
+    })
   },
-  bindMobileWxa: function bindMobileWxa(token, encryptedData, iv) {
-    var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  bindMobileWxa: (token, encryptedData, iv, pwd = '') => {
     return request('/user/wxapp/bindMobile', true, 'post', {
-      token: token, encryptedData: encryptedData, iv: iv, pwd: pwd
-    });
+      token, encryptedData, iv, pwd
+    })
   },
-  bindMobileWxapp: function bindMobileWxapp(token, code, encryptedData, iv) {
-    var pwd = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
-
+  bindMobileWxapp: (token, code, encryptedData, iv, pwd = '') => {
     return request('/user/wxapp/bindMobile', true, 'post', {
-      token: token, code: code, encryptedData: encryptedData, iv: iv, pwd: pwd
-    });
+      token, code, encryptedData, iv, pwd
+    })
   },
-  bindMobileWxappV2: function bindMobileWxappV2(token, code) {
-    var pwd = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  bindMobileWxappV2: (token, code, pwd = '') => {
     return request('/user/wxapp/bindMobile/v2', true, 'post', {
-      token: token, code: code, pwd: pwd
-    });
+      token, code, pwd
+    })
   },
-  bindMobileTta: function bindMobileTta(token, encryptedData, iv) {
-    var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
-    return request('/user/tt/microapp/bindMobile', true, 'post', {
-      token: token, encryptedData: encryptedData, iv: iv, pwd: pwd
-    });
+  bindMobileTta: (token, encryptedData, iv, pwd = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/user/tt/miniapp/bindMobile', false, 'post', {
+      token, encryptedData, iv, pwd
+    })
   },
-  bindMobileSms: function bindMobileSms(token, mobile, code) {
-    var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  bindMobileSms: (token, mobile, code, pwd = '') => {
     return request('/user/m/bind-mobile', true, 'post', {
-      token: token, mobile: mobile, code: code, pwd: pwd
-    });
+      token, mobile, code, pwd
+    })
   },
-  userDetail: function userDetail(token) {
+  userDetail: (token) => {
     return request('/user/detail', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  randomNick: function randomNick() {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
+  randomNick: (len = '') => {
     return request('/user/randomNick', true, 'get', {
-      len: len
-    });
+      len
+    })
   },
-  userDetailSpreadUser: function userDetailSpreadUser(token, uid) {
+  userDetailSpreadUser: (token, uid) => {
     return request('/user/detail/spreadUser', true, 'get', {
-      token: token, uid: uid
-    });
+      token, uid
+    })
   },
-  userWxinfo: function userWxinfo(token) {
+  userWxinfo: (token) => {
     return request('/user/wxinfo', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  userAliappInfo: function userAliappInfo(token) {
+  userAliappInfo: (token) => {
     return request('/user/aliappInfo', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  userAmount: function userAmount(token) {
+  userAmount: (token) => {
     return request('/user/amount', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  orderCreate: function orderCreate(data) {
-    return request('/order/create', true, 'post', data);
+  userAmountV2: (token) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/amount', false, 'get', {
+      token
+    })
   },
-  orderList: function orderList(data) {
-    return request('/order/list', true, 'post', data);
+  orderCreate: (data) => {
+    return request('/order/create', true, 'post', data)
   },
-  orderDetail: function orderDetail(token, id) {
-    var hxNumber = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    var peisongOrderId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  orderList: (data) => {
+    return request('/order/list', true, 'post', data)
+  },
+  orderDetail: (token, id, hxNumber = '', peisongOrderId = '') => {
     return request('/order/detail', true, 'get', {
-      id: id,
-      token: token,
-      hxNumber: hxNumber,
-      peisongOrderId: peisongOrderId
-    });
+      id,
+      token,
+      hxNumber,
+      peisongOrderId
+    })
   },
-  orderMtLocation: function orderMtLocation(id) {
+  orderMtLocation: id => {
     return request('/order/mtlocation', true, 'get', {
-      id: id
-    });
+      id
+    })
   },
-  orderDelivery: function orderDelivery(token, orderId) {
+  orderDelivery: (token, orderId) => {
     return request('/order/delivery', true, 'post', {
-      orderId: orderId,
-      token: token
-    });
+      orderId,
+      token
+    })
   },
-  orderReputation: function orderReputation(data) {
-    return request('/order/reputation', true, 'post', data);
+  orderReputation: (data) => {
+    return request('/order/reputation', true, 'post', data)
   },
-  orderReputationList: function orderReputationList(data) {
-    return request('/order/listReputation', true, 'post', data);
+  orderReputationList: (data) => {
+    return request('/order/listReputation', true, 'post', data)
   },
-  orderReputationDelete: function orderReputationDelete(data) {
-    return request('/order/reputation/delete', true, 'post', data);
+  orderReputationDelete: (data) => {
+    return request('/order/reputation/delete', true, 'post', data)
   },
-  orderReputationModify: function orderReputationModify(data) {
-    return request('/order/reputation/modify', true, 'post', data);
+  orderReputationModify: (data) => {
+    return request('/order/reputation/modify', true, 'post', data)
   },
-  orderClose: function orderClose(token, orderId) {
+  orderClose: (token, orderId) => {
     return request('/order/close', true, 'post', {
-      orderId: orderId,
-      token: token
-    });
+      orderId,
+      token
+    })
   },
-  orderDelete: function orderDelete(token, orderId) {
+  orderCloseV2: data => {
+    return request('/order/close', true, 'post', data)
+  },
+  orderDelete: (token, orderId) => {
     return request('/order/delete', true, 'post', {
-      orderId: orderId,
-      token: token
-    });
+      orderId,
+      token
+    })
   },
-  orderPay: function orderPay(token, orderId) {
+  orderPay: (token, orderId) => {
     return request('/order/pay', true, 'post', {
-      orderId: orderId,
-      token: token
-    });
+      orderId,
+      token
+    })
   },
-  orderPayV2: function orderPayV2(data) {
-    return request('/order/pay', true, 'post', data);
+  orderPayV2: data => {
+    return request('/order/pay', true, 'post', data)
   },
-  jdjlOrderPay: function jdjlOrderPay(token, _token) {
-    var couponId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  jdjlOrderPay: (token, _token, couponId = '') => {
     return request('/jdjl/payOrder', true, 'post', {
-      _token: _token,
-      token: token,
-      couponId: couponId
-    });
+      _token,
+      token,
+      couponId
+    })
   },
-  orderHX: function orderHX(hxNumber) {
+  orderHX: (hxNumber) => {
     return request('/order/hx', true, 'post', {
-      hxNumber: hxNumber
-    });
+      hxNumber
+    })
   },
-  orderHXV2: function orderHXV2(data) {
-    return request('/order/hx', true, 'post', data);
+  orderHXV2: data => {
+    return request('/order/hx', true, 'post', data)
   },
-  orderSet: function orderSet() {
-    return request('/order/set', true, 'get');
+  orderSet: () => {
+    return request('/order/set', true, 'get')
   },
-  orderRefunds: function orderRefunds(token, orderId) {
+  orderRefunds: (token, orderId) => {
     return request('/order/refund', true, 'get', {
-      token: token,
-      orderId: orderId
-    });
+      token,
+      orderId
+    })
   },
-  withDrawApply: function withDrawApply(token, money) {
+  withDrawApply: (token, money) => {
     return request('/user/withDraw/apply', true, 'post', {
-      money: money,
-      token: token
-    });
+      money,
+      token
+    })
   },
-  withDrawApplyV2: function withDrawApplyV2(data) {
-    return request('/user/withDraw/apply', true, 'post', data);
+  withDrawApplyV2: data => {
+    return request('/user/withDraw/apply', true, 'post', data)
   },
-  withDrawDetail: function withDrawDetail(token, id) {
+  withDrawDetail: (token, id) => {
     return request('/user/withDraw/detail', true, 'get', {
-      token: token,
-      id: id
-    });
+      token,
+      id
+    })
   },
-  withDrawLogs: function withDrawLogs(data) {
-    return request('/user/withDraw/list', true, 'post', data);
+  withDrawLogs: (data) => {
+    return request('/user/withDraw/list', true, 'post', data)
   },
-  withDrawSetting: function withDrawSetting() {
-    return request('/user/withDraw/setting', true, 'get');
+  withDrawSetting: () => {
+    return request('/user/withDraw/setting', true, 'get')
   },
-  province: function province() {
-    return request('/common/region/v2/province', false, 'get');
+  withDrawApplyV3: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/withdrawal/apply', true, 'post', data)
   },
-  city: function city() {
-    return request('/common/region/v2/city', false, 'get');
+  withDrawDetailV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/withdrawal/detail', true, 'get', data)
   },
-  districts: function districts() {
-    return request('/common/region/v2/districts', false, 'get');
+  withDrawLogsV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/withdrawal/list', true, 'post', data)
   },
-  streets: function streets() {
-    return request('/common/region/v2/streets', false, 'get');
+  withDrawSettingV2: () => {
+    return request(COMMON_BASE_URL + subDomain + '/user/withdrawal/setting', true, 'get')
   },
-  nextRegion: function nextRegion(pid) {
+  wxpayRequestMerchantTransferV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/withdrawal/requestMerchantTransfer', true, 'get', data);
+  },
+  province: () => {
+    return request('/common/region/v2/province', false, 'get')
+  },
+  city: () => {
+    return request('/common/region/v2/city', false, 'get')
+  },
+  districts: () => {
+    return request('/common/region/v2/districts', false, 'get')
+  },
+  streets: () => {
+    return request('/common/region/v2/streets', false, 'get')
+  },
+  nextRegion: (pid) => {
     return request('/common/region/v2/child', false, 'get', {
-      pid: pid
-    });
+      pid
+    })
   },
-  regionInfo: function regionInfo(id) {
+  regionInfo: (id) => {
     return request('/common/region/v2/info', false, 'get', {
-      id: id
-    });
+      id
+    })
   },
-  regionInfoBatch: function regionInfoBatch(ids) {
+  regionInfoBatch: (ids) => {
     return request('/common/region/v2/infoBatch', false, 'get', {
-      ids: ids
-    });
+      ids
+    })
   },
-  regionSearch: function regionSearch(data) {
-    return request('/common/region/v2/search', false, 'post', data);
+  regionSearch: data => {
+    return request('/common/region/v2/search', false, 'post', data)
   },
-  provinceV2: function provinceV2() {
-    return request('https://common.apifm.com/' + subDomain + '/region/province', false, 'get');
+  provinceV2: () => {
+    return request(COMMON_BASE_URL + subDomain + '/region/province', false, 'get')
   },
-  cityV2: function cityV2() {
-    return request('https://common.apifm.com/' + subDomain + '/region/city', false, 'get');
+  cityV2: () => {
+    return request(COMMON_BASE_URL + subDomain + '/region/city', false, 'get')
   },
-  districtsV2: function districtsV2(data) {
-    return request('https://common.apifm.com/' + subDomain + '/region/districts', false, 'post', data);
+  districtsV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/region/districts', false, 'post', data)
   },
-  streetsV2: function streetsV2(data) {
-    return request('https://common.apifm.com/' + subDomain + '/region/streets', false, 'post', data);
+  streetsV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/region/streets', false, 'post', data)
   },
-  nextRegionV2: function nextRegionV2(pid) {
-    return request('https://common.apifm.com/' + subDomain + '/region/child', false, 'get', { pid: pid });
+  nextRegionV2: pid => {
+    return request(COMMON_BASE_URL + subDomain + '/region/child', false, 'get', { pid })
   },
-  regionInfoV2: function regionInfoV2(id) {
-    return request('https://common.apifm.com/' + subDomain + '/region/info', false, 'get', { id: id });
+  regionInfoV2: id => {
+    return request(COMMON_BASE_URL + subDomain + '/region/info', false, 'get', { id })
   },
-  regionInfoBatchV2: function regionInfoBatchV2(ids) {
-    return request('https://common.apifm.com/' + subDomain + '/region/infoBatch', false, 'get', { ids: ids });
+  regionInfoBatchV2: ids => {
+    return request(COMMON_BASE_URL + subDomain + '/region/infoBatch', false, 'get', { ids })
   },
-  regionSearchV2: function regionSearchV2(data) {
-    return request('https://common.apifm.com/' + subDomain + '/region/search', false, 'post', data);
+  regionSearchV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/region/search', false, 'post', data)
   },
-  cashLogs: function cashLogs(data) {
-    return request('/user/cashLog', true, 'post', data);
+  regionAnalysis: address => {
+    return request(COMMON_BASE_URL + subDomain + '/region/analysis', false, 'post', { address })
   },
-  cashLogsV2: function cashLogsV2(data) {
-    return request('/user/cashLog/v2', true, 'post', data);
+  cashLogs: (data) => {
+    return request('/user/cashLog', true, 'post', data)
   },
-  statisticsComingOut: function statisticsComingOut(data) {
-    return request('/user/statisticsComingOut', true, 'post', data);
+  cashLogsV2: (data) => {
+    return request('/user/cashLog/v2', true, 'post', data)
   },
-  payLogs: function payLogs(data) {
-    return request('/user/payLogs', true, 'post', data);
+  cashLogsV3: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/cashLog/v2', false, 'post', data)
   },
-  rechargeSendRules: function rechargeSendRules() {
-    return request('/user/recharge/send/rule', true, 'get');
+  statisticsComingOut: (data) => {
+    return request('/user/statisticsComingOut', true, 'post', data)
   },
-  payBillDiscounts: function payBillDiscounts() {
-    return request('/payBill/discounts', true, 'get');
+  statisticsComingOutV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/statisticsComingOut', false, 'post', data)
   },
-  payBill: function payBill(token, money) {
-    var pwd = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/payBill/pay', true, 'post', { token: token, money: money, pwd: pwd });
+  payLogs: (data) => {
+    return request('/user/payLogs', true, 'post', data)
   },
-  payBillV2: function payBillV2(data) {
-    return request('/payBill/pay', true, 'post', data);
+  rechargeSendRules: () => {
+    return request('/user/recharge/send/rule', true, 'get')
   },
-  vipLevel: function vipLevel() {
-    return request('/config/vipLevel', true, 'get');
+  payBillDiscounts: () => {
+    return request('/payBill/discounts', true, 'get')
   },
-  fxApply: function fxApply(token, name, mobile) {
-    return request('/saleDistribution/apply', true, 'post', { token: token, name: name, mobile: mobile });
+  payBill: (token, money, pwd = '') => {
+    return request('/payBill/pay', true, 'post', { token, money, pwd })
   },
-  fxApplyV2: function fxApplyV2(data) {
-    return request('/saleDistribution/apply/v2', true, 'post', data);
+  payBillV2: (data) => {
+    return request('/payBill/pay', true, 'post', data)
   },
-  fxSetting: function fxSetting() {
-    return request('/saleDistribution/setting', true, 'get');
+  vipLevel: () => {
+    return request('/config/vipLevel', true, 'get')
   },
-  fxBuy: function fxBuy(token) {
-    return request('/saleDistribution/buy', true, 'post', { token: token });
+  fxApply: (token, name, mobile) => {
+    return request('/saleDistribution/apply', true, 'post', { token, name, mobile })
   },
-  fxApplyProgress: function fxApplyProgress(token) {
-    return request('/saleDistribution/apply/progress', true, 'get', { token: token });
+  fxApplyV2: data => {
+    return request('/saleDistribution/apply/v2', true, 'post', data)
   },
-  fxApplyProgressV2: function fxApplyProgressV2(token) {
+  fxSetting: () => {
+    return request(COMMON_BASE_URL + subDomain + '/saleDistribution/setting', true, 'get')
+  },
+  fxBuy: token => {
+    return request('/saleDistribution/buy', true, 'post', { token })
+  },
+  fxApplyProgress: (token) => {
+    return request('/saleDistribution/apply/progress', true, 'get', { token })
+  },
+  fxApplyProgressV2: (token) => {
     return request('/saleDistribution/apply/progress/v2', true, 'get', { token: token });
   },
-  fxMembers: function fxMembers(data) {
-    return request('/saleDistribution/members', true, 'post', data);
+  fxMembers: (data) => {
+    return request('/saleDistribution/members', true, 'post', data)
   },
-  fxCommisionLog: function fxCommisionLog(data) {
-    return request('/saleDistribution/commision/log', true, 'post', data);
+  fxCommisionLog: (data) => {
+    return request('/saleDistribution/commision/log', true, 'post', data)
   },
-  fxCommisionFreezeAmount: function fxCommisionFreezeAmount(token) {
-    return request('/saleDistribution/commission/freeze', true, 'get', { token: token });
+  fxCommisionFreezeAmount: (token) => {
+    return request('/saleDistribution/commission/freeze', true, 'get', { token })
   },
-  fxSaleroomRankTotal: function fxSaleroomRankTotal(page, pageSize) {
+  fxSaleroomRankTotal: (page, pageSize) => {
     return request('/saleDistribution/sale-room-rank/total', true, 'get', {
-      page: page, pageSize: pageSize
-    });
+      page, pageSize
+    })
   },
-  fxSaleroomRankTotalTeam: function fxSaleroomRankTotalTeam(page, pageSize) {
+  fxSaleroomRankTotalTeam: (page, pageSize) => {
     return request('/saleDistribution/sale-room-rank/team/total', true, 'get', {
-      page: page, pageSize: pageSize
-    });
+      page, pageSize
+    })
   },
-  fxSaleroomRankDaily: function fxSaleroomRankDaily(page, pageSize, day) {
-    return request('/saleDistribution/sale-room-rank/daily', true, 'get', {
-      page: page, pageSize: pageSize, day: day
-    });
+  fxSaleroomRankDaily: (page, pageSize, day) => {
+    return request(COMMON_BASE_URL + subDomain + '/saleDistribution/sale-room-rank/daily', false, 'get', {
+      page, pageSize, day
+    })
   },
-  fxMembersStatistics: function fxMembersStatistics(token) {
-    return request('/saleDistribution/members/statistics', true, 'get', { token: token });
+  fxStatisticsDays: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/saleDistribution/statistics/days', false, 'get', data)
   },
-  fxMyCommisionStatistics: function fxMyCommisionStatistics(token, days) {
-    return request('/saleDistribution/my/commision', true, 'get', { token: token, days: days });
+  fxUpgrade: (token) => {
+    return request(COMMON_BASE_URL + subDomain + '/saleDistribution/upgrade', false, 'post', { token })
   },
-  fxGoods: function fxGoods(data) {
-    return request('/saleDistribution/goods', true, 'post', data);
+  fxMembersStatistics: token => {
+    return request('/saleDistribution/members/statistics', true, 'get', { token })
   },
-  fxTeamReport: function fxTeamReport(data) {
-    return request('/saleDistribution/team/report', true, 'post', data);
+  fxMyCommisionStatistics: (token, days) => {
+    return request(COMMON_BASE_URL + subDomain + '/saleDistribution/my/commision', false, 'get', { token, days })
   },
-  fxCities: function fxCities(token) {
-    return request('/saleDistribution/city/list', true, 'get', { token: token });
+  fxGoods: data => {
+    return request('/saleDistribution/goods', true, 'post', data)
   },
-  fxCityReport: function fxCityReport(data) {
-    return request('/saleDistribution/city/report', true, 'post', data);
+  fxTeamReport: data => {
+    return request('/saleDistribution/team/report', true, 'post', data)
   },
-  goodsSellNumberStatistics: function goodsSellNumberStatistics(page, pageSize) {
-    var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  fxCities: token => {
+    return request('/saleDistribution/city/list', true, 'get', { token })
+  },
+  fxCityReport: data => {
+    return request('/saleDistribution/city/report', true, 'post', data)
+  },
+  goodsSellNumberStatistics: (page, pageSize, goodsId = '') => {
     return request('/site/goods/statistics', true, 'get', {
-      page: page, pageSize: pageSize, goodsId: goodsId
-    });
+      page, pageSize, goodsId
+    })
   },
-  wxaQrcode: function wxaQrcode(data) {
-    return request('https://oss.apifm.com/' + subDomain + '/qrcode/wxa/unlimit', true, 'post', data);
+  wxaQrcode: (data) => {
+    return request('https://oss.apifm.com/' + subDomain + '/qrcode/wxa/unlimit', true, 'post', data)
   },
-  ttaQrcode: function ttaQrcode(paramsJson, expireHours) {
-    return request('/user/tt/microapp/qrcode', true, 'post', {
+  ttaQrcode: (paramsJson, expireHours) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/tt/miniapp/qrcode', false, 'post', {
       content: JSON.stringify(paramsJson),
-      expireHours: expireHours
-    });
+      expireHours
+    })
   },
-  commonQrcode: function commonQrcode(data) {
-    return request('https://oss.apifm.com/' + subDomain + '/qrcode/content', true, 'post', data);
+  commonQrcode: (data) => {
+    return request('https://oss.apifm.com/' + subDomain + '/qrcode/content', true, 'post', data)
   },
-  uploadFile: function uploadFile(token, tempFilePath) {
-    var expireHours = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    var uploadUrl = API_BASE_URL + '/' + subDomain + '/dfs/upload/file';
-    return new Promise(function (resolve, reject) {
+  uploadFile: (token, tempFilePath, expireHours = '') => {
+    const uploadUrl = API_BASE_URL + '/' + subDomain + '/dfs/upload/file'
+    return new Promise((resolve, reject) => {
       wx.uploadFile({
         url: uploadUrl,
         filePath: tempFilePath,
         name: 'upfile',
         formData: {
           'token': token,
-          expireHours: expireHours
+          expireHours
         },
-        success: function success(res) {
-          resolve(JSON.parse(res.data));
+        success(res) {
+          resolve(JSON.parse(res.data))
         },
-        fail: function fail(error) {
-          reject(error);
+        fail(error) {
+          reject(error)
         },
-        complete: function complete(aaa) {
+        complete(aaa) {
           // 加载完成
         }
-      });
-    });
+      })
+    })
   },
-  uploadFileV2: function uploadFileV2(token, tempFilePath) {
-    var expireHours = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return new Promise(function (resolve, reject) {
+  uploadFileV2: (token, tempFilePath, expireHours = '') => {
+    return new Promise((resolve, reject) => {
       wx.uploadFile({
         url: 'https://oss.apifm.com/upload2',
         filePath: tempFilePath,
         name: 'upfile',
         formData: {
-          token: token,
-          subDomain: subDomain,
-          expireHours: expireHours
+          token,
+          subDomain,
+          expireHours
         },
-        success: function success(res) {
-          resolve(JSON.parse(res.data));
+        success(res) {
+          resolve(JSON.parse(res.data))
         },
-        fail: function fail(error) {
-          reject(error);
+        fail(error) {
+          reject(error)
         },
-        complete: function complete(aaa) {
+        complete(aaa) {
           // 加载完成
         }
-      });
-    });
+      })
+    })
   },
-  uploadFileFromUrl: function uploadFileFromUrl() {
-    var remoteFileUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var ext = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/dfs/upload/url', true, 'post', { remoteFileUrl: remoteFileUrl, ext: ext });
+  uploadFileV22: (token, tempFilePath, expireHours = '') => {
+    return new Promise((resolve, reject) => {
+      tt.uploadFile({
+        url: 'https://dfs.apifm.com/upload2',
+        filePath: tempFilePath,
+        name: 'upfile',
+        formData: {
+          token,
+          subDomain,
+          expireHours
+        },
+        success(res) {
+          resolve(JSON.parse(res.data))
+        },
+        fail(error) {
+          reject(error)
+        },
+        complete(aaa) {
+          // 加载完成
+        }
+      })
+    })
   },
-  uploadFileFromUrlV2: function uploadFileFromUrlV2(data) {
-    var _data = Object.assign(data, { subDomain: subDomain });
-    return request('https://oss.apifm.com/uploadByUrl', false, 'post', _data);
+  uploadFileFromUrl: (remoteFileUrl = '', ext = '') => {
+    return request('/dfs/upload/url', true, 'post', { remoteFileUrl, ext })
   },
-  uploadFileList: function uploadFileList() {
-    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/dfs/upload/list', true, 'post', { path: path });
+  uploadFileFromUrlV2: data => {
+    const _data = Object.assign(data, { subDomain })
+    return request('https://oss.apifm.com/uploadByUrl', false, 'post', _data)
   },
-  uploadFileListV2: function uploadFileListV2(data) {
-    return request('/dfs/upload/list/v2', true, 'post', data);
+  uploadFileFromUrlV22: data => {
+    const _data = Object.assign(data, { subDomain })
+    return request('https://dfs.apifm.com/uploadByUrl', false, 'post', _data)
   },
-  galleryList: function galleryList(data) {
-    return request('/dfs/gallery', true, 'post', data);
+  uploadFileList: (path = '') => {
+    return request('/dfs/upload/list', true, 'post', { path })
   },
-  refundApply: function refundApply(data) {
-    return request('/order/refundApply/apply', true, 'post', data);
+  uploadFileListV2: data => {
+    return request('/dfs/upload/list/v2', true, 'post', data)
   },
-  refundApplyDetail: function refundApplyDetail(token, orderId) {
-    var orderGoodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  galleryList: data => {
+    return request('/dfs/gallery', true, 'post', data)
+  },
+  refundApply: (data) => {
+    return request('/order/refundApply/apply', true, 'post', data)
+  },
+  refundApplyDetail: (token, orderId, orderGoodsId = '') => {
     return request('/order/refundApply/info', true, 'get', {
-      token: token,
-      orderId: orderId,
-      orderGoodsId: orderGoodsId
-    });
+      token,
+      orderId,
+      orderGoodsId
+    })
   },
-  refundApplyCancel: function refundApplyCancel(token, orderId) {
-    var orderGoodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  refundApplyCancel: (token, orderId, orderGoodsId = '') => {
     return request('/order/refundApply/cancel', true, 'post', {
-      token: token,
-      orderId: orderId,
-      orderGoodsId: orderGoodsId
-    });
+      token,
+      orderId,
+      orderGoodsId
+    })
   },
-  cmsCategories: function cmsCategories() {
-    return request('/cms/category/list', true, 'get', {});
+  refundApplySetBackLogistics: (data) => {
+    return request('/order/refundApply/setBackLogistics', true, 'post', data)
   },
-  cmsCategoryDetail: function cmsCategoryDetail(id) {
-    return request('/cms/category/info', true, 'get', { id: id });
+  cmsCategories: () => {
+    return request(COMMON_BASE_URL + subDomain + '/cms/category/list', false, 'get', {})
   },
-  cmsArticles: function cmsArticles(data) {
-    return request('/cms/news/list', true, 'post', data);
+  cmsCategoryDetail: (id) => {
+    return request(COMMON_BASE_URL + subDomain + '/cms/category/info', false, 'get', { id })
   },
-  cmsArticlesV2: function cmsArticlesV2(data) {
-    return request('/cms/news/list/v2', true, 'post', data);
+  cmsArticles: (data) => {
+    return request('/cms/news/list', true, 'post', data)
   },
-  cmsArticlesV3: function cmsArticlesV3(data) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/list/v2', true, 'post', data);
+  cmsArticlesV2: (data) => {
+    return request('/cms/news/list/v2', true, 'post', data)
   },
-  cmsArticleUsefulLogs: function cmsArticleUsefulLogs(data) {
-    return request('/cms/news/useful/logs', true, 'post', data);
+  cmsArticlesV3: (data) => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/list/v2', true, 'post', data)
   },
-  cmsArticleDetail: function cmsArticleDetail(id) {
-    return request('/cms/news/detail', true, 'get', { id: id });
+  cmsArticleUsefulLogs: (data) => {
+    return request('/cms/news/useful/logs', true, 'post', data)
   },
-  cmsArticleDetailV2: function cmsArticleDetailV2(id) {
-    var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/cms/news/detail/v2', true, 'get', { id: id, token: token });
+  cmsArticleDetail: (id) => {
+    return request('/cms/news/detail', true, 'get', { id })
   },
-  cmsArticleDetailV3: function cmsArticleDetailV3(data) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/detail/v2', true, 'get', data);
+  cmsArticleDetailV2: (id, token = '') => {
+    return request('/cms/news/detail/v2', true, 'get', { id, token })
   },
-  cmsArticlePreNext: function cmsArticlePreNext(id) {
-    return request('/cms/news/preNext', true, 'get', { id: id });
+  cmsArticleDetailV3: data => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/detail/v2', true, 'get', data)
   },
-  cmsArticlePreNextV2: function cmsArticlePreNextV2(id) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/preNext', true, 'get', { id: id });
+  cmsArticlePreNext: (id) => {
+    return request('/cms/news/preNext', true, 'get', { id })
   },
-  cmsArticleCreate: function cmsArticleCreate(data) {
-    return request('/cms/news/put', true, 'post', data);
+  cmsArticlePreNextV2: (id) => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/preNext', true, 'get', { id })
   },
-  cmsArticleCreateV2: function cmsArticleCreateV2(data) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/put', true, 'post', data);
+  cmsArticleCreate: (data) => {
+    return request('/cms/news/put', true, 'post', data)
   },
-  cmsArticleDelete: function cmsArticleDelete(token, id) {
-    return request('/cms/news/del', true, 'post', { token: token, id: id });
+  cmsArticleCreateV2: (data) => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/put', true, 'post', data)
   },
-  cmsArticleDeleteV2: function cmsArticleDeleteV2(token, id) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/del', true, 'post', { token: token, id: id });
+  cmsArticleDelete: (token, id) => {
+    return request('/cms/news/del', true, 'post', { token, id })
   },
-  cmsArticleUseless: function cmsArticleUseless(data) {
-    return request('/cms/news/useful', true, 'post', data);
+  cmsArticleDeleteV2: (token, id) => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/del', true, 'post', { token, id })
   },
-  cmsArticleModifyExtNumber: function cmsArticleModifyExtNumber(data) {
-    return request('/cms/news/modifyExtNumber', true, 'post', data);
+  cmsArticleUseless: (data) => {
+    return request('/cms/news/useful', true, 'post', data)
   },
-  cmsArticleModifyExtNumberV2: function cmsArticleModifyExtNumberV2(data) {
-    return request('https://cms.apifm.com/' + merchantId + '/cms/news/modifyExtNumber', true, 'post', data);
+  cmsArticleModifyExtNumber: (data) => {
+    return request('/cms/news/modifyExtNumber', true, 'post', data)
   },
-  newsOwnerUserViewStatistics: function newsOwnerUserViewStatistics(data) {
-    return request('/newsOwnerUserViewStatistics/list', true, 'post', data);
+  cmsArticleModifyExtNumberV2: (data) => {
+    return request('https://cms.apifm.com/' + merchantId + '/cms/news/modifyExtNumber', true, 'post', data)
   },
-  cmsPage: function cmsPage(key) {
-    return request('/cms/page/info/v2', true, 'get', { key: key });
+  newsOwnerUserViewStatistics: (data) => {
+    return request('/newsOwnerUserViewStatistics/list', true, 'post', data)
   },
-  cmsTags: function cmsTags() {
-    return request('/cms/tags/list', true, 'get', {});
+  cmsPage: (key) => {
+    return request(COMMON_BASE_URL + subDomain + '/cms/page/info/v2', true, 'get', { key })
   },
-  cmsTagsV2: function cmsTagsV2(data) {
-    return request('https://cms.apifm.com/' + merchantId + '/newsTag/list', true, 'post', data);
+  cmsTags: () => {
+    return request('/cms/tags/list', true, 'get', {  })
   },
-  cmsNewsSignUsers: function cmsNewsSignUsers(data) {
-    return request('/newsSign/signUsers', true, 'post', data);
+  cmsTagsV2: data => {
+    return request('https://cms.apifm.com/' + merchantId + '/newsTag/list', true, 'post', data)
   },
-  cmsNewsSignOnline: function cmsNewsSignOnline(data) {
-    return request('/newsSign/signOnline', true, 'post', data);
+  cmsNewsSignUsers: (data) => {
+    return request('/newsSign/signUsers', true, 'post', data)
   },
-  cmsNewsSignOffline: function cmsNewsSignOffline(data) {
-    return request('/newsSign/signOffline', true, 'post', data);
+  cmsNewsSignOnline: (data) => {
+    return request('/newsSign/signOnline', true, 'post', data)
   },
-  cmsNewsSignCheck: function cmsNewsSignCheck(token, newsId) {
-    return request('/newsSign/check', true, 'get', { token: token, newsId: newsId });
+  cmsNewsSignOffline: (data) => {
+    return request('/newsSign/signOffline', true, 'post', data)
   },
-  invoiceList: function invoiceList(data) {
-    return request('/invoice/list', true, 'post', data);
+  cmsNewsSignCheck: (token, newsId) => {
+    return request('/newsSign/check', true, 'get', { token, newsId })
   },
-  invoiceApply: function invoiceApply(data) {
-    return request('/invoice/apply', true, 'post', data);
+  invoiceList: (data) => {
+    return request('/invoice/list', true, 'post', data)
   },
-  invoiceDetail: function invoiceDetail(token, id) {
-    return request('/invoice/info', true, 'get', { token: token, id: id });
+  invoiceApply: (data) => {
+    return request('/invoice/apply', true, 'post', data)
   },
-  depositList: function depositList(data) {
-    return request('/deposit/list', true, 'post', data);
+  invoiceDetail: (token, id) => {
+    return request('/invoice/info', true, 'get', { token, id })
   },
-  payDeposit: function payDeposit(data) {
-    return request('/deposit/pay', true, 'post', data);
+  depositList: (data) => {
+    return request('/deposit/list', true, 'post', data)
   },
-  depositInfo: function depositInfo(token, id) {
-    return request('/deposit/info', true, 'get', { token: token, id: id });
+  payDeposit: (data) => {
+    return request('/deposit/pay', true, 'post', data)
   },
-  depositBackApply: function depositBackApply(token, id) {
-    return request('/deposit/back/apply', true, 'post', { token: token, id: id });
+  depositInfo: (token, id) => {
+    return request('/deposit/info', true, 'get', { token, id })
   },
-  shopAreaCities: function shopAreaCities() {
-    return request('/shopArea/cities', true, 'get');
+  depositBackApply: (token, id) => {
+    return request('/deposit/back/apply', true, 'post', { token, id })
   },
-  shopAreaList: function shopAreaList(data) {
-    return request('/shopArea/list', true, 'post', data);
+  depositListV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/deposit/list', false, 'post', data)
   },
-  shopAreaDetail: function shopAreaDetail(id) {
-    return request('/shopArea/detail', true, 'get', { id: id });
+  payDepositV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/deposit/pay', false, 'post', data)
   },
-  fetchShopsCities: function fetchShopsCities() {
-    return request('/shop/subshop/cities', true, 'get');
+  payStatusDepositV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/deposit/payStatus', false, 'post', data)
   },
-  fetchShops: function fetchShops(data) {
-    return request('/shop/subshop/list', true, 'post', data);
+  depositInfoV2: (token, id) => {
+    return request(COMMON_BASE_URL + subDomain + '/deposit/info', false, 'get', { token, id })
   },
-  fetchMyShops: function fetchMyShops(token) {
-    return request('/shop/subshop/my', true, 'get', { token: token });
+  depositBackApplyV2: (token, id) => {
+    return request(COMMON_BASE_URL + subDomain + '/deposit/back/apply', false, 'post', { token, id })
   },
-  shopSubdetail: function shopSubdetail(id) {
-    return request('/shop/subshop/detail/v2', true, 'get', { id: id });
+  shopAreaCities: () => {
+    return request('/shopArea/cities', true, 'get')
   },
-  shopSubApply: function shopSubApply(data) {
-    return request('/shop/subshop/apply', true, 'post', data);
+  shopAreaList: (data) => {
+    return request('/shopArea/list', true, 'post', data)
   },
-  pickPoints: function pickPoints(data) {
-    return request('/shop/subshop/pickPoints', true, 'post', data);
+  shopAreaDetail: (id) => {
+    return request('/shopArea/detail', true, 'get', { id })
   },
-  shopReputationList: function shopReputationList(data) {
-    return request('/shop/subshop/listReputation', true, 'post', data);
+  fetchShopsCities: () => {
+    return request('/shop/subshop/cities', true, 'get')
   },
-  shopPicList: function shopPicList(data) {
-    return request('/shop/subshop/shopPics', true, 'post', data);
+  fetchShops: (data) => {
+    return request('/shop/subshop/list', true, 'post', data)
   },
-  shopFavPut: function shopFavPut(token, shopId) {
-    return request('/shop/fav/add', true, 'post', { token: token, shopId: shopId });
+  fetchShopsV2: (data) => {
+    return request('/shop/subshop/list/v2', true, 'post', data)
   },
-  shopFavCheck: function shopFavCheck(token, shopId) {
-    return request('/shop/fav/check', true, 'get', { token: token, shopId: shopId });
+  fetchMyShops: (token) => {
+    return request('/shop/subshop/my', true, 'get', { token })
   },
-  shopFavList: function shopFavList(data) {
-    return request('/shop/fav/list', true, 'post', data);
+  shopSubdetail: (id) => {
+    return request('/shop/subshop/detail/v2', true, 'get', { id })
   },
-  shopFavDelete: function shopFavDelete(token, shopId) {
-    return request('/shop/fav/delete', true, 'post', { token: token, shopId: shopId });
+  shopSubApply: (data) => {
+    return request('/shop/subshop/apply', true, 'post', data)
   },
-  userAttendantFavPut: function userAttendantFavPut(token, attendantId) {
-    return request('/userAttendantFav/add', true, 'post', { token: token, attendantId: attendantId });
+  pickPoints: (data) => {
+    return request('/shop/subshop/pickPoints', true, 'post', data)
   },
-  userAttendantFavCheck: function userAttendantFavCheck(token, attendantId) {
-    return request('/userAttendantFav/check', true, 'get', { token: token, attendantId: attendantId });
+  shopReputationList: (data) => {
+    return request('/shop/subshop/listReputation', true, 'post', data)
   },
-  userAttendantFavList: function userAttendantFavList(data) {
-    return request('/userAttendantFav/list', true, 'post', data);
+  shopPicList: (data) => {
+    return request('/shop/subshop/shopPics', true, 'post', data)
   },
-  userAttendantFavDelete: function userAttendantFavDelete(token, attendantId) {
-    return request('/userAttendantFav/delete', true, 'post', { token: token, attendantId: attendantId });
+  shopFavPut: (token, shopId) => {
+    return request('/shop/fav/add', true, 'post', { token, shopId })
   },
-  addComment: function addComment(data) {
-    return request('/comment/add', true, 'post', data);
+  shopFavCheck: (token, shopId) => {
+    return request('/shop/fav/check', true, 'get', { token, shopId })
   },
-  commentList: function commentList(data) {
-    return request('/comment/list', true, 'post', data);
+  shopFavList: (data) => {
+    return request('/shop/fav/list', true, 'post', data)
   },
-  commentListV2: function commentListV2(data) {
-    return request('/comment/list/v2', true, 'post', data);
+  shopFavDelete: (token, shopId) => {
+    return request('/shop/fav/delete', true, 'post', { token, shopId })
   },
-  delComment: function delComment(data) {
-    return request('/comment/del', true, 'post', data);
+  userAttendantFavPut: (token, attendantId) => {
+    return request('/userAttendantFav/add', true, 'post', { token, attendantId })
   },
-  modifyUserInfo: function modifyUserInfo(data) {
-    return request('/user/modify', true, 'post', data);
+  userAttendantFavCheck: (token, attendantId) => {
+    return request('/userAttendantFav/check', true, 'get', { token, attendantId })
+  },
+  userAttendantFavList: (data) => {
+    return request('/userAttendantFav/list', true, 'post', data)
+  },
+  userAttendantFavDelete: (token, attendantId) => {
+    return request('/userAttendantFav/delete', true, 'post', { token, attendantId })
+  },
+  addComment: (data) => {
+    return request('/comment/add', true, 'post', data)
+  },
+  commentList: (data) => {
+    return request('/comment/list', true, 'post', data)
+  },
+  commentListV2: (data) => {
+    return request('/comment/list/v2', true, 'post', data)
+  },
+  delComment: (data) => {
+    return request('/comment/del', true, 'post', data)
+  },
+  modifyUserInfo: (data) => {
+    return request('/user/modify', true, 'post', data)
   },
   modifyUserInfoV2: (data) => {
-    return request('https://common.apifm.com/' + subDomain + '/user/modify', false, 'post', data)
+    return request(COMMON_BASE_URL + subDomain + '/user/modify', false, 'post', data)
   },
-  bindSaleman: function bindSaleman(data) {
-    return request('/user/bindSaleman', true, 'post', data);
+  bindSaleman: data => {
+    return request('/user/bindSaleman', true, 'post', data)
   },
-  modifyUserPassword: function modifyUserPassword(token, pwdOld, pwdNew) {
-    return request('/user/modify/password', true, 'post', { token: token, pwdOld: pwdOld, pwdNew: pwdNew });
+  modifyUserPassword: (token, pwdOld, pwdNew) => {
+    return request('/user/modify/password', true, 'post', { token, pwdOld, pwdNew })
   },
-  modifyUserPasswordByUserName: function modifyUserPasswordByUserName(data) {
-    return request('/user/username/modifyPassword', true, 'post', data);
+  modifyUserPasswordByUserName: (data) => {
+    return request('/user/username/modifyPassword', true, 'post', data)
   },
-  anonymousUserInfo: function anonymousUserInfo(id) {
-    return request('/user/anonymous/info', true, 'get', { id: id });
+  anonymousUserInfo: (id) => {
+    return request('/user/anonymous/info', true, 'get', { id })
   },
-  uniqueId: function uniqueId() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/uniqueId/get', true, 'get', { type: type });
+  uniqueId: (type = '') => {
+    return request('/uniqueId/get', true, 'get', { type })
   },
-  queryBarcode: function queryBarcode() {
-    var barcode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/barcode/info', true, 'get', { barcode: barcode });
+  sequence: (type = '', defValue = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/uniqueId/sequence', false, 'get', { type, defValue })
   },
-  luckyInfo: function luckyInfo(id) {
-    return request('/luckyInfo/info/v2', true, 'get', { id: id });
+  queryBarcode: (barcode = '') => {
+    return request('/barcode/info', true, 'get', { barcode })
   },
-  luckyInfoJoin: function luckyInfoJoin(id, token) {
-    return request('/luckyInfo/join', true, 'post', { id: id, token: token });
+  luckyInfo: (id) => {
+    return request('/luckyInfo/info/v2', true, 'get', { id })
   },
-  luckyInfoJoinMy: function luckyInfoJoinMy(id, token) {
-    return request('/luckyInfo/join/my', true, 'get', { id: id, token: token });
+  luckyInfoJoin: (id, token) => {
+    return request('/luckyInfo/join', true, 'post', { id, token })
   },
-  luckyInfoJoinLogs: function luckyInfoJoinLogs(data) {
-    return request('/luckyInfo/join/logs', true, 'post', data);
+  luckyInfoJoinMy: (id, token) => {
+    return request('/luckyInfo/join/my', true, 'get', { id, token })
   },
-  jsonList: function jsonList(data) {
-    return request('/json/list', true, 'post', data);
+  luckyInfoJoinLogs: (data) => {
+    return request('/luckyInfo/join/logs', true, 'post', data)
   },
-  jsonListV2: function jsonListV2(data) {
-    return request('/json/list/v2', true, 'post', data);
+  jsonList: (data) => {
+    return request('/json/list', true, 'post', data)
   },
-  jsonSet: function jsonSet(data) {
-    return request('/json/set', true, 'post', data);
+  jsonListV2: (data) => {
+    return request('/json/list/v2', true, 'post', data)
   },
-  jsonDelete: function jsonDelete(token, id) {
-    return request('/json/delete', true, 'post', { token: token, id: id });
+  jsonSet: (data) => {
+    return request('/json/set', true, 'post', data)
   },
-  jsonTop: function jsonTop(token, id, isTop) {
-    return request('/json/top', true, 'post', { token: token, id: id, isTop: isTop });
+  jsonDelete: (token, id) => {
+    return request('/json/delete', true, 'post', { token, id })
   },
-  jsonHighlight: function jsonHighlight(token, id, isHighlight) {
-    return request('/json/highlight', true, 'post', { token: token, id: id, isHighlight: isHighlight });
+  jsonTop: (token, id, isTop) => {
+    return request('/json/top', true, 'post', { token, id, isTop })
   },
-  graphValidateCodeUrl: function graphValidateCodeUrl() {
-    var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Math.random();
-
-    var _url = API_BASE_URL + '/' + subDomain + '/verification/pic/get?key=' + key;
-    return _url;
+  jsonHighlight: (token, id, isHighlight) => {
+    return request('/json/highlight', true, 'post', { token, id, isHighlight })
   },
-  graphValidateCodeCheck: function graphValidateCodeCheck() {
-    var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Math.random();
-    var code = arguments[1];
-
-    return request('/verification/pic/check', true, 'post', { key: key, code: code });
+  jsonListV3: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/json/list', true, 'post', data)
   },
-  shortUrl: function shortUrl() {
-    var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/common/short-url/shorten', false, 'post', { url: url });
+  jsonSetV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/json/set', true, 'post', data)
   },
-  shortUrlV2: function shortUrlV2(content) {
-    return request('/common/short-url/shorten/v2', false, 'post', { content: content });
+  jsonDeleteV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/json/delete', true, 'post', data)
   },
-  shortUrlExpand: function shortUrlExpand(suffix) {
-    return request('/common/short-url/expand', false, 'post', { suffix: suffix });
+  jsonTopv2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/json/top', true, 'post', data)
   },
-  smsValidateCode: function smsValidateCode(mobile) {
-    var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var picCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/verification/sms/get', true, 'get', { mobile: mobile, key: key, picCode: picCode });
+  jsonHighlightv2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/json/highlight', true, 'post', data)
   },
-  smsValidateCodeByToken: function smsValidateCodeByToken(token) {
-    return request('/verification/sms/get-by-token', true, 'get', { token: token });
+  graphValidateCodeUrl: (key = Math.random()) => {
+    const _url = API_BASE_URL + '/' + subDomain + '/verification/pic/get?key=' + key
+    return _url
   },
-  smsValidateCodeCheck: function smsValidateCodeCheck(mobile, code) {
-    return request('/verification/sms/check', true, 'post', { mobile: mobile, code: code });
+  graphValidateCodeCheck: (key = Math.random(), code) => {
+    return request('/verification/pic/check', true, 'post', { key, code })
   },
-  mailValidateCode: function mailValidateCode(mail) {
-    return request('/verification/mail/get', true, 'get', { mail: mail });
+  shortUrl: (url = '') => {
+    return request('/common/short-url/shorten', false, 'post', { url })
   },
-  mailValidateCodeCheck: function mailValidateCodeCheck(mail, code) {
-    return request('/verification/mail/check', true, 'post', { mail: mail, code: code });
+  shortUrlV2: (content) => {
+    return request('/common/short-url/shorten/v2', false, 'post', { content })
   },
-  mapDistance: function mapDistance(lat1, lng1, lat2, lng2) {
-    return request('/common/map/distance', false, 'get', { lat1: lat1, lng1: lng1, lat2: lat2, lng2: lng2 });
+  shortUrlExpand: (suffix) => {
+    return request('/common/short-url/expand', false, 'post', { suffix })
   },
-  mapDistanceNavigation: function mapDistanceNavigation(key, mode, from, to) {
-    return request('/common/map/qq/distance', false, 'post', { key: key, mode: mode, from: from, to: to });
+  smsValidateCode: (mobile, key = '', picCode = '') => {
+    return request('/verification/sms/get', true, 'get', { mobile, key, picCode })
   },
-  mapQQAddress: function mapQQAddress() {
-    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var coord_type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '5';
-
-    return request('/common/map/qq/address', false, 'get', { location: location, coord_type: coord_type });
+  smsValidateCodeByToken: (token) => {
+    return request('/verification/sms/get-by-token', true, 'get', { token })
   },
-  mapQQAddressV2: function mapQQAddressV2(key, location) {
-    var coord_type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '5';
-
-    return request('/common/map/qq/address', false, 'get', { key: key, location: location, coord_type: coord_type });
+  smsValidateCodeCheck: (mobile, code) => {
+    return request('/verification/sms/check', true, 'post', { mobile, code })
   },
-  mapQQSearch: function mapQQSearch(data) {
-    return request('/common/map/qq/search', false, 'post', data);
+  mailValidateCode: (mail) => {
+    return request('/verification/mail/get', true, 'get', { mail })
   },
-  virtualTraderList: function virtualTraderList(data) {
-    return request('/virtualTrader/list', true, 'post', data);
+  mailValidateCodeCheck: (mail, code) => {
+    return request('/verification/mail/check', true, 'post', { mail, code })
   },
-  virtualTraderDetail: function virtualTraderDetail(token, id) {
-    return request('/virtualTrader/info', true, 'get', { token: token, id: id });
+  mapDistance: (lat1, lng1, lat2, lng2) => {
+    return request('/common/map/distance', false, 'get', { lat1, lng1, lat2, lng2 })
   },
-  virtualTraderBuy: function virtualTraderBuy(token, id) {
-    return request('/virtualTrader/buy', true, 'post', { token: token, id: id });
+  mapDistanceNavigation: (key, mode, from, to) => {
+    return request('/common/map/qq/distance', false, 'post', { key, mode, from, to })
   },
-  virtualTraderMyBuyLogs: function virtualTraderMyBuyLogs(data) {
-    return request('/virtualTrader/buy/logs', true, 'post', data);
+  mapQQAddress: (location = '', coord_type = '5') => {
+    return request('/common/map/qq/address', false, 'get', { location, coord_type })
   },
-  queuingTypes: function queuingTypes() {
-    var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/queuing/types', true, 'get', { status: status });
+  mapQQAddressV2: (key, location, coord_type = '5') => {
+    return request('/common/map/qq/address', false, 'get', { key, location, coord_type })
   },
-  queuingGet: function queuingGet(token, typeId) {
-    var mobile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/queuing/get', true, 'post', { token: token, typeId: typeId, mobile: mobile });
+  mapQQSearch: (data) => {
+    return request('/common/map/qq/search', false, 'post', data)
   },
-  queuingMy: function queuingMy(token) {
-    var typeId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var status = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/queuing/my', true, 'get', { token: token, typeId: typeId, status: status });
+  mapQQSearchV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/qq/search', false, 'post', data)
   },
-  idcardCheck: function idcardCheck(token, name, idCardNo) {
-    return request('/user/idcard', true, 'post', { token: token, name: name, idCardNo: idCardNo });
+  mapDistanceNavigationV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/qq/distance', false, 'post', data)
   },
-  idcardCheckManualReview: function idcardCheckManualReview(data) {
-    return request('/user/idcard/manualReview', true, 'post', data);
+  mapQQAddressV3: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/qq/address', false, 'post', data)
   },
-  idcardCheckManualReviewInfo: function idcardCheckManualReviewInfo(token) {
-    return request('/user/idcard/manualReview/info', true, 'get', { token: token });
+  mapGeocoder: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/geocoder', false, 'post', data)
   },
-  bindSeller: function bindSeller(data) {
-    return request('/user/bindSeller', true, 'post', data);
+  mapDrive: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/drive', false, 'post', data)
   },
-  loginout: function loginout(token) {
-    return request('/user/loginout', true, 'get', { token: token });
+  mapAddressToGps: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/map/addressToGps', false, 'post', data)
   },
-  userLogedList: function userLogedList(token) {
-    return request('/user/logedUserList', true, 'get', { token: token });
+  virtualTraderList: (data) => {
+    return request('/virtualTrader/list', true, 'post', data)
   },
-  userDelete: function userDelete(token) {
-    return request('/user/delete', true, 'post', { token: token });
+  virtualTraderDetail: (token, id) => {
+    return request('/virtualTrader/info', true, 'get', { token, id })
   },
-  dynamicUserCode: function dynamicUserCode(token) {
-    return request('/user/dynamicUserCode', true, 'get', { token: token });
+  virtualTraderBuy: (token, id) => {
+    return request('/virtualTrader/buy', true, 'post', { token, id })
   },
-  userLevelList: function userLevelList(data) {
-    return request('/user/level/list', true, 'post', data);
+  virtualTraderMyBuyLogs: (data) => {
+    return request('/virtualTrader/buy/logs', true, 'post', data)
   },
-  userLevelDetail: function userLevelDetail(levelId) {
-    return request('/user/level/info', true, 'get', { id: levelId });
+  virtualTraderListV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/virtualTrader/list', false, 'post', data)
   },
-  userLevelPrices: function userLevelPrices(levelId) {
-    return request('/user/level/prices', true, 'get', { levelId: levelId });
+  virtualTraderDetailV2: (token, id) => {
+    return request(COMMON_BASE_URL + subDomain + '/virtualTrader/info', false, 'get', { token, id })
   },
-  userLevelBuy: function userLevelBuy(token, priceId) {
-    var isAutoRenew = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    var remark = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  virtualTraderBuyV2: (token, id) => {
+    return request(COMMON_BASE_URL + subDomain + '/virtualTrader/buy', false, 'post', { token, id })
+  },
+  virtualTraderMyBuyLogsV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/virtualTrader/buy/logs', false, 'post', data)
+  },
+  queuingTypes: (status = '') => {
+    return request('/queuing/types', true, 'get', { status })
+  },
+  queuingGet: (token, typeId, mobile = '') => {
+    return request('/queuing/get', true, 'post', { token, typeId, mobile })
+  },
+  queuingMy: (token, typeId = '', status = '') => {
+    return request('/queuing/my', true, 'get', { token, typeId, status })
+  },
+  idcardCheck: (token, name, idCardNo) => {
+    return request('/user/idcard', true, 'post', { token, name, idCardNo })
+  },
+  idcardCheckManualReview: (data) => {
+    return request('/user/idcard/manualReview', true, 'post', data)
+  },
+  idcardCheckManualReviewInfo: (token) => {
+    return request('/user/idcard/manualReview/info', true, 'get', { token })
+  },
+  userTagList: (data) => {
+    return request('/userTag/list', true, 'post', data)
+  },
+  userTagCertificateQuery: (token) => {
+    return request('/userTag/certificate/query', true, 'get', { token })
+  },
+  userTagCertificate: (data) => {
+    return request('/userTag/certificate', true, 'post', data)
+  },
+  bindSeller: data => {
+    return request('/user/bindSeller', true, 'post', data)
+  },
+  loginout: (token) => {
+    return request('/user/loginout', true, 'get', { token })
+  },
+  userLogedList: (token) => {
+    return request('/user/logedUserList', true, 'get', { token })
+  },
+  userDelete: (token) => {
+    return request('/user/delete', true, 'post', { token })
+  },
+  dynamicUserCode: (token) => {
+    return request(COMMON_BASE_URL + subDomain + '/user/dynamicUserCode', false, 'get', { token })
+  },
+  userLevelList: (data) => {
+    return request('/user/level/list', true, 'post', data)
+  },
+  userLevelDetail: (levelId) => {
+    return request('/user/level/info', true, 'get', { id: levelId })
+  },
+  userLevelPrices: (levelId) => {
+    return request('/user/level/prices', true, 'get', { levelId })
+  },
+  userLevelBuy: (token, priceId, isAutoRenew = false, remark = '') => {
     return request('/user/level/buy', true, 'post', {
-      token: token,
+      token,
       userLevelPriceId: priceId,
-      isAutoRenew: isAutoRenew,
-      remark: remark
-    });
+      isAutoRenew,
+      remark
+    })
   },
-  userLevelBuyLogs: function userLevelBuyLogs(data) {
-    return request('/user/level/buyLogs', true, 'post', data);
+  userLevelBuyLogs: (data) => {
+    return request('/user/level/buyLogs', true, 'post', data)
   },
-  messageList: function messageList(data) {
-    return request('/user/message/list', true, 'post', data);
+  messageList: (data) => {
+    return request('/user/message/list', true, 'post', data)
   },
-  messageRead: function messageRead(token, id) {
-    return request('/user/message/read', true, 'post', { token: token, id: id });
+  messageRead: (token, id) => {
+    return request('/user/message/read', true, 'post', { token, id })
   },
-  messageDelete: function messageDelete(token, id) {
-    return request('/user/message/del', true, 'post', { token: token, id: id });
+  messageDelete: (token, id) => {
+    return request('/user/message/del', true, 'post', { token, id })
   },
-  bindOpenid: function bindOpenid(token, code) {
-    // SDK文档到这里
+  bindOpenid: (token, code) => { // SDK文档到这里
     return request('/user/wxapp/bindOpenid', true, 'post', {
-      token: token, code: code,
+      token, code,
       type: 2
-    });
+    })
   },
-  bindOpenidV2: function bindOpenidV2(token, code, appid) {
+  bindOpenidV2: (token, code, appid) => {
     return request('/user/wxapp/bindOpenid/v2', true, 'post', {
-      token: token, code: code, appid: appid
-    });
+      token, code, appid
+    })
   },
-  bindOpenidV11: function bindOpenidV11(data) {
-    return request('/user/wxapp/bindOpenid', true, 'post', data);
+  bindOpenidV11: data => {
+    return request('/user/wxapp/bindOpenid', true, 'post', data)
   },
-  encryptedData: function encryptedData(code, _encryptedData, iv) {
+  encryptedData: (code, encryptedData, iv) => {
     return request('/user/wxapp/decode/encryptedData', true, 'post', {
-      code: code, encryptedData: _encryptedData, iv: iv
-    });
+      code, encryptedData, iv
+    })
   },
-  voteItems: function voteItems(data) {
-    return request('/vote/items', true, 'post', data);
+  voteItems: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/items', false, 'post', data)
   },
-  voteItemDetail: function voteItemDetail(id) {
-    return request('/vote/info', true, 'get', { id: id });
+  voteItemDetail: (id) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/info', false, 'get', { id })
   },
-  vote: function vote(token, voteId, items, remark) {
-    return request('/vote/vote', true, 'post', {
-      token: token, voteId: voteId,
+  vote: (token, voteId, items, remark) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote', false, 'post', {
+      token, voteId,
       items: items.join(),
-      remark: remark
-    });
+      remark
+    })
   },
-  voteCategory: function voteCategory(data) {
-    return request('/vote/vote/category', true, 'post', data);
+  voteCategory: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/category', false, 'post', data)
   },
-  myVote: function myVote(token, voteId) {
-    return request('/vote/vote/info', true, 'get', {
-      token: token, voteId: voteId
-    });
+  myVote: (token, voteId) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/info', false, 'get', {
+      token, voteId,
+    })
   },
-  myVoteV2: function myVoteV2(token, voteId) {
-    return request('/vote/vote/info/v2', true, 'get', {
-      token: token, voteId: voteId
-    });
+  myVoteV2: (token, voteId) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/info/v2', false, 'get', {
+      token, voteId,
+    })
   },
-  voteLogs: function voteLogs(data) {
-    return request('/vote/vote/list', true, 'post', data);
+  voteLogs: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/list', false, 'post', data)
   },
-  voteGroups: function voteGroups(data) {
-    return request('/vote/vote/groups', true, 'post', data);
+  voteGroups: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/groups', false, 'post', data)
   },
-  voteGroupsDetail: function voteGroupsDetail(data) {
-    return request('/vote/vote/groups/detail', true, 'get', data);
+  voteGroupsDetail: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/vote/groups/detail', false, 'get', data)
   },
-  myInviteVoteJoinList: function myInviteVoteJoinList(data) {
-    return request('/vote/myInviteLoinList', true, 'post', data);
+  myInviteVoteJoinList: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/vote/myInviteLoinList', false, 'post', data)
   },
-  yuyueItemPublish: function yuyueItemPublish(data) {
-    return request('/yuyue/publish', true, 'post', data);
+  yuyueItemPublish: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/publish', false, 'post', data)
   },
-  yuyueItems: function yuyueItems(data) {
-    return request('/yuyue/items', true, 'post', data);
+  yuyueItems: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/items', false, 'post', data)
   },
-  yuyueItemDetail: function yuyueItemDetail(id) {
-    var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/yuyue/info', true, 'get', { id: id, token: token });
+  yuyueItemDetail: (id, token = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/info', false, 'get', { id, token })
   },
-  yuyueItemDelete: function yuyueItemDelete(token, id) {
-    return request('/yuyue/del', true, 'post', { token: token, id: id });
+  yuyueItemDelete: (token, id) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/del', false, 'post', { token, id })
   },
-  yuyueJoin: function yuyueJoin(data) {
-    return request('/yuyue/join', true, 'post', data);
+  yuyueJoin: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/join', false, 'post', data)
   },
-  yuyueJoinPay: function yuyueJoinPay(token, joinId) {
-    return request('/yuyue/pay', true, 'post', {
-      token: token, joinId: joinId
-    });
+  yuyueJoinPay: (token, joinId) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/pay', false, 'post', {
+      token, joinId
+    })
   },
-  yuyueJoinUpdate: function yuyueJoinUpdate(token, joinId, extJsonStr) {
-    return request('/yuyue/join/update', true, 'post', {
-      token: token, joinId: joinId, extJsonStr: extJsonStr
-    });
+  yuyueJoinUpdate: (token, joinId, extJsonStr) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/join/update', false, 'post', {
+      token, joinId, extJsonStr
+    })
   },
-  yuyueJoinDelete: function yuyueJoinDelete(token, joinId) {
-    return request('/yuyue/delJoin', true, 'post', {
-      token: token, id: joinId
-    });
+  yuyueLike: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/like', false, 'post', data)
   },
-  yuyueMyJoinInfo: function yuyueMyJoinInfo(token, joinId) {
-    return request('/yuyue/join/info', true, 'post', {
-      token: token, joinId: joinId
-    });
+  yuyueJoinDelete: (token, joinId) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/delJoin', false, 'post', {
+      token, id: joinId
+    })
   },
-  yuyueMyJoinLogs: function yuyueMyJoinLogs(data) {
-    return request('/yuyue/join/list', true, 'post', data);
+  yuyueServered: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/servered', false, 'post', data)
   },
-  yuyueTeams: function yuyueTeams(data) {
-    return request('/yuyue/info/teams', true, 'post', data);
+  yuyueMyJoinInfo: (token, joinId) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/join/info', false, 'post', {
+      token, joinId
+    })
   },
-  yuyueTeamDetail: function yuyueTeamDetail(teamId) {
-    return request('/yuyue/info/team', true, 'get', { teamId: teamId });
+  yuyueMyJoinLogs: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/join/list', false, 'post', data)
   },
-  yuyueTeamMembers: function yuyueTeamMembers(data) {
-    return request('/yuyue/info/team/members', true, 'post', data);
+  yuyueTeams: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/info/teams', false, 'post', data)
   },
-  yuyueTeamDeleteMember: function yuyueTeamDeleteMember(token, joinId) {
-    return request('/yuyue/info/team/members/del', true, 'post', data);
+  yuyueTeamDetail: (teamId) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/info/team', false, 'get', { teamId })
   },
-  register_email: function register_email(data) {
-    return request('/user/email/register', true, 'post', data);
+  yuyueTeamMembers: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/info/team/members', false, 'post', data)
   },
-  login_email: function login_email(data) {
-    return request('/user/email/login', true, 'post', data);
+  yuyueTeamDeleteMember: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/info/team/members/del', false, 'post', data)
   },
-  bindEmail: function bindEmail(token, email, code) {
-    var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  yuyueFavList: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/fav/list', false, 'post', data)
+  },
+  yuyueFavAdd: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/fav/add', false, 'post', data)
+  },
+  yuyueFavDelete: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/fav/delete', false, 'post', data)
+  },
+  yuyueFavCheck: data => {
+    return request(COMMON_BASE_URL + subDomain + '/yuyue/fav/check', false, 'get', data)
+  },
+  register_email: (data) => {
+    return request('/user/email/register', true, 'post', data)
+  },
+  login_email: (data) => {
+    return request('/user/email/login', true, 'post', data)
+  },
+  bindEmail: (token, email, code, pwd = '') => {
     return request('/user/email/bindEmail', true, 'post', {
-      token: token, email: email, code: code, pwd: pwd
-    });
+      token, email, code, pwd
+    })
+  },  
+  goodsDynamic: (type) => {
+    return request('/site/goods/dynamic', true, 'get', { type })
   },
-  goodsDynamic: function goodsDynamic(type) {
-    return request('/site/goods/dynamic', true, 'get', { type: type });
+  goodsDynamicV2: data => {
+    return request('/site/goods/dynamic', true, 'get', data)
   },
-  goodsDynamicV2: function goodsDynamicV2(data) {
-    return request('/site/goods/dynamic', true, 'get', data);
+  usersDynamic: (type) => {
+    return request(COMMON_BASE_URL + subDomain + '/site/user/dynamic', false, 'get', { type })
   },
-  usersDynamic: function usersDynamic(type) {
-    return request('/site/user/dynamic', true, 'get', { type: type });
+  fetchSubDomainByWxappAppid: (appid) => {
+    return request('/subdomain/appid/wxapp', false, 'get', { appid })
   },
-  fetchSubDomainByWxappAppid: function fetchSubDomainByWxappAppid(appid) {
-    return request('/subdomain/appid/wxapp', false, 'get', { appid: appid });
+  cmsArticleFavPut: (token, newsId) => {
+    return request('/cms/news/fav/add', true, 'post', { token, newsId })
   },
-  cmsArticleFavPut: function cmsArticleFavPut(token, newsId) {
-    return request('/cms/news/fav/add', true, 'post', { token: token, newsId: newsId });
+  cmsArticleFavCheck: (token, newsId) => {
+    return request('/cms/news/fav/check', true, 'get', { token, newsId })
   },
-  cmsArticleFavCheck: function cmsArticleFavCheck(token, newsId) {
-    return request('/cms/news/fav/check', true, 'get', { token: token, newsId: newsId });
+  cmsArticleFavList: (data) => {
+    return request('/cms/news/fav/list', true, 'post', data)
   },
-  cmsArticleFavList: function cmsArticleFavList(data) {
-    return request('/cms/news/fav/list', true, 'post', data);
+  cmsArticleFavListV2: (data) => {
+    return request('/cms/news/fav/list/v2', true, 'post', data)
   },
-  cmsArticleFavListV2: function cmsArticleFavListV2(data) {
-    return request('/cms/news/fav/list/v2', true, 'post', data);
+  cmsArticleFavDeleteById: (token, id) => {
+    return request('/cms/news/fav/delete', true, 'post', { token, id })
   },
-  cmsArticleFavDeleteById: function cmsArticleFavDeleteById(token, id) {
-    return request('/cms/news/fav/delete', true, 'post', { token: token, id: id });
+  cmsArticleFavDeleteByNewsId: (token, newsId) => {
+    return request('/cms/news/fav/delete', true, 'post', { token, newsId })
   },
-  cmsArticleFavDeleteByNewsId: function cmsArticleFavDeleteByNewsId(token, newsId) {
-    return request('/cms/news/fav/delete', true, 'post', { token: token, newsId: newsId });
-  },
-  shippingCarInfo: function shippingCarInfo(token) {
-    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  shippingCarInfo: (token, type = '') => {
     return request('/shopping-cart/info', true, 'get', {
-      token: token, type: type
-    });
+      token, type
+    })
   },
-  shippingCarInfoAddItem: function shippingCarInfoAddItem(token, goodsId, number, sku, addition) {
-    var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '';
-
+  shippingCarInfoAddItem: (token, goodsId, number, sku, addition, type = '') => {
     return request('/shopping-cart/add', true, 'post', {
-      token: token,
-      goodsId: goodsId,
-      number: number,
+      token,
+      goodsId,
+      number,
       sku: sku && sku.length > 0 ? JSON.stringify(sku) : '',
       addition: addition && addition.length > 0 ? JSON.stringify(addition) : '',
-      type: type
-    });
+      type
+    })
   },
-  shippingCarInfoAddItemV2: function shippingCarInfoAddItemV2(data) {
-    return request('/shopping-cart/add', true, 'post', data);
+  shippingCarInfoAddItemV2: data => {
+    return request('/shopping-cart/add', true, 'post', data)
   },
-  shippingCarInfoModifyNumber: function shippingCarInfoModifyNumber(token, key, number) {
-    var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  shippingCarInfoModifyNumber: (token, key, number, type = '') => {
     return request('/shopping-cart/modifyNumber', true, 'post', {
-      token: token, key: key, number: number, type: type
-    });
+      token, key, number, type
+    })
   },
-  shippingCarInfoRemoveItem: function shippingCarInfoRemoveItem(token, key) {
-    var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
+  shippingCarInfoRemoveItem: (token, key, type = '') => {
     return request('/shopping-cart/remove', true, 'post', {
-      token: token, key: key, type: type
-    });
+      token, key, type
+    })
   },
-  shippingCartSelected: function shippingCartSelected(token, key, selected) {
-    var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
+  shippingCartSelected: (token, key, selected, type = '') => {
     return request('/shopping-cart/select', true, 'post', {
-      token: token, key: key, selected: selected, type: type
-    });
+      token, key, selected, type
+    })
   },
-  shippingCarInfoRemoveAll: function shippingCarInfoRemoveAll(token) {
-    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  shippingCarInfoRemoveAll: (token, type = '') => {
     return request('/shopping-cart/empty', true, 'post', {
-      token: token, type: type
-    });
+      token, type
+    })
   },
-  growthLogs: function growthLogs(data) {
-    return request('/growth/logs', true, 'post', data);
+  growthLogs: (data) => {
+    return request('/growth/logs', true, 'post', data)
   },
-  exchangeScoreToGrowth: function exchangeScoreToGrowth(token, deductionScore) {
+  exchangeScoreToGrowth: (token, deductionScore) => {
     return request('/growth/exchange', true, 'post', {
-      token: token, deductionScore: deductionScore
-    });
+      token, deductionScore
+    })
   },
-  wxaMpLiveRooms: function wxaMpLiveRooms() {
-    return request('/wx/live/rooms', true, 'get');
+  growthLogsV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/growthLog/logs', true, 'post', data)
   },
-  wxaMpLiveRoomHisVedios: function wxaMpLiveRoomHisVedios(roomId) {
+  exchangeScoreToGrowthV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/growthLog/exchange', true, 'post', data)
+  },
+  wxaMpLiveRooms: () => {
+    return request('/wx/live/rooms', true, 'get')
+  },
+  wxaMpLiveRoomHisVedios: (roomId) => {
     return request('/wx/live/his', true, 'get', {
-      roomId: roomId
-    });
+      roomId
+    })
   },
-  peisonFeeList: function peisonFeeList() {
-    return request('/fee/peisong/list', true, 'get');
+  peisonFeeList: () => {
+    return request('/fee/peisong/list', true, 'get')
   },
-  peisongMembers: function peisongMembers(data) {
-    return request('/peisong/member/list', true, 'post', data);
+  peisongMembers: (data) => {
+    return request('/peisong/member/list', true, 'post', data)
   },
-  peisongMemberInfo: function peisongMemberInfo(token) {
+  peisongMemberInfo: (token) => {
     return request('/peisong/member/info', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  peisongMemberChangeWorkStatus: function peisongMemberChangeWorkStatus(token) {
+  peisongMemberChangeWorkStatus: (token) => {
     return request('/peisong/member/change-work-status', true, 'post', {
-      token: token
-    });
+      token
+    })
   },
-  peisongOrdersGrabbing: function peisongOrdersGrabbing(token) {
-    return request('/peisong/order/grabbing', true, 'get', { token: token });
+  peisongOrdersGrabbing: (token) => {
+    return request('/peisong/order/grabbing', true, 'get', { token })
   },
-  peisongOrders: function peisongOrders(data) {
-    return request('/peisong/order/list', true, 'post', data);
+  peisongOrders: (data) => {
+    return request('/peisong/order/list', true, 'post', data)
   },
-  peisongOrderGrab: function peisongOrderGrab(data) {
-    return request('/peisong/order/grab', true, 'post', data);
+  peisongOrderGrab: (data) => {
+    return request('/peisong/order/grab', true, 'post', data)
   },
-  peisongOrderDetail: function peisongOrderDetail(token, id) {
-    return request('/peisong/order/detail', true, 'get', { token: token, id: id });
+  peisongOrderDetail: (token, id) => {
+    return request('/peisong/order/detail', true, 'get', { token, id })
   },
-  peisongOrderEstimatedCompletionTime: function peisongOrderEstimatedCompletionTime(data) {
-    return request('/peisong/order/estimatedCompletionTime', true, 'post', data);
+  peisongOrderEstimatedCompletionTime: (data) => {
+    return request('/peisong/order/estimatedCompletionTime', true, 'post', data)
   },
-  peisongStartService: function peisongStartService(data) {
-    return request('/peisong/order/start-service', true, 'post', data);
+  peisongStartService: (data) => {
+    return request('/peisong/order/start-service', true, 'post', data)
   },
-  peisongEndService: function peisongEndService(data) {
-    return request('/peisong/order/end-service', true, 'post', data);
+  peisongEndService: (data) => {
+    return request('/peisong/order/end-service', true, 'post', data)
   },
-  peisongEndServiceRemark: function peisongEndServiceRemark(token, id, remarkEnd) {
-    return request('/peisong/order/end-service/remarkEnd', true, 'post', { token: token, id: id, remarkEnd: remarkEnd });
+  peisongEndServiceRemark: (token, id, remarkEnd) => {
+    return request('/peisong/order/end-service/remarkEnd', true, 'post', { token, id, remarkEnd })
   },
-  peisongOrderAllocation: function peisongOrderAllocation(token, id, uid) {
+  peisongOrderAllocation: (token, id, uid) => {
     return request('/peisong/order/allocation', true, 'post', {
-      token: token, id: id, uid: uid
-    });
+      token, id, uid
+    })
   },
-  siteStatistics: function siteStatistics() {
-    return request('/site/statistics', true, 'get');
+  siteStatistics: () => {
+    return request(COMMON_BASE_URL + subDomain + '/site/statistics', false, 'get')
   },
-  orderStatistics: function orderStatistics(token) {
+  orderStatistics: (token) => {
     return request('/order/statistics', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  orderStatisticsv2: function orderStatisticsv2(data) {
-    return request('/order/statistics', true, 'get', data);
+  orderStatisticsv2: data => {
+    return request('/order/statistics', true, 'get', data)
   },
-  siteStatisticsSaleroom: function siteStatisticsSaleroom(data) {
-    return request('/site/statistics/saleroom', true, 'get', data);
+  siteStatisticsSaleroom: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/site/statistics/saleroom', false, 'get', data)
   },
-  siteStatisticsSaleroomYear: function siteStatisticsSaleroomYear() {
-    var year = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    return request('/site/statistics/saleroom/year', true, 'get', { year: year });
+  siteStatisticsSaleroomYear: (year = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/site/statistics/saleroom/year', false, 'get', { year })
   },
-  bonusLog: function bonusLog(data) {
-    return request('/bonusLog/list', true, 'post', data);
+  bonusLog: (data) => {
+    return request('/bonusLog/list', true, 'post', data)
   },
-  mtjAsset: function mtjAsset(token) {
-    return request('/mtj/asset', true, 'get', { token: token });
+  bonusLogV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/bonusLog/list', false, 'post', data)
   },
-  mtjSetting: function mtjSetting() {
-    return request('/mtj/setting', true, 'get');
+  mtjAsset: (token) => {
+    return request('/mtj/asset', true, 'get', { token })
   },
-  mtjLogs: function mtjLogs(data) {
-    return request('/mtj/logs', true, 'post', data);
+  mtjSetting: () => {
+    return request('/mtj/setting', true, 'get')
   },
-  mtjStatistics: function mtjStatistics() {
-    return request('/site/statistics/mjt', true, 'get');
+  mtjLogs: (data) => {
+    return request('/mtj/logs', true, 'post', data)
   },
-  mtjTransfer: function mtjTransfer(data) {
-    return request('/mtj/transfer', true, 'post', data);
+  mtjStatistics: () => {
+    return request('/site/statistics/mjt', true, 'get')
   },
-  mtjTransferLogs: function mtjTransferLogs(data) {
-    return request('/mtj/transfer/logs', true, 'post', data);
+  mtjTransfer: (data) => {
+    return request('/mtj/transfer', true, 'post', data)
   },
-  wxOpenAuthorization: function wxOpenAuthorization(data) {
-    return request('/user/wxsns/authorization', true, 'post', data);
+  mtjTransferLogs: (data) => {
+    return request('/mtj/transfer/logs', true, 'post', data)
   },
-  wxOpenRegister: function wxOpenRegister(data) {
-    return request('/user/wxsns/register', true, 'post', data);
+  mtjAssetV2: (token) => {
+    return request(COMMON_BASE_URL + subDomain + '/mtj/asset', true, 'get', { token })
   },
-  wxOpenBindOpenid: function wxOpenBindOpenid(data) {
-    return request('/user/wxsns/bindOpenid/v2', true, 'post', data);
+  mtjSettingV2: () => {
+    return request(COMMON_BASE_URL + subDomain + '/mtj/setting', true, 'get')
   },
-  wxOpenLogin: function wxOpenLogin(data) {
-    return request('/user/wxsns/login', true, 'post', data);
+  mtjLogsV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/mtj/logs', true, 'post', data)
   },
-  userAttentioncheck: function userAttentioncheck(token, uid) {
+  mtjStatisticsV2: () => {
+    return request(COMMON_BASE_URL + subDomain + '/site/statistics/mjt', true, 'get')
+  },
+  mtjTransferV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/mtj/transfer', true, 'post', data)
+  },
+  mtjTransferLogsV2: (data) => {
+    return request(COMMON_BASE_URL + subDomain + '/mtj/transfer/logs', true, 'post', data)
+  },
+  wxOpenAuthorization: (data) => {
+    return request('/user/wxsns/authorization', true, 'post', data)
+  },
+  wxOpenRegister: (data) => {
+    return request('/user/wxsns/register', true, 'post', data)
+  },
+  wxOpenBindOpenid: (data) => {
+    return request('/user/wxsns/bindOpenid/v2', true, 'post', data)
+  },
+  wxOpenLogin: (data) => {
+    return request('/user/wxsns/login', true, 'post', data)
+  },
+  userAttentioncheck: (token, uid) => {
     return request('/user/attention/check', true, 'get', {
-      token: token, uid: uid
-    });
+      token, uid
+    })
   },
-  userAttentionAdd: function userAttentionAdd(token, uid) {
+  userAttentionAdd: (token, uid) => {
     return request('/user/attention/add', true, 'post', {
-      token: token, uid: uid
-    });
+      token, uid
+    })
   },
-  userAttentionRemove: function userAttentionRemove(token, uid) {
+  userAttentionRemove: (token, uid) => {
     return request('/user/attention/remove', true, 'post', {
-      token: token, uid: uid
-    });
+      token, uid
+    })
   },
-  userAttentionMeList: function userAttentionMeList(data) {
-    return request('/user/attention/attention-me', true, 'post', data);
+  userAttentionMeList: (data) => {
+    return request('/user/attention/attention-me', true, 'post', data)
   },
-  userMyAttentionList: function userMyAttentionList(data) {
-    return request('/user/attention/my-attention', true, 'post', data);
+  userMyAttentionList: (data) => {
+    return request('/user/attention/my-attention', true, 'post', data)
   },
-  userAttentionDetail: function userAttentionDetail(token, uid) {
+  userAttentionDetail: (token, uid) => {
     return request('/user/attention/detail', true, 'get', {
-      token: token, uid: uid
-    });
+      token, uid
+    })
   },
-  userAttentionStatistics: function userAttentionStatistics(token) {
+  userAttentionStatistics: (token) => {
     return request('/user/attention/statistics', true, 'get', {
-      token: token
-    });
+      token
+    })
   },
-  cyTableToken: function cyTableToken(tableId, key) {
+  cyTableToken: (tableId, key) => {
     return request('/cyTable/token', true, 'post', {
       id: tableId,
       k: key
-    });
+    })
   },
-  cyTableAddOrder: function cyTableAddOrder(data) {
-    return request('/cyTable/add-order', true, 'post', data);
+  cyTableAddOrder: data => {
+    return request('/cyTable/add-order', true, 'post', data)
   },
-  cyTablePayOrder: function cyTablePayOrder(data) {
-    return request('/cyTable/pay-order', true, 'post', data);
+  cyTablePayOrder: data => {
+    return request('/cyTable/pay-order', true, 'post', data)
   },
-  cyTableInfo: function cyTableInfo(id) {
-    return request('/cyTable/info', true, 'get', { id: id });
+  cyTableInfo: id => {
+    return request('/cyTable/info', true, 'get', { id })
   },
-  cyTableList: function cyTableList(data) {
-    return request('/cyTable/list', true, 'post', data);
+  cyTableList: data => {
+    return request('/cyTable/list', true, 'post', data)
   },
-  goodsTimesSchedule: function goodsTimesSchedule() {
-    var goodsId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var brandId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    var categoryId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
-    return request('/shop/goods/times/schedule', true, 'post', { goodsId: goodsId, propertyChildIds: propertyChildIds, brandId: brandId, categoryId: categoryId });
+  goodsTimesSchedule: (goodsId = '', propertyChildIds = '', brandId = '', categoryId = '') => {
+    return request('/shop/goods/times/schedule', true, 'post', { goodsId, propertyChildIds, brandId, categoryId })
   },
-  goodsTimesDays: function goodsTimesDays(goodsId) {
-    var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/shop/goods/times/days', true, 'post', { goodsId: goodsId, propertyChildIds: propertyChildIds });
+  goodsTimesDays: (goodsId, propertyChildIds = '') => {
+    return request('/shop/goods/times/days', true, 'post', { goodsId, propertyChildIds })
   },
-  goodsTimesDayItems: function goodsTimesDayItems(day, goodsId) {
-    var propertyChildIds = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/shop/goods/times/items', true, 'post', { day: day, goodsId: goodsId, propertyChildIds: propertyChildIds });
+  goodsTimesDayItems: (day, goodsId, propertyChildIds = '') => {
+    return request('/shop/goods/times/items', true, 'post', { day, goodsId, propertyChildIds })
   },
-  goodsBrandList: function goodsBrandList(data) {
-    return request('/shop/goods/brand/list', true, 'post', data);
+  goodsBrandList: data => {
+    return request('/shop/goods/brand/list', true, 'post', data)
   },
-  goodsBrandDetail: function goodsBrandDetail(id) {
-    return request('/shop/goods/brand/detail', true, 'get', { id: id });
+  goodsBrandDetail: id => {
+    return request('/shop/goods/brand/detail', true, 'get', { id })
   },
-  wxappServiceLogin: function wxappServiceLogin(data) {
-    return request('/user/wxappService/login', true, 'post', data);
+  wxappServiceLogin: data => {
+    return request('/user/wxappService/login', true, 'post', data)
   },
-  wxappServiceLoginWxaMobile: function wxappServiceLoginWxaMobile(data) {
-    return request('/user/wxappService/login/mobile', true, 'post', data);
+  wxappServiceLoginWxaMobile: data => {
+    return request('/user/wxappService/login/mobile', true, 'post', data)
   },
-  wxappServiceRegisterComplex: function wxappServiceRegisterComplex(data) {
-    return request('/user/wxappService/register/complex', true, 'post', data);
+  wxappServiceRegisterComplex: data => {
+    return request('/user/wxappService/register/complex', true, 'post', data)
   },
-  wxappServiceRegisterSimple: function wxappServiceRegisterSimple(data) {
-    return request('/user/wxappService/register/simple', true, 'post', data);
+  wxappServiceRegisterSimple: data => {
+    return request('/user/wxappService/register/simple', true, 'post', data)
   },
-  wxappServiceAuthorize: function wxappServiceAuthorize(data) {
-    return request('/user/wxappService/authorize', true, 'post', data);
+  wxappServiceAuthorize: data => {
+    return request('/user/wxappService/authorize', true, 'post', data)
   },
-  wxappServiceBindMobile: function wxappServiceBindMobile(data) {
-    return request('/user/wxappService/bindMobile', true, 'post', data);
+  wxappServiceBindMobile: data => {
+    return request('/user/wxappService/bindMobile', true, 'post', data)
   },
-  wxappServiceBindMobileV2: function wxappServiceBindMobileV2(data) {
-    return request('/user/wxappService/bindMobile/v2', true, 'post', data);
+  wxappServiceBindMobileV2: data => {
+    return request('/user/wxappService/bindMobile/v2', true, 'post', data)
   },
-  wxappServiceBindOpenid: function wxappServiceBindOpenid(data) {
-    return request('/user/wxappService/bindOpenid', true, 'post', data);
+  wxappServiceBindOpenid: data => {
+    return request('/user/wxappService/bindOpenid', true, 'post', data)
   },
-  wxappServiceEncryptedData: function wxappServiceEncryptedData(data) {
-    return request('/user/wxappService/decode/encryptedData', true, 'post', data);
+  wxappServiceEncryptedData: data => {
+    return request('/user/wxappService/decode/encryptedData', true, 'post', data)
   },
-  trtcUserSig: function trtcUserSig(token) {
-    return request('/trtc/userSig', true, 'get', { token: token });
+  trtcUserSig: token => {
+    return request('/trtc/userSig', true, 'get', { token })
   },
-  setPayPassword: function setPayPassword(token, pwd) {
-    return request('/user/paypwd/set', true, 'post', { token: token, pwd: pwd });
+  setPayPassword: (token, pwd) => {
+    return request('/user/paypwd/set', true, 'post', { token, pwd })
   },
-  modifyPayPassword: function modifyPayPassword(token, pwdOld, pwdNew) {
-    return request('/user/paypwd/modify', true, 'post', { token: token, pwdOld: pwdOld, pwdNew: pwdNew });
+  modifyPayPassword: (token, pwdOld, pwdNew) => {
+    return request('/user/paypwd/modify', true, 'post', { token, pwdOld, pwdNew })
   },
-  resetPayPassword: function resetPayPassword(mobile, code, pwd) {
-    return request('/user/paypwd/reset', true, 'post', { mobile: mobile, code: code, pwd: pwd });
+  resetPayPassword: (mobile, code, pwd) => {
+    return request('/user/paypwd/reset', true, 'post', { mobile, code, pwd })
   },
-  adPosition: function adPosition(key) {
-    return request('/site/adPosition/info', true, 'get', { key: key });
+  adPosition: key => {
+    return request('/site/adPosition/info', true, 'get', { key })
   },
-  adPositionBatch: function adPositionBatch(keys) {
-    return request('/site/adPosition/batch', true, 'get', { keys: keys });
+  adPositionBatch: keys => {
+    return request('/site/adPosition/batch', true, 'get', { keys })
   },
-  momentsCategory: function momentsCategory() {
-    return request('/momentsCategory/list', true, 'get');
+  momentsCategory: () => {
+    return request('/momentsCategory/list', true, 'get')
   },
-  momentsList: function momentsList(data) {
-    return request('/moments/list', true, 'post', data);
+  momentsList: data => {
+    return request('/moments/list', true, 'post', data)
   },
-  momentsdetail: function momentsdetail(id) {
-    return request('/moments/detail', true, 'get', { id: id });
+  momentsdetail: id => {
+    return request('/moments/detail', true, 'get', { id })
   },
-  goodsVisitLog: function goodsVisitLog(data) {
-    return request('/goods/visitLog', true, 'post', data);
+  goodsVisitLog: data => {
+    return request('/goods/visitLog', true, 'post', data)
   },
-  goodsVisitLogAdd: function goodsVisitLogAdd(data) {
-    return request('/goods/visitLog/add', true, 'post', data);
+  goodsVisitLogAdd: data => {
+    return request('/goods/visitLog/add', true, 'post', data)
   },
-  goodsVisitLogDelete: function goodsVisitLogDelete(data) {
-    return request('/goods/visitLog/delete', true, 'post', data);
+  goodsVisitLogDelete: data => {
+    return request('/goods/visitLog/delete', true, 'post', data)
   },
-  goodsVisitLogClear: function goodsVisitLogClear(token) {
-    return request('/goods/visitLog/clear', true, 'post', { token: token });
+  goodsVisitLogClear: token => {
+    return request('/goods/visitLog/clear', true, 'post', { token })
   },
-  channelDataPush: function channelDataPush(key, content) {
-    return request('/channelData/push', true, 'post', { key: key, content: content });
+  goodsVisitLogV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/goods/visitLog', false, 'post', data)
   },
-  channelDataPull: function channelDataPull(key) {
-    return request('/channelData/pull', true, 'get', { key: key });
+  goodsVisitLogAddV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/goods/visitLog/add', false, 'post', data)
   },
-  bindPartner: function bindPartner(token, partnerId) {
-    return request('/user/bindPartner', true, 'post', { token: token, uid: partnerId });
+  goodsVisitLogDeleteV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/goods/visitLog/delete', false, 'post', data)
   },
-  partnerSetting: function partnerSetting() {
-    return request('/partner/setting', true, 'get');
+  goodsVisitLogClearV2: token => {
+    return request(COMMON_BASE_URL + subDomain + '/goods/visitLog/clear', false, 'post', { token })
   },
-  partnerBindTeamLeader: function partnerBindTeamLeader(token, uid) {
-    return request('/partner/bindTeamLeader', true, 'post', { token: token, uid: uid });
+  channelDataPush: (key, content) => {
+    return request('/channelData/push', true, 'post', { key, content })
   },
-  partnerBuyTeamLeader: function partnerBuyTeamLeader(token) {
-    return request('/partner/buy', true, 'post', { token: token });
+  channelDataPull: (key) => {
+    return request('/channelData/pull', true, 'get', { key })
   },
-  partnerMembersStatistics: function partnerMembersStatistics(token) {
-    return request('/partner/members/statistics', true, 'get', { token: token });
+  bindPartner: (token, partnerId) => {
+    return request('/user/bindPartner', true, 'post', { token, uid: partnerId })
   },
-  partnerMembers: function partnerMembers(data) {
-    return request('/partner/members', true, 'post', data);
+  partnerSetting: () => {
+    return request('/partner/setting', true, 'get')
   },
-  myLiveRooms: function myLiveRooms(data) {
-    return request('/liveRooms/my', true, 'post', data);
+  partnerBindTeamLeader: (token, uid) => {
+    return request('/partner/bindTeamLeader', true, 'post', { token, uid })
   },
-  liveRooms: function liveRooms(data) {
-    return request('/liveRooms/list', true, 'post', data);
+  partnerBuyTeamLeader: token => {
+    return request('/partner/buy', true, 'post', { token })
   },
-  myLiveRoomsInfo: function myLiveRoomsInfo(token, id) {
-    return request('/liveRooms/my/info', true, 'get', { token: token, id: id });
+  partnerMembersStatistics: token => {
+    return request(COMMON_BASE_URL + subDomain + '/partner/members/statistics', false, 'get', { token })
   },
-  liveRoomsInfo: function liveRoomsInfo(token, id) {
-    return request('/liveRooms/info', true, 'get', { token: token, id: id });
+  partnerMembers: data => {
+    return request(COMMON_BASE_URL + subDomain + '/partner/members', false, 'post', data)
   },
-  liveRoomGoodsMainly: function liveRoomGoodsMainly(data) {
-    return request('/liveRooms/goods/mainly', true, 'post', data);
+  myLiveRooms: data => {
+    return request('/liveRooms/my', true, 'post', data)
   },
-  stopLiveRoom: function stopLiveRoom(token, id) {
-    return request('/liveRooms/my/stop', true, 'post', { token: token, id: id });
+  liveRooms: data => {
+    return request('/liveRooms/list', true, 'post', data)
   },
-  likeLiveRoom: function likeLiveRoom(token, id) {
-    return request('/liveRooms/like', true, 'post', { token: token, id: id });
+  myLiveRoomsInfo: (token, id) => {
+    return request('/liveRooms/my/info', true, 'get', { token, id })
   },
-  liveRoomOnlineUsers: function liveRoomOnlineUsers(token, roomId) {
-    return request('/websocket/rest/liveRoom/onlines', false, 'get', { token: token, roomId: roomId });
+  liveRoomsInfo: (token, id) => {
+    return request('/liveRooms/info', true, 'get', { token, id })
   },
-  liveRoomKickOutUser: function liveRoomKickOutUser(token, roomId, uid) {
-    return request('/websocket/rest/liveRoom/kickOut', false, 'post', { token: token, roomId: roomId, uid: uid });
+  liveRoomGoodsMainly: data => {
+    return request('/liveRooms/goods/mainly', true, 'post', data)
   },
-  mockApi: function mockApi(groupName, apiName, method) {
-    return request('/mock/' + groupName + '/' + apiName, true, method);
+  stopLiveRoom: (token, id) => {
+    return request('/liveRooms/my/stop', true, 'post', { token, id })
   },
-  tourJourneyList: function tourJourneyList(type, refId) {
-    return request('/tourJourney/list', true, 'get', { type: type, refId: refId });
+  likeLiveRoom: (token, id) => {
+    return request('/liveRooms/like', true, 'post', { token, id })
   },
-  userBankSelectBanks: function userBankSelectBanks() {
-    return request('/userBank/banks', true, 'get');
+  liveRoomOnlineUsers: (token, roomId) => {
+    return request('/websocket/rest/liveRoom/onlines', false, 'get', { token, roomId })
   },
-  userBankInfo: function userBankInfo(token) {
-    return request('/userBank/info', true, 'get', { token: token });
+  liveRoomKickOutUser: (token, roomId, uid) => {
+    return request('/websocket/rest/liveRoom/kickOut', false, 'post', { token, roomId, uid })
   },
-  userBankBind: function userBankBind(data) {
-    return request('/userBank/bind', true, 'post', data);
+  mockApi: (groupName, apiName, method) => {
+    return request(`/mock/${groupName}/${apiName}`, true, method)
   },
-  userBankUnBind: function userBankUnBind(token) {
-    return request('/userBank/unbind', true, 'post', { token: token });
+  tourJourneyList: (type, refId) => {
+    return request('/tourJourney/list', true, 'get', { type, refId })
+  },
+  userBankSelectBanks: () => {
+    return request('/userBank/banks', true, 'get')
+  },
+  userBankInfo: token => {
+    return request('/userBank/info', true, 'get', { token })
+  },
+  userBankBind: data => {
+    return request('/userBank/bind', true, 'post', data)
+  },
+  userBankUnBind: token => {
+    return request('/userBank/unbind', true, 'post', { token })
   },
   // 京东VOP相关接口
-  jdvopGoodsList: function jdvopGoodsList(data) {
-    return request('/jdvop/' + merchantId + '/goods/list', false, 'post', data);
+  jdvopGoodsList: data => {
+    return request(`/jdvop/${merchantId}/goods/list`, false, 'post', data)
   },
-  jdvopGoodsCheckCanBuy: function jdvopGoodsCheckCanBuy(data) {
-    return request('/jdvop/' + merchantId + '/goods/checkCanBuy', false, 'post', data);
+  jdvopGoodsListV2: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/list`, false, 'post', data)
   },
-  jdvopGoodsDetail: function jdvopGoodsDetail(goodsId) {
-    return request('/jdvop/' + merchantId + '/goods/detail', false, 'get', {
+  jdvopGoodsListV3: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/v2/list`, false, 'post', data)
+  },
+  jdvopGoodsCheckCanBuy: data => {
+    return request(`/jdvop/${merchantId}/goods/checkCanBuy`, false, 'post', data)
+  },
+  jdvopGoodsCheckCanBuyV2: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/checkCanBuy`, false, 'post', data)
+  },
+  jdvopGoodsCheckCanBuyV3: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/v2/getSkusAllSaleState`, false, 'post', data)
+  },
+  jdvopGoodsDetail: goodsId => {
+    return request(`/jdvop/${merchantId}/goods/detail`, false, 'get', {
       skuId: goodsId,
       queryExts: 'wxintroduction'
-    });
+    })
   },
-  jdvopGoodsSkuImages: function jdvopGoodsSkuImages(goodsId) {
-    return request('/jdvop/' + merchantId + '/goods/skuImages', false, 'get', {
+  jdvopGoodsDetailV2: goodsId => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/detail`, false, 'get', {
+      skuId: goodsId,
+      queryExts: 'wxintroduction'
+    })
+  },
+  jdvopGoodsDetailV3: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/v2/detail`, false, 'get', data)
+  },
+  jdvopGoodsSkuImages: goodsId => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/skuImages`, false, 'get', {
       skuId: goodsId
-    });
+    })
   },
-  jdvopCartInfo: function jdvopCartInfo(token) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/info', false, 'get', {
-      token: token
-    });
+  jdvopGoodsSkuImagesV2: goodsId => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/v2/skuImages`, false, 'get', {
+      skuId: goodsId
+    })
   },
-  jdvopCartAdd: function jdvopCartAdd(data) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/add', false, 'post', data);
+  jdVopSkuGoodsSaleRule: skuId => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/goods/v2/checkSkuSaleList`, false, 'get', { skuId })
   },
-  jdvopCartModifyNumber: function jdvopCartModifyNumber(token, key, number) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/modifyNumber', false, 'post', {
-      token: token, key: key, number: number
-    });
+  jdvopCartInfo: token => {
+    return request(`/jdvop/${merchantId}/shopping-cart/info`, false, 'get', {
+      token
+    })
   },
-  jdvopCartSelect: function jdvopCartSelect(token, key, selected) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/select', false, 'post', {
-      token: token, key: key, selected: selected
-    });
+  jdvopCartAdd: data => {
+    return request(`/jdvop/${merchantId}/shopping-cart/add`, false, 'post', data)
   },
-  jdvopCartRemove: function jdvopCartRemove(token, key) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/remove', false, 'post', {
-      token: token, key: key
-    });
+  jdvopCartModifyNumber: (token, key, number) => {
+    return request(`/jdvop/${merchantId}/shopping-cart/modifyNumber`, false, 'post', {
+      token, key, number
+    })
   },
-  jdvopCartEmpty: function jdvopCartEmpty(token) {
-    return request('/jdvop/' + merchantId + '/shopping-cart/empty', false, 'post', {
-      token: token
-    });
+  jdvopCartSelect: (token, key, selected) => {
+    return request(`/jdvop/${merchantId}/shopping-cart/select`, false, 'post', {
+      token, key, selected
+    })
+  },
+  jdvopCartRemove: (token, key) => {
+    return request(`/jdvop/${merchantId}/shopping-cart/remove`, false, 'post', {
+      token, key
+    })
+  },
+  jdvopCartEmpty: token => {
+    return request(`/jdvop/${merchantId}/shopping-cart/empty`, false, 'post', {
+      token
+    })
+  },
+  jdvopCartInfoV2: token => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/info`, false, 'get', {
+      token
+    })
+  },
+  jdvopCartAddV2: data => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/add`, false, 'post', data)
+  },
+  jdvopCartModifyNumberV2: (token, key, number) => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/modifyNumber`, false, 'post', {
+      token, key, number
+    })
+  },
+  jdvopCartSelectV2: (token, key, selected) => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/select`, false, 'post', {
+      token, key, selected
+    })
+  },
+  jdvopCartRemoveV2: (token, key) => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/remove`, false, 'post', {
+      token, key
+    })
+  },
+  jdvopCartEmptyV2: token => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/shopping-cart/empty`, false, 'post', {
+      token
+    })
+  },
+  jdvopCategory: pid => {
+    return request(`https://jdvop.apifm.com/jdvop/${merchantId}/category/list`, false, 'get', {
+      pid
+    })
+  },
+  jdvopCategory46: pid => {
+    return request(`https://jdvop.apifm.com/jdvop/46/category/list`, false, 'get', {
+      pid
+    })
   },
   // 商家从区管进货
-  jdvopJinhuoGoods: function jdvopJinhuoGoods(data) {
-    return request('/vop/goods/list', true, 'post', data);
+  jdvopJinhuoGoods: data => {
+    return request('/vop/goods/list', true, 'post', data)
   },
-  jdvopJinhuoGoodsDetail: function jdvopJinhuoGoodsDetail(token, skuId) {
-    return request('/vop/goods/detail', true, 'get', { token: token, skuId: skuId });
+  jdvopJinhuoGoodsDetail: (token, skuId) => {
+    return request('/vop/goods/detail', true, 'get', { token, skuId })
   },
   // cps
-  cpsJdGoodsCategory: function cpsJdGoodsCategory(parentId, grade) {
-    return request('/cpsJdGoods/category', true, 'get', { parentId: parentId, grade: grade });
+  cpsJdGoodsCategory: (parentId, grade) => {
+    return request('/cpsJdGoods/category', true, 'get', { parentId, grade })
   },
-  cpsJdGoodsSearch: function cpsJdGoodsSearch(data) {
-    return request('/cpsJdGoods/search', true, 'post', data);
+  cpsJdGoodsSearch: data => {
+    return request('/cpsJdGoods/search', true, 'post', data)
   },
-  cpsJdGoodsDetail: function cpsJdGoodsDetail(data) {
-    return request('/cpsJdGoods/detail', true, 'get', data);
+  cpsJdGoodsDetail: data => {
+    return request('/cpsJdGoods/detail', true, 'get', data)
   },
-  cpsJdGoodsSetExt: function cpsJdGoodsSetExt(data) {
-    return request('/cpsJdGoods/ext/set', true, 'post', data);
+  cpsJdGoodsSetExt: data => {
+    return request('/cpsJdGoods/ext/set', true, 'post', data)
   },
-  cpsJdGoodsQueryExt: function cpsJdGoodsQueryExt(skuId) {
-    return request('/cpsJdGoods/ext/query', true, 'get', { skuId: skuId });
+  cpsJdGoodsQueryExt: skuId => {
+    return request('/cpsJdGoods/ext/query', true, 'get', { skuId })
   },
-  cpsJdGoodsShotUrl: function cpsJdGoodsShotUrl(token, skuId) {
-    return request('/cpsJdGoods/shotUrl', true, 'get', { token: token, skuId: skuId });
+  cpsJdGoodsShotUrl: (token, skuId) => {
+    return request('/cpsJdGoods/shotUrl', true, 'get', { token, skuId })
   },
-  cpsJdGoodsShotUrlSite: function cpsJdGoodsShotUrlSite(token, materialUrl, couponUrl) {
-    return request('/cpsJdGoods/shotUrl/site', true, 'post', { token: token, materialUrl: materialUrl, couponUrl: couponUrl });
+  cpsJdGoodsShotUrlSite: (token, materialUrl, couponUrl) => {
+    return request('/cpsJdGoods/shotUrl/site', true, 'post', { token, materialUrl, couponUrl })
   },
-  cpsJdOrders: function cpsJdOrders(data) {
-    return request('/cpsJdOrder/list', true, 'post', data);
+  cpsJdOrders: data => {
+    return request('/cpsJdOrder/list', true, 'post', data)
   },
-  cpsJdOrderDetail: function cpsJdOrderDetail(token, id) {
-    return request('/cpsJdOrder/detail', true, 'get', { token: token, id: id });
+  cpsJdOrderDetail: (token, id) => {
+    return request('/cpsJdOrder/detail', true, 'get', { token, id })
   },
-  cpsPddBeian: function cpsPddBeian(token) {
-    return request('/cpsPddGoods/beian', true, 'get', { token: token });
+  cpsPddBeian: token => {
+    return request('/cpsPddGoods/beian', true, 'get', { token })
   },
-  cpsPddGoodsDetail: function cpsPddGoodsDetail(data) {
-    return request('/cpsPddGoods/detail', true, 'get', data);
+  cpsPddGoodsDetail: data => {
+    return request('/cpsPddGoods/detail', true, 'get', data)
   },
-  cpsPddGoodsShotUrl: function cpsPddGoodsShotUrl(token, goodsSign) {
-    return request('/cpsPddGoods/shotUrl', true, 'get', { token: token, goodsSign: goodsSign });
+  cpsPddGoodsShotUrl: (token, goodsSign) => {
+    return request('/cpsPddGoods/shotUrl', true, 'get', { token, goodsSign })
   },
-  cpsPddOrders: function cpsPddOrders(data) {
-    return request('/cpsPddOrder/list', true, 'post', data);
+  cpsPddOrders: data => {
+    return request('/cpsPddOrder/list', true, 'post', data)
   },
-  cpsPddOrderDetail: function cpsPddOrderDetail(token, id) {
-    return request('/cpsPddOrder/detail', true, 'get', { token: token, id: id });
+  cpsPddOrderDetail: (token, id) => {
+    return request('/cpsPddOrder/detail', true, 'get', { token, id })
   },
-  cpsTaobaoGoodsDetail: function cpsTaobaoGoodsDetail(data) {
-    return request('/cpsTaobaoGoods/detail', true, 'get', data);
+  cpsTaobaoGoodsDetail: data => {
+    return request('/cpsTaobaoGoods/detail', true, 'get', data)
   },
-  cpsTaobaoGoodsShotUrl: function cpsTaobaoGoodsShotUrl(token, content) {
-    return request('/cpsTaobaoGoods/shotUrl', true, 'post', { token: token, content: content });
+  cpsTaobaoGoodsShotUrl: (token, content) => {
+    return request('/cpsTaobaoGoods/shotUrl', true, 'post', { token, content })
   },
-  cpsTaobaoGoodsKouling: function cpsTaobaoGoodsKouling(token, content) {
-    return request('/cpsTaobaoGoods/kouling', true, 'post', { token: token, content: content });
+  cpsTaobaoGoodsKouling: (token, content) => {
+    return request('/cpsTaobaoGoods/kouling', true, 'post', { token, content })
   },
   // 回收
-  recycleOrders: function recycleOrders(data) {
-    return request('/recycleOrder/list', true, 'post', data);
+  recycleOrders: data => {
+    return request('/recycleOrder/list', true, 'post', data)
   },
-  recycleOrderApply: function recycleOrderApply(data) {
-    return request('/recycleOrder/apply', true, 'post', data);
+  recycleOrderApply: data => {
+    return request('/recycleOrder/apply', true, 'post', data)
   },
-  recycleOrderDetail: function recycleOrderDetail(token, id) {
-    return request('/recycleOrder/detail', true, 'get', { token: token, id: id });
+  recycleOrderDetail: (token, id) => {
+    return request('/recycleOrder/detail', true, 'get', { token, id })
   },
-  recycleOrderFahuo: function recycleOrderFahuo(data) {
-    return request('/recycleOrder/fahuo', true, 'post', data);
+  recycleOrderFahuo: data => {
+    return request('/recycleOrder/fahuo', true, 'post', data)
   },
-  recycleOrderClose: function recycleOrderClose(token, id) {
-    return request('/recycleOrder/close', true, 'post', { token: token, id: id });
+  recycleOrderClose: (token, id) => {
+    return request('/recycleOrder/close', true, 'post', { token, id })
   },
-  recycleOrderDelete: function recycleOrderDelete(token, id) {
-    return request('/recycleOrder/del', true, 'post', { token: token, id: id });
+  recycleOrderDelete: (token, id) => {
+    return request('/recycleOrder/del', true, 'post', { token, id })
   },
   // 会员卡
-  cardList: function cardList(data) {
-    return request('/card/list', true, 'get', data);
+  cardList: data => {
+    return request('/card/list', true, 'get', data)
   },
-  cardInfo: function cardInfo(id) {
-    return request('/card/info', true, 'get', { id: id });
+  cardInfo: id => {
+    return request('/card/info', true, 'get', { id })
   },
-  cardBuy: function cardBuy(token, id) {
-    return request('/card/buy', true, 'post', { token: token, id: id });
+  cardBuy: (token, id) => {
+    return request('/card/buy', true, 'post', { token, id })
   },
-  cardMyList: function cardMyList(token) {
-    return request('/card/my', true, 'get', { token: token });
+  cardMyList: token => {
+    return request('/card/my', true, 'get', { token })
   },
-  cardMyLogs: function cardMyLogs(data) {
-    return request('/card/logs', true, 'post', data);
+  cardMyLogs: data => {
+    return request('/card/logs', true, 'post', data)
   },
-  cardExchangeFromPwd: function cardExchangeFromPwd(data) {
-    return request('/card/exchange', true, 'post', data);
+  cardExchangeFromPwd: data => {
+    return request('/card/exchange', true, 'post', data)
   },
   cardShareOpen: data => {
     return request('/card/share/open', true, 'post', data)
@@ -2335,561 +2420,604 @@ module.exports = {
     return request('/card/share/fetch', true, 'post', data)
   },
   // 收藏卡片
-  collectCardHis: function collectCardHis(data) {
-    return request('/collectCard/del', true, 'post', data);
+  collectCardHis: data => {
+    return request('/collectCard/del', true, 'post', data)
   },
-  collectCardInfo: function collectCardInfo(number) {
-    return request('/collectCard/cardInfo', true, 'get', { number: number });
+  collectCardInfo: (number) => {
+    return request('/collectCard/cardInfo', true, 'get', { number })
   },
-  collectCardHisInfo: function collectCardHisInfo(token, id) {
-    return request('/collectCard/hisInfo', true, 'get', { token: token, id: id });
+  collectCardHisInfo: (token, id) => {
+    return request('/collectCard/hisInfo', true, 'get', { token, id })
   },
-  collectCardBind: function collectCardBind(data) {
-    return request('/collectCard/bind', true, 'post', data);
+  collectCardBind: data => {
+    return request('/collectCard/bind', true, 'post', data)
   },
-  collectCardUnBind: function collectCardUnBind(token, id, smsCode) {
-    return request('/collectCard/bind', true, 'post', { token: token, id: id, smsCode: smsCode });
+  collectCardUnBind: (token, id, smsCode) => {
+    return request('/collectCard/bind', true, 'post', { token, id, smsCode })
   },
   // 其他
-  bengenSaleTongjiList: function bengenSaleTongjiList(data) {
-    return request('/bengenSaleTongji/list', true, 'post', data);
+  bengenSaleTongjiList: data => {
+    return request('/bengenSaleTongji/list', true, 'post', data)
   },
-  bengenSaleTongjiRank: function bengenSaleTongjiRank(data) {
-    return request('/bengenSaleTongji/rank', true, 'get', data);
+  bengenSaleTongjiRank: data => {
+    return request('/bengenSaleTongji/rank', true, 'get', data)
   },
   // 购买课程
-  courseInfoList: function courseInfoList(data) {
-    return request('/courseInfo/list', true, 'post', data);
+  courseInfoList: data => {
+    return request('/courseInfo/list', true, 'post', data)
   },
-  courseInfo: function courseInfo(id) {
-    return request('/courseInfo/info', true, 'get', { id: id });
+  courseInfo: id => {
+    return request('/courseInfo/info', true, 'get', { id })
   },
-  courseBuyLogPublic: function courseBuyLogPublic(data) {
-    return request('/courseBuyLog/public', true, 'post', data);
+  courseBuyLogPublic: data => {
+    return request('/courseBuyLog/public', true, 'post', data)
   },
-  courseBuyLogMy: function courseBuyLogMy(data) {
-    return request('/courseBuyLog/my', true, 'post', data);
+  courseBuyLogMy: data => {
+    return request('/courseBuyLog/my', true, 'post', data)
   },
-  courseInfoBuy: function courseInfoBuy(data) {
-    return request('/courseBuyLog/buy', true, 'post', data);
+  courseInfoBuy: data => {
+    return request('/courseBuyLog/buy', true, 'post', data)
   },
-  courseInfoBuyLogPay: function courseInfoBuyLogPay(token, orderId) {
-    return request('/courseBuyLog/pay', true, 'post', { token: token, orderId: orderId });
+  courseInfoBuyLogPay: (token, orderId) => {
+    return request('/courseBuyLog/pay', true, 'post', { token, orderId })
   },
-  courseInfoBuyLogDetail: function courseInfoBuyLogDetail(token, id) {
-    var hxNumber = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-    return request('/courseBuyLog/detail', true, 'get', { token: token, id: id, hxNumber: hxNumber });
+  courseInfoBuyLogDetail: (token, id, hxNumber = '') => {
+    return request('/courseBuyLog/detail', true, 'get', { token, id, hxNumber })
   },
-  courseInfoBuyLogClose: function courseInfoBuyLogClose(token, orderId) {
-    return request('/courseBuyLog/close', true, 'post', { token: token, orderId: orderId });
+  courseInfoBuyLogClose: (token, orderId) => {
+    return request('/courseBuyLog/close', true, 'post', { token, orderId })
   },
-  courseInfoBuyLogDelete: function courseInfoBuyLogDelete(token, orderId) {
-    return request('/courseBuyLog/del', true, 'post', { token: token, orderId: orderId });
+  courseInfoBuyLogDelete: (token, orderId) => {
+    return request('/courseBuyLog/del', true, 'post', { token, orderId })
+  },
+  courseInfoListV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/courseInfo/list', false, 'post', data)
+  },
+  courseInfoV2: id => {
+    return request(COMMON_BASE_URL + subDomain + '/courseInfo/info', false, 'get', { id })
+  },
+  courseBuyLogPublicV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/public', false, 'post', data)
+  },
+  courseBuyLogMyV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/my', false, 'post', data)
+  },
+  courseInfoBuyV2: data => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/buy', false, 'post', data)
+  },
+  courseInfoBuyLogPayV2: (token, orderId) => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/pay', false, 'post', { token, orderId })
+  },
+  courseInfoBuyLogDetailV2: (token, id, hxNumber = '') => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/detail', false, 'get', { token, id, hxNumber })
+  },
+  courseInfoBuyLogCloseV2: (token, orderId) => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/close', false, 'post', { token, orderId })
+  },
+  courseInfoBuyLogDeleteV2: (token, orderId) => {
+    return request(COMMON_BASE_URL + subDomain + '/courseBuyLog/del', false, 'post', { token, orderId })
   },
   // 橱窗
-  chuchuanSettingInfo: function chuchuanSettingInfo(uid) {
-    return request('/chuchuan/info', true, 'get', { uid: uid });
+  chuchuanSettingInfo: uid => {
+    return request('/chuchuan/info', true, 'get', { uid })
   },
-  chuchuanSettingModify: function chuchuanSettingModify(data) {
-    return request('/chuchuan/modify', true, 'post', data);
+  chuchuanSettingModify: data => {
+    return request('/chuchuan/modify', true, 'post', data)
   },
-  chuchuanGoodsList: function chuchuanGoodsList(data) {
-    return request('/chuchuanGoods/list', true, 'post', data);
+  chuchuanGoodsList: data => {
+    return request('/chuchuanGoods/list', true, 'post', data)
   },
-  chuchuanGoodsAdd: function chuchuanGoodsAdd(data) {
-    return request('/chuchuanGoods/add', true, 'post', data);
+  chuchuanGoodsAdd: data => {
+    return request('/chuchuanGoods/add', true, 'post', data)
   },
-  chuchuanGoodsRemove: function chuchuanGoodsRemove(token, goodsId) {
-    return request('/chuchuanGoods/remove', true, 'post', { token: token, goodsId: goodsId });
+  chuchuanGoodsRemove: (token, goodsId) => {
+    return request('/chuchuanGoods/remove', true, 'post', { token, goodsId })
   },
-  chuchuanGoodsCheck: function chuchuanGoodsCheck(token, goodsId) {
-    return request('/chuchuanGoods/check', true, 'get', { token: token, goodsId: goodsId });
+  chuchuanGoodsCheck: (token, goodsId) => {
+    return request('/chuchuanGoods/check', true, 'get', { token, goodsId })
   },
   // 寄存
-  jicunGoodsList: function jicunGoodsList(data) {
-    return request('/jicunGoods/list', true, 'post', data);
+  jicunGoodsList: data => {
+    return request('/jicunGoods/list', true, 'post', data)
   },
-  jicunGoodsDetail: function jicunGoodsDetail(data) {
-    return request('/jicunGoods/detail', true, 'get', data);
+  jicunGoodsDetail: data => {
+    return request('/jicunGoods/detail', true, 'get', data)
+  },
+  // stripe
+  stripeAddCard: function stripeAddCard(data) {
+    return request('/pay/stripe/addCard', true, 'post', data);
+  },
+  stripeCardList: function stripeCardList(token) {
+    return request('/pay/stripe/cardList', true, 'get', { token });
+  },
+  stripeDelCard: function stripeDelCard(token, cardId) {
+    return request('/pay/stripe/deleteCard', true, 'post', { token, cardId });
+  },
+  stripeCharge: function stripeCharge(data) {
+    return request('/pay/stripe/charge', true, 'post', data);
   },
   // ocr
-  ocrBusinessLicense: function ocrBusinessLicense(imageUrl) {
-    return request('/ocr/businessLicense', true, 'post', { imageUrl: imageUrl });
+  ocrBusinessLicense: imageUrl => {
+    return request(COMMON_BASE_URL + subDomain + '/ocr/businessLicense', false, 'post', { imageUrl })
   },
-  ocrIdcard: function ocrIdcard(imageUrl) {
-    return request('/ocr/idcard', true, 'post', { imageUrl: imageUrl });
+  ocrIdcard: imageUrl => {
+    return request(COMMON_BASE_URL + subDomain + '/ocr/idcard', false, 'post', { imageUrl })
   },
-  ocrBankcard: function ocrBankcard(imageUrl) {
-    return request('/ocr/bankcard', true, 'post', { imageUrl: imageUrl });
+  ocrBankcard: imageUrl => {
+    return request(COMMON_BASE_URL + subDomain + '/ocr/bankcard', false, 'post', { imageUrl })
   },
-  ocrDriverLicense: function ocrDriverLicense(imageUrl) {
-    return request('/ocr/driverLicense', true, 'post', { imageUrl: imageUrl });
+  ocrDriverLicense: imageUrl => {
+    return request(COMMON_BASE_URL + subDomain + '/ocr/driverLicense', false, 'post', { imageUrl })
   },
   // 朋友圈
-  momentsPublish: function momentsPublish(data) {
-    return request('/user/moments/publish', true, 'post', data);
+  momentsPublish: data => {
+    return request('/user/moments/publish', true, 'post', data)
   },
-  userMomentsList: function userMomentsList(data) {
-    return request('/user/moments/list', true, 'get', data);
+  userMomentsList: data => {
+    return request('/user/moments/list', true, 'get', data)
   },
-  momentsDetail: function momentsDetail(token, momentsId) {
-    return request('/user/moments/detail', true, 'get', { token: token, momentsId: momentsId });
+  momentsDetail: (token, momentsId) => {
+    return request('/user/moments/detail', true, 'get', { token, momentsId })
   },
-  momentsDelete: function momentsDelete(token, momentsId) {
-    return request('/user/moments/del', true, 'post', { token: token, momentsId: momentsId });
+  momentsDelete: (token, momentsId) => {
+    return request('/user/moments/del', true, 'post', { token, momentsId })
   },
-  momentsDeleteComment: function momentsDeleteComment(token, commentId) {
-    return request('/user/moments/delCommon', true, 'post', { token: token, commentId: commentId });
+  momentsDeleteComment: (token, commentId) => {
+    return request('/user/moments/delCommon', true, 'post', { token, commentId })
   },
-  momentsLike: function momentsLike(token, momentsId) {
-    return request('/user/moments/like', true, 'post', { token: token, momentsId: momentsId });
+  momentsLike: (token, momentsId) => {
+    return request('/user/moments/like', true, 'post', { token, momentsId })
   },
-  momentsComment: function momentsComment(token, momentsId) {
-    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    var content = arguments[3];
-
-    return request('/user/moments/comment', true, 'post', { token: token, momentsId: momentsId, uid: uid, content: content });
+  momentsComment: (token, momentsId, uid = '', content) => {
+    return request('/user/moments/comment', true, 'post', { token, momentsId, uid, content })
   },
-  momentsCommentLogs: function momentsCommentLogs(data) {
-    return request('/user/moments/logs', true, 'get', data);
+  momentsCommentLogs: data => {
+    return request('/user/moments/logs', true, 'get', data)
   },
-  momentsLogsRead: function momentsLogsRead(token, logsIds) {
-    return request('/user/moments/logRead', true, 'post', { token: token, logsIds: logsIds });
+  momentsLogsRead: (token, logsIds) => {
+    return request('/user/moments/logRead', true, 'post', { token, logsIds })
   },
-  bottleMsgPublish: function bottleMsgPublish(data) {
-    return request('/bottleMsg/publish', true, 'post', data);
+  bottleMsgPublish: data => {
+    return request('/bottleMsg/publish', true, 'post', data)
   },
-  bottleMsgSalvage: function bottleMsgSalvage(token) {
-    return request('/bottleMsg/salvage', true, 'get', { token: token });
+  bottleMsgSalvage: token => {
+    return request('/bottleMsg/salvage', true, 'get', { token })
   },
-  userInvoiceInfo: function userInvoiceInfo(token) {
-    return request('/userInvoice/info', true, 'get', { token: token });
+  userInvoiceInfo: token => {
+    return request('/userInvoice/info', true, 'get', { token })
   },
-  userInvoiceUnbind: function userInvoiceUnbind(token) {
-    return request('/userInvoice/unbind', true, 'post', { token: token });
+  userInvoiceUnbind: token => {
+    return request('/userInvoice/unbind', true, 'post', { token })
   },
-  userInvoiceBind: function userInvoiceBind(data) {
-    return request('/userInvoice/bind', true, 'post', data);
+  userInvoiceBind: data => {
+    return request('/userInvoice/bind', true, 'post', data)
   },
-  goodsLendsList: function goodsLendsList(data) {
-    return request('/goodsLends/list', true, 'post', data);
+  goodsLendsList: data => {
+    return request('/goodsLends/list', true, 'post', data)
   },
-  goodsLendsLogs: function goodsLendsLogs(data) {
-    return request('/goodsLends/logs', true, 'post', data);
+  goodsLendsLogs: data => {
+    return request('/goodsLends/logs', true, 'post', data)
   },
   // 支付宝小程序
-  aliappUserRegister: function aliappUserRegister(data) {
-    return request('/user/aliapp/register', true, 'post', data);
+  aliappUserRegister: data => {
+    return request('/user/aliapp/register', true, 'post', data)
   },
-  aliappUserLogin: function aliappUserLogin(data) {
-    return request('/user/aliapp/login', true, 'post', data);
+  aliappUserLogin: data => {
+    return request('/user/aliapp/login', true, 'post', data)
   },
-  aliappUserAuthorize: function aliappUserAuthorize(data) {
-    return request('/user/aliapp/authorize', true, 'post', data);
+  aliappUserAuthorize: data => {
+    return request('/user/aliapp/authorize', true, 'post', data)
   },
-  aliappWebUserAuthorize: function aliappWebUserAuthorize(data) {
-    return request('/user/aliappweb/authorize', true, 'post', data);
+  aliappWebUserAuthorize: data => {
+    return request('/user/aliappweb/authorize', true, 'post', data)
   },
-  aliappQrcode: function aliappQrcode(content) {
-    return request('/user/aliapp/qrcode', true, 'post', { content: content });
+  aliappQrcode: content => {
+    return request('/user/aliapp/qrcode', true, 'post', { content })
   },
-  aliappBindMobile: function aliappBindMobile(data) {
-    return request('/user/aliapp/bindMobile', true, 'post', data);
+  aliappMiniappBindMobile: (data) => {
+    return request('/user/aliapp/bindMobile', true, 'post', data)
   },
-  aliappGetMobile: function aliappGetMobile(encryptedData) {
-    return request('/user/aliapp/getMobile', true, 'post', { encryptedData: encryptedData });
+  aliappBindMobile: data => {
+    return request('/user/aliapp/bindMobile', true, 'post', data)
   },
-  tempDataSet: function tempDataSet(key, content) {
-    return request('/tempData/set', true, 'post', { key: key, content: content });
+  aliappGetMobile: (encryptedData) => {
+    return request('/user/aliapp/getMobile', true, 'post', { encryptedData })
   },
-  tempDataGet: function tempDataGet(key) {
-    return request('/tempData/get', true, 'get', { key: key });
+  tempDataSet: (key, content) => {
+    return request('/tempData/set', true, 'post', { key, content })
   },
-  tempDataSetV2: function tempDataSetV2(key, content) {
-    return request('https://common.apifm.com/' + merchantId + '/tempData/set', true, 'post', { key: key, content: content });
+  tempDataGet: key => {
+    return request('/tempData/get', true, 'get', { key })
   },
-  tempDataGetV2: function tempDataGetV2(key) {
-    return request('https://common.apifm.com/' + merchantId + '/tempData/get', true, 'get', { key: key });
+  tempDataSetV2: (key, content) => {
+    return request(COMMON_BASE_URL + merchantId + '/tempData/set', true, 'post', { key, content })
   },
-  commonDatetime: function commonDatetime() {
-    return request('/common/datetime', true, 'get');
+  tempDataGetV2: key => {
+    return request(COMMON_BASE_URL + merchantId + '/tempData/get', true, 'get', { key })
   },
-  commonDays: function commonDays() {
-    var startDay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var days = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/common/days', false, 'get', { startDay: startDay, days: days });
+  commonDatetime: () => {
+    return request('/common/datetime', true, 'get')
   },
-  commonDiffMillis: function commonDiffMillis() {
-    var d1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var d2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/common/diffMillis', false, 'get', { d1: d1, d2: d2 });
+  commonDays: (startDay = '', days = '') => {
+    return request('/common/days', false, 'get', { startDay, days })
+  },
+  commonDiffMillis: (d1 = '', d2 = '') => {
+    return request('/common/diffMillis', false, 'get', { d1, d2 })
   },
   // 企业应用 组织/成员/网盘
-  organizePrices: function organizePrices() {
-    return request('/organizeInfo/prices', true, 'get');
+  organizePrices: () => {
+    return request('/organizeInfo/prices', true, 'get')
   },
-  organizeCreate: function organizeCreate(data) {
-    return request('/organizeInfo/create', true, 'post', data);
+  organizeCreate: data => {
+    return request('/organizeInfo/create', true, 'post', data)
   },
-  organizeUpgrade: function organizeUpgrade(data) {
-    return request('/organizeInfo/upgrade', true, 'post', data);
+  organizeUpgrade: data => {
+    return request('/organizeInfo/upgrade', true, 'post', data)
   },
-  organizeModify: function organizeModify(data) {
-    return request('/organizeInfo/modify', true, 'post', data);
+  organizeModify: data => {
+    return request('/organizeInfo/modify', true, 'post', data)
   },
-  organizeJoinKey: function organizeJoinKey(data) {
-    return request('/organizeInfo/joinKey', true, 'get', data);
+  organizeJoinKey: data => {
+    return request('/organizeInfo/joinKey', true, 'get', data)
   },
-  organizeJoin: function organizeJoin(data) {
-    return request('/organizeInfo/join', true, 'post', data);
+  organizeJoin: data => {
+    return request('/organizeInfo/join', true, 'post', data)
   },
-  organizeGrantAdmin: function organizeGrantAdmin(data) {
-    return request('/organizeInfo/grantAdmin', true, 'post', data);
+  organizeGrantAdmin: data => {
+    return request('/organizeInfo/grantAdmin', true, 'post', data)
   },
-  organizeKick: function organizeKick(data) {
-    return request('/organizeInfo/kick', true, 'post', data);
+  organizeKick: data => {
+    return request('/organizeInfo/kick', true, 'post', data)
   },
-  organizeKickAllMembers: function organizeKickAllMembers(data) {
-    return request('/organizeInfo/kickAllMembers', true, 'post', data);
+  organizeKickAllMembers: data => {
+    return request('/organizeInfo/kickAllMembers', true, 'post', data)
   },
-  organizeKickSelf: function organizeKickSelf(data) {
-    return request('/organizeInfo/kickSelf', true, 'post', data);
+  organizeKickSelf: data => {
+    return request('/organizeInfo/kickSelf', true, 'post', data)
   },
-  organizeNick: function organizeNick(data) {
-    return request('/organizeInfo/nick', true, 'post', data);
+  organizeNick: data => {
+    return request('/organizeInfo/nick', true, 'post', data)
   },
-  organizeDelete: function organizeDelete(data) {
-    return request('/organizeInfo/deleteOrganize', true, 'post', data);
+  organizeDelete: data => {
+    return request('/organizeInfo/deleteOrganize', true, 'post', data)
   },
-  organizeMyOrganizeInfo: function organizeMyOrganizeInfo(data) {
-    return request('/organizeInfo/myOrganizeInfo', true, 'post', data);
+  organizeMyOrganizeInfo: data => {
+    return request('/organizeInfo/myOrganizeInfo', true, 'post', data)
   },
-  organizeDetail: function organizeDetail(data) {
-    return request('/organizeInfo/organizeDetail', true, 'get', data);
+  organizeDetail: data => {
+    return request('/organizeInfo/organizeDetail', true, 'get', data)
   },
-  organizeMembers: function organizeMembers(data) {
-    return request('/organizeInfo/members', true, 'post', data);
+  organizeMembers: data => {
+    return request('/organizeInfo/members', true, 'post', data)
   },
-  organizeNoticeList: function organizeNoticeList(data) {
-    return request('/organizeNotice/list', true, 'post', data);
+  organizeNoticeList: data => {
+    return request('/organizeNotice/list', true, 'post', data)
   },
-  organizeNoticeDetail: function organizeNoticeDetail(data) {
-    return request('/organizeNotice/detail', true, 'get', data);
+  organizeNoticeDetail: data => {
+    return request('/organizeNotice/detail', true, 'get', data)
   },
-  organizeNoticeSave: function organizeNoticeSave(data) {
-    return request('/organizeNotice/save', true, 'post', data);
+  organizeNoticeSave: data => {
+    return request('/organizeNotice/save', true, 'post', data)
   },
-  organizeNoticeDelete: function organizeNoticeDelete(data) {
-    return request('/organizeNotice/del', true, 'post', data);
+  organizeNoticeDelete: data => {
+    return request('/organizeNotice/del', true, 'post', data)
   },
-  organizePanUpload: function organizePanUpload(data) {
-    return request('/organizePan/upload', true, 'post', data);
+  organizePanUpload: data => {
+    return request('/organizePan/upload', true, 'post', data)
   },
-  organizePanDownload: function organizePanDownload(data) {
-    return request('/organizePan/download', true, 'get', data);
+  organizePanDownload: data => {
+    return request('/organizePan/download', true, 'get', data)
   },
-  organizePanFiles: function organizePanFiles(data) {
-    return request('/organizePan/files', true, 'post', data);
+  organizePanFiles: data => {
+    return request('/organizePan/files', true, 'post', data)
   },
-  organizePanModify: function organizePanModify(data) {
-    return request('/organizePan/modify', true, 'post', data);
+  organizePanModify: data => {
+    return request('/organizePan/modify', true, 'post', data)
   },
-  organizePanDelete: function organizePanDelete(data) {
-    return request('/organizePan/del', true, 'post', data);
+  organizePanDelete: data => {
+    return request('/organizePan/del', true, 'post', data)
   },
-  newsExtFieldList: function newsExtFieldList(token, organizeId, newsId) {
-    return request('/newsExtField/extFields', true, 'get', { token: token, organizeId: organizeId, newsId: newsId });
+  newsExtFieldList: (token, organizeId, newsId) => {
+    return request('/newsExtField/extFields', true, 'get', { token, organizeId, newsId })
   },
-  newsExtFieldDynamic: function newsExtFieldDynamic(token, newsId) {
-    return request('/newsExtField/dynamic', true, 'get', { token: token, newsId: newsId });
+  newsExtFieldDynamic: (token, newsId) => {
+    return request('/newsExtField/dynamic', true, 'get', { token, newsId })
   },
-  newsExtFieldSet: function newsExtFieldSet(data) {
-    return request('/newsExtField/setField', true, 'post', data);
+  newsExtFieldSet: data => {
+    return request('/newsExtField/setField', true, 'post', data)
   },
-  userAttendantList: function userAttendantList(data) {
-    return request('/user/attendant/list', true, 'post', data);
+  newsExtFieldInit: data => {
+    return request('https://cms.apifm.com/' + subDomain + '/newsExtField/initFields', true, 'post', data)
   },
-  userAttendantDetail: function userAttendantDetail(id) {
-    var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/user/attendant/detail', true, 'get', { id: id, token: token });
+  newsExtFieldListV2: data => {
+    return request('https://cms.apifm.com/' + subDomain + '/newsExtField/extFields', true, 'get', data)
   },
-  userAttendantGoods: function userAttendantGoods(id) {
-    return request('/user/attendant/goods', true, 'get', { id: id });
+  newsExtFieldDynamicV2: data => {
+    return request('https://cms.apifm.com/' + subDomain + '/newsExtField/dynamic', true, 'get', data)
   },
-  userAttendantGoodsSet: function userAttendantGoodsSet(token, ids) {
-    return request('/user/attendant/goodsSet', true, 'post', { token: token, ids: ids });
+  newsExtFieldSetV2: data => {
+    return request('https://cms.apifm.com/' + subDomain + '/newsExtField/setField', true, 'post', data)
   },
-  userAttendantBindShop: function userAttendantBindShop(token, shopId) {
-    return request('/user/attendant/bindShop', true, 'post', { shopId: shopId, token: token });
+  userAttendantList: data => {
+    return request('/user/attendant/list', true, 'post', data)
   },
-  userAttendantUnBindShop: function userAttendantUnBindShop(token) {
-    return request('/user/attendant/unbindShop', true, 'post', { token: token });
+  userAttendantDetail: (id, token = '') => {
+    return request('/user/attendant/detail', true, 'get', { id, token })
   },
-  userAttendantChangeStatus: function userAttendantChangeStatus(data) {
-    return request('/user/attendant/changeStatus', true, 'post', data);
+  userAttendantGoods: (id) => {
+    return request('/user/attendant/goods', true, 'get', { id })
   },
-  userAttendantDaysTimesAttendant: function userAttendantDaysTimesAttendant(goodsId, day) {
-    return request('/user/attendant/daysTimesAttendant', true, 'get', { goodsId: goodsId, day: day });
+  userAttendantGoodsSet: (token, ids) => {
+    return request('/user/attendant/goodsSet', true, 'post', { token, ids })
   },
-  userAttendantDaysTimesAttendantSetQuery: function userAttendantDaysTimesAttendantSetQuery(token, day) {
-    return request('/user/attendant/daysTimesAttendant/set/query', true, 'get', { token: token, day: day });
+  userAttendantBindShop: (token, shopId) => {
+    return request('/user/attendant/bindShop', true, 'post', { shopId, token })
   },
-  userAttendantDaysTimesAttendantSet: function userAttendantDaysTimesAttendantSet(data) {
-    return request('/user/attendant/daysTimesAttendant/set', true, 'post', data);
+  userAttendantUnBindShop: (token) => {
+    return request('/user/attendant/unbindShop', true, 'post', { token })
   },
-  userAttendantListReputation: function userAttendantListReputation(data) {
-    return request('/user/attendant/listReputation', true, 'post', data);
+  userAttendantChangeStatus: data => {
+    return request('/user/attendant/changeStatus', true, 'post', data)
   },
-  userAttendantShowPics: function userAttendantShowPics(id) {
-    return request('/user/attendant/showPics', true, 'get', { id: id });
+  userAttendantDaysTimesAttendant: (goodsId, day) => {
+    return request('/user/attendant/daysTimesAttendant', true, 'get', { goodsId, day })
   },
-  userAttendantShowPicsAdd: function userAttendantShowPicsAdd(token, url) {
-    return request('/user/attendant/showPicsAdd', true, 'post', { token: token, url: url });
+  userAttendantDaysTimesAttendantSetQuery: (token, day) => {
+    return request('/user/attendant/daysTimesAttendant/set/query', true, 'get', { token, day })
   },
-  userAttendantShowPicsDel: function userAttendantShowPicsDel(token, id) {
-    return request('/user/attendant/showPicsDel', true, 'post', { token: token, id: id });
+  userAttendantDaysTimesAttendantSet: data => {
+    return request('/user/attendant/daysTimesAttendant/set', true, 'post', data)
   },
-  userAttendantUpdate: function userAttendantUpdate(data) {
-    return request('/user/attendant/update', true, 'post', data);
+  userAttendantListReputation: data => {
+    return request('/user/attendant/listReputation', true, 'post', data)
   },
-  userAttendantOrderServing: function userAttendantOrderServing(token, orderId) {
-    return request('/order/serving', true, 'post', { token: token, orderId: orderId });
+  userAttendantShowPics: id => {
+    return request('/user/attendant/showPics', true, 'get', { id })
   },
-  userAttendantOrderRejectOrder: function userAttendantOrderRejectOrder(token, orderId) {
-    return request('/order/rejectOrder', true, 'post', { token: token, orderId: orderId });
+  userAttendantShowPicsAdd: (token, url) => {
+    return request('/user/attendant/showPicsAdd', true, 'post', { token, url })
   },
-  userAttendantOrderSuccess: function userAttendantOrderSuccess(token, orderId) {
-    return request('/order/success', true, 'post', { token: token, orderId: orderId });
+  userAttendantShowPicsDel: (token, id) => {
+    return request('/user/attendant/showPicsDel', true, 'post', { token, id })
   },
-  shopCategory: function shopCategory() {
-    return request('/shopCategory/all', true, 'get');
+  userAttendantUpdate: data => {
+    return request('/user/attendant/update', true, 'post', data)
   },
-  shopCategoryDetail: function shopCategoryDetail(id) {
-    return request('/shopCategory/info', true, 'get', { id: id });
+  userAttendantOrderServing: (token, orderId) => {
+    return request('/order/serving', true, 'post', { token, orderId })
+  },
+  userAttendantOrderRejectOrder: (token, orderId) => {
+    return request('/order/rejectOrder', true, 'post', { token, orderId })
+  },
+  userAttendantOrderSuccess: (token, orderId) => {
+    return request('/order/success', true, 'post', { token, orderId })
+  },
+  shopCategory: () => {
+    return request('/shopCategory/all', true, 'get')
+  },
+  shopCategoryDetail: (id) => {
+    return request('/shopCategory/info', true, 'get', { id })
   },
   yudingStatistics: function yudingStatistics(day) {
-    return request('/shop/goods/yudingStatistics', true, 'get', { day: day });
+    return request('/shop/goods/yudingStatistics', true, 'get', { day });
   },
-  contactList: function contactList() {
-    return request('/contact/list', true, 'get');
+  contactList: () => {
+    return request('/contact/list', true, 'get')
   },
-  distributedLock: function distributedLock(key, seconds) {
-    return request('/distributedLock/lock', true, 'get', { key: key, seconds: seconds });
+  distributedLock: (key, seconds) => {
+    return request('/distributedLock/lock', true, 'get', { key, seconds })
   },
-  distributedLockRelease: function distributedLockRelease(key) {
-    return request('/distributedLock/lock', true, 'get', { key: key });
+  distributedLockRelease: (key) => {
+    return request('/distributedLock/lock', true, 'get', { key })
   },
-  communitySetting: function communitySetting() {
-    return request('/community/setting', true, 'get');
+  communitySetting: () => {
+    return request('/community/setting', true, 'get')
   },
-  communityLeaderApply: function communityLeaderApply(data) {
-    return request('/communityLeader/apply', true, 'post', data);
+  communityLeaderApply: data => {
+    return request('/communityLeader/apply', true, 'post', data)
   },
-  communityLeaderApplyInfo: function communityLeaderApplyInfo(token) {
-    return request('/communityLeader/apply/info', true, 'get', { token: token });
+  communityLeaderApplyInfo: token => {
+    return request('/communityLeader/apply/info', true, 'get', { token })
   },
-  communityLeaderBuy: function communityLeaderBuy(token) {
-    return request('/communityLeader/buy', true, 'post', { token: token });
+  communityLeaderBuy: token => {
+    return request('/communityLeader/buy', true, 'post', { token })
   },
-  communityOrderFahuo: function communityOrderFahuo(data) {
-    return request('/communityOrder/fahuo', true, 'post', data);
+  communityOrderFahuo: data => {
+    return request('/communityOrder/fahuo', true, 'post', data)
   },
-  wxmpOpenid: function wxmpOpenid(code) {
-    return request('/user/wxmp/openid', true, 'get', { code: code });
+  wxmpOpenid: code => {
+    return request('/user/wxmp/openid', true, 'get', { code })
   },
-  listingSet: function listingSet() {
-    return request('/listingSet/info', true, 'get');
+  listingSet: () => {
+    return request('/listingSet/info', true, 'get')
   },
-  listingMyListing: function listingMyListing(token) {
-    return request('/listingInfo/myListing', true, 'get', { token: token });
+  listingMyListing: (token) => {
+    return request('/listingInfo/myListing', true, 'get', { token })
   },
-  listingSave: function listingSave(data) {
-    return request('/listingInfo/save', true, 'post', data);
+  listingSave: data => {
+    return request('/listingInfo/save', true, 'post', data)
   },
-  listingDetail: function listingDetail(id) {
-    return request('/listingInfo/detail', true, 'get', { id: id });
+  listingDetail: (id) => {
+    return request('/listingInfo/detail', true, 'get', { id })
   },
-  listingCancel: function listingCancel(token, id) {
-    return request('/listingInfo/cancel', true, 'post', { token: token, id: id });
+  listingCancel: (token, id) => {
+    return request('/listingInfo/cancel', true, 'post', { token, id })
   },
-  listingSuccess: function listingSuccess(token, id) {
-    return request('/listingInfo/success', true, 'post', { token: token, id: id });
+  listingSuccess: (token, id) => {
+    return request('/listingInfo/success', true, 'post', { token, id })
   },
-  listingDelete: function listingDelete(token, id) {
-    return request('/listingInfo/delete', true, 'post', { token: token, id: id });
+  listingDelete: (token, id) => {
+    return request('/listingInfo/delete', true, 'post', { token, id })
   },
-  listingAddGoods: function listingAddGoods(data) {
-    return request('/listingInfo/addGoods', true, 'post', data);
+  listingAddGoods: data => {
+    return request('/listingInfo/addGoods', true, 'post', data)
   },
-  listingRemoveGoods: function listingRemoveGoods(data) {
-    return request('/listingInfo/removeGoods', true, 'post', data);
+  listingRemoveGoods: data => {
+    return request('/listingInfo/removeGoods', true, 'post', data)
   },
-  listingJoinList: function listingJoinList(data) {
-    return request('/listingInfo/joinList', true, 'post', data);
+  listingJoinList: data => {
+    return request('/listingInfo/joinList', true, 'post', data)
   },
-  attendantAcceptOrder: function attendantAcceptOrder(data) {
-    return request('/order/acceptOrder', true, 'post', data);
+  attendantAcceptOrder: data => {
+    return request('/order/acceptOrder', true, 'post', data)
   },
-  orderCancelOrderPeriod: function orderCancelOrderPeriod(data) {
-    return request('/order/cancelOrderPeriod', true, 'post', data);
+  orderCancelOrderPeriod: data => {
+    return request('/order/cancelOrderPeriod', true, 'post', data)
   },
-  orderStartOrderPeriod: function orderStartOrderPeriod(data) {
-    return request('/order/startOrderPeriod', true, 'post', data);
+  orderStartOrderPeriod: data => {
+    return request('/order/startOrderPeriod', true, 'post', data)
   },
-  shansongCourierInfo: function shansongCourierInfo(data) {
-    return request('/order/shansongCourierInfo', true, 'get', data);
+  shansongCourierInfo: data => {
+    return request('/order/shansongCourierInfo', true, 'get', data)
   },
-  shansongOrderInfo: function shansongOrderInfo(data) {
-    return request('/order/shansongOrderInfo', true, 'get', data);
+  shansongOrderInfo: data => {
+    return request('/order/shansongOrderInfo', true, 'get', data)
   },
-  userAttendantOrderStatistics: function userAttendantOrderStatistics(data) {
-    return request('/order/statisticsJishi', true, 'get', data);
+  userAttendantOrderStatistics: data => {
+    return request('/order/statisticsJishi', true, 'get', data)
   },
-  keloopOrderLogs: function keloopOrderLogs(data) {
-    return request('/order/keloop/orderLogs', true, 'get', data);
+  keloopOrderLogs: data => {
+    return request('/order/keloop/orderLogs', true, 'get', data)
   },
-  keloopCourierTag: function keloopCourierTag(data) {
-    return request('/order/keloop/courierTag', true, 'get', data);
+  keloopCourierTag: data => {
+    return request('/order/keloop/courierTag', true, 'get', data)
   },
-  workingHoursMySubmitLogs: function workingHoursMySubmitLogs(data) {
-    return request('/workingHours/mySubmitLogs', true, 'post', data);
+  workingHoursMySubmitLogs: data => {
+    return request('/workingHours/mySubmitLogs', true, 'post', data)
   },
-  workingHoursSubmit: function workingHoursSubmit(data) {
-    return request('/workingHours/submit', true, 'post', data);
+  workingHoursSubmit: data => {
+    return request('/workingHours/submit', true, 'post', data)
   },
-  workingHoursBossReport: function workingHoursBossReport(data) {
-    return request('/workingHours/bossReport', true, 'post', data);
+  workingHoursBossReport: data => {
+    return request('/workingHours/bossReport', true, 'post', data)
   },
-  workingHoursMyProject: function workingHoursMyProject(data) {
-    return request('/workingHours/myProject', true, 'post', data);
+  workingHoursMyProject: data => {
+    return request('/workingHours/myProject', true, 'post', data)
   },
-  workingHoursProjectInfo: function workingHoursProjectInfo(code) {
-    return request('/workingHours/project', true, 'get', { code: code });
+  workingHoursProjectInfo: code => {
+    return request('/workingHours/project', true, 'get', { code })
   },
-  bestpayProCreateOrder: function bestpayProCreateOrder(data) {
-    return request('/pay/bestpay/proCreateOrder', true, 'post', data);
+  bestpayProCreateOrder: data => {
+    return request('/pay/bestpay/proCreateOrder', true, 'post', data)
   },
-  bestpayH5: function bestpayH5(data) {
-    return request('/pay/bestpay/h5', true, 'get', data);
+  bestpayH5: data => {
+    return request('/pay/bestpay/h5', true, 'get', data)
   },
-  shopIotDevices: function shopIotDevices(data) {
-    return request('/shopIot/devices', true, 'get', data);
+  shopIotDevices: data => {
+    return request('/shopIot/devices', true, 'get', data)
   },
-  shopIotCmds: function shopIotCmds(data) {
-    return request('/shopIot/cmds', true, 'get', data);
+  shopIotCmds: data => {
+    return request('/shopIot/cmds', true, 'get', data)
   },
-  shopIotExecute: function shopIotExecute(data) {
-    return request('/shopIot/execute', true, 'post', data);
+  shopIotExecute: data => {
+    return request('/shopIot/execute', true, 'post', data)
   },
-  wxTemplateNumberList: function wxTemplateNumberList(token) {
-    return request('/wxTemplateNumber/list', true, 'get', { token: token });
+  wxTemplateNumberList: (token) => {
+    return request('/wxTemplateNumber/list', true, 'get', { token })
   },
-  wxTemplateNumberSubscribe: function wxTemplateNumberSubscribe(data) {
-    return request('/wxTemplateNumber/subscribe', true, 'post', data);
+  wxTemplateNumberSubscribe: (data) => {
+    return request('/wxTemplateNumber/subscribe', true, 'post', data)
   },
-  errandsTaskPublish: function errandsTaskPublish(data) {
-    return request('/errandsTask/publish', true, 'post', data);
+  errandsTaskPublish: (data) => {
+    return request('/errandsTask/publish', true, 'post', data)
   },
-  errandsTaskPay: function errandsTaskPay(data) {
-    return request('/errandsTask/pay', true, 'post', data);
+  errandsTaskPay: (data) => {
+    return request('/errandsTask/pay', true, 'post', data)
   },
-  errandsTaskAccept: function errandsTaskAccept(data) {
-    return request('/errandsTask/accept', true, 'post', data);
+  errandsTaskAccept: (data) => {
+    return request('/errandsTask/accept', true, 'post', data)
   },
-  errandsTaskFinish: function errandsTaskFinish(data) {
-    return request('/errandsTask/finish', true, 'post', data);
+  errandsTaskFinish: (data) => {
+    return request('/errandsTask/finish', true, 'post', data)
   },
-  errandsTaskSuccess: function errandsTaskSuccess(data) {
-    return request('/errandsTask/success', true, 'post', data);
+  errandsTaskSuccess: (data) => {
+    return request('/errandsTask/success', true, 'post', data)
   },
-  activityVoteInfoList: function activityVoteInfoList(data) {
-    return request('/activityVoteInfo/list', true, 'post', data);
+  activityVoteInfoList: (data) => {
+    return request('/activityVoteInfo/list', true, 'post', data)
   },
-  activityVoteInfoJoinList: function activityVoteInfoJoinList(data) {
-    return request('/activityVoteInfo/joinList', true, 'post', data);
+  activityVoteInfoJoinList: (data) => {
+    return request('/activityVoteInfo/joinList', true, 'post', data)
   },
-  activityVoteInfoDetail: function activityVoteInfoDetail(id) {
-    return request('/activityVoteInfo/detail', true, 'get', { id: id });
+  activityVoteInfoDetail: (id) => {
+    return request('/activityVoteInfo/detail', true, 'get', { id })
   },
-  activityVoteInfoJoinDetail: function activityVoteInfoJoinDetail(joinId) {
-    return request('/activityVoteInfo/joinDetail', true, 'get', { joinId: joinId });
+  activityVoteInfoJoinDetail: (joinId) => {
+    return request('/activityVoteInfo/joinDetail', true, 'get', { joinId })
   },
-  activityVoteInfoScoreToVotes: function activityVoteInfoScoreToVotes(activityId) {
-    return request('/activityVoteInfo/scoreToVotes', true, 'get', { activityId: activityId });
+  activityVoteInfoScoreToVotes: (activityId) => {
+    return request('/activityVoteInfo/scoreToVotes', true, 'get', { activityId })
   },
-  activityVoteInfoFetchVoteNumber: function activityVoteInfoFetchVoteNumber(data) {
-    return request('/activityVoteInfo/fetchVoteNumber', true, 'post', data);
+  activityVoteInfoFetchVoteNumber: (data) => {
+    return request('/activityVoteInfo/fetchVoteNumber', true, 'post', data)
   },
-  activityVoteInfoJoin: function activityVoteInfoJoin(data) {
-    return request('/activityVoteInfo/join', true, 'post', data);
+  activityVoteInfoJoin: (data) => {
+    return request('/activityVoteInfo/join', true, 'post', data)
   },
-  activityVoteInfoVote: function activityVoteInfoVote(data) {
-    return request('/activityVoteInfo/vote', true, 'post', data);
+  activityVoteInfoVote: (data) => {
+    return request('/activityVoteInfo/vote', true, 'post', data)
   },
-  activityVoteBlance: function activityVoteBlance(token, activityId) {
-    return request('/activityVoteInfo/balance', true, 'get', { token: token, activityId: activityId });
+  activityVoteBlance: (token, activityId) => {
+    return request('/activityVoteInfo/balance', true, 'get', { token, activityId })
   },
-  stringsToPlainText: function stringsToPlainText(content) {
-    var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    return request('/common/strings/plainText', true, 'post', { content: content, len: len });
+  stringsToPlainText: (content, len = '') => {
+    return request('/common/strings/plainText', true, 'post', { content, len })
   },
-  blindBoxFriendsMatch: function blindBoxFriendsMatch(data) {
-    return request('/blindBoxFriends/match', true, 'post', data);
+  blindBoxFriendsMatch: (data) => {
+    return request('/blindBoxFriends/match', true, 'post', data)
   },
-  blindBoxFriendsPush: function blindBoxFriendsPush(data) {
-    return request('/blindBoxFriends/push', true, 'post', data);
+  blindBoxFriendsPush: (data) => {
+    return request('/blindBoxFriends/push', true, 'post', data)
   },
-  blindBoxFriendsPay: function blindBoxFriendsPay(data) {
-    return request('/blindBoxFriends/pay', true, 'post', data);
+  blindBoxFriendsPay: (data) => {
+    return request('/blindBoxFriends/pay', true, 'post', data)
   },
-  blindBoxFriendsChangeStatus: function blindBoxFriendsChangeStatus(data) {
-    return request('/blindBoxFriends/changeStatus', true, 'post', data);
+  blindBoxFriendsChangeStatus: (data) => {
+    return request('/blindBoxFriends/changeStatus', true, 'post', data)
   },
-  blindBoxFriendsDelete: function blindBoxFriendsDelete(data) {
-    return request('/blindBoxFriends/delete', true, 'post', data);
+  blindBoxFriendsDelete: (data) => {
+    return request('/blindBoxFriends/delete', true, 'post', data)
   },
-  blindBoxFriendsPullLogs: function blindBoxFriendsPullLogs(data) {
-    return request('/blindBoxFriends/pullLogs', true, 'post', data);
+  blindBoxFriendsPullLogs: (data) => {
+    return request('/blindBoxFriends/pullLogs', true, 'post', data)
   },
-  blindBoxFriendsPushLogs: function blindBoxFriendsPushLogs(data) {
-    return request('/blindBoxFriends/pushLogs', true, 'post', data);
+  blindBoxFriendsPushLogs: (data) => {
+    return request('/blindBoxFriends/pushLogs', true, 'post', data)
   },
-  blindBoxFriendsRechargeRule: function blindBoxFriendsRechargeRule() {
-    return request('/blindBoxFriends/rechargeRule', true, 'get');
+  blindBoxFriendsRechargeRule: () => {
+    return request('/blindBoxFriends/rechargeRule', true, 'get')
   },
-  blindBoxFriendsBuyPullTimes: function blindBoxFriendsBuyPullTimes(data) {
-    return request('/blindBoxFriends/buyPullTimes', true, 'post', data);
+  blindBoxFriendsBuyPullTimes: (data) => {
+    return request('/blindBoxFriends/buyPullTimes', true, 'post', data)
   },
-  blindBoxFriendsUnlock: function blindBoxFriendsUnlock(data) {
-    return request('/blindBoxFriends/unlock', true, 'post', data);
+  blindBoxFriendsUnlock: (data) => {
+    return request('/blindBoxFriends/unlock', true, 'post', data)
   },
-  blindBoxFriendsBalance: function blindBoxFriendsBalance(token) {
-    return request('/blindBoxFriends/balance', true, 'get', { token: token });
+  blindBoxFriendsBalance: (token) => {
+    return request('/blindBoxFriends/balance', true, 'get', { token })
   },
-  cpactivityInfoDetail: function cpactivityInfoDetail(id) {
-    return request('/cpactivityInfo/detail', true, 'get', { id: id });
+  cpactivityInfoDetail: (id) => {
+    return request('/cpactivityInfo/detail', true, 'get', { id })
   },
-  cpactivityUpdateUserInfo: function cpactivityUpdateUserInfo(data) {
-    return request('/cpactivityInfo/updateUserInfo', true, 'post', data);
+  cpactivityUpdateUserInfo: (data) => {
+    return request('/cpactivityInfo/updateUserInfo', true, 'post', data)
   },
-  cpactivityJoinDetail: function cpactivityJoinDetail(data) {
-    return request('/cpactivityInfo/join', true, 'get', data);
+  cpactivityJoinDetail: (data) => {
+    return request('/cpactivityInfo/join', true, 'get', data)
   },
-  cpactivityJoin: function cpactivityJoin(data) {
-    return request('/cpactivityInfo/join', true, 'post', data);
+  cpactivityJoin: (data) => {
+    return request('/cpactivityInfo/join', true, 'post', data)
   },
-  cpactivityJoinDynamics: function cpactivityJoinDynamics(cpactivityId) {
-    return request('/cpactivityInfo/joinDynamics', true, 'get', { cpactivityId: cpactivityId });
+  cpactivityJoinDynamics: (cpactivityId) => {
+    return request('/cpactivityInfo/joinDynamics', true, 'get', { cpactivityId })
   },
-  cpactivityPay: function cpactivityPay(data) {
-    return request('/cpactivityInfo/pay', true, 'post', data);
-  }
-};
-
-/***/ })
-/******/ ]);
+  cpactivityPay: (data) => {
+    return request('/cpactivityInfo/pay', true, 'post', data)
+  },
+  volcesArkCreateChatCompletion: (message) => {
+    return request(COMMON_BASE_URL + subDomain + '/volcesArk/createChatCompletion', false, 'post', { message })
+  },
+  volcesArkChatCompletionResult: (key) => {
+    return request(COMMON_BASE_URL + subDomain + '/volcesArk/result', false, 'get', { key })
+  },
+}

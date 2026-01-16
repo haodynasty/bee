@@ -154,7 +154,7 @@
         <text>其他设置</text>
       </view>
       <view class="menu-list">
-        <view class="menu-list-item" wx:if="{{true}}" bindtap="scanOrderCode">
+        <view class="menu-list-item" wx:if="{{canHX}}" bindtap="scanOrderCode">
           <view class="item-left">
             <view class="list-icon scan-icon">
               <van-icon name="scan" size="40rpx" />
@@ -203,7 +203,7 @@
           </view>
           <van-icon name="arrow" size="32rpx" color="#999" />
         </view>
-        <view class="menu-list-item" bindtap="goadmin">
+        <view class="menu-list-item" bindtap="goadmin" wx:if="{{isAdmin}}">
           <view class="item-left">
             <view class="list-icon admin-icon">
               <van-icon name="manager-o" size="40rpx" />
