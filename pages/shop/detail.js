@@ -15,12 +15,31 @@ Page({
     this.shopSubdetail()
   },
   async shopSubdetail() {
+    if (!this.data.id) {
+      wx.showModal({
+        confirmText: this.data.$t.common.confirm,
+        cancelText: this.data.$t.common.cancel,
+        content: '门店ID不存在',
+        showCancel: false
+      })
+      wx.navigateBack()
+      return
+    }
+    
     const res = await WXAPI.shopSubdetail(this.data.id)
     if (res.code != 0) {
       wx.showModal({
         confirmText: this.data.$t.common.confirm,
         cancelText: this.data.$t.common.cancel,
         content: res.msg,
+        showCancel: false
+      })
+      wx.navigateBack()
+    } else if (!res.data || !res.data.info) {
+      wx.showModal({
+        confirmText: this.data.$t.common.confirm,
+        cancelText: this.data.$t.common.cancel,
+        content: '门店信息不完整',
         showCancel: false
       })
       wx.navigateBack()
@@ -31,7 +50,7 @@ Page({
       const marker = {
         latitude: res.data.info.latitude,
         longitude: res.data.info.longitude,
-        iconPath: wx.getStorageSync('mapPos'),
+        iconPath: wx.getStorageSync('mapPos') || '',
         height: 30,
         width: 30,
       }

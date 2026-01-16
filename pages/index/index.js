@@ -17,12 +17,14 @@ Page({
     pingtuan_open_id: undefined,
     menuButtonBoundingClientRect: wx.getMenuButtonBoundingClientRect(),
 
-    // 连续滚动模式相关数据
-    isContinuousMode: true, // 是否启用连续滚动模式
-    categoryIndex: 0, // 当前激活的分类索引
-    goodsByCategory: [], // 按分类分组的商品数据，用于跟踪每个分类的商品范围
+    // 单分类模式相关数据
+    isContinuousMode: false, // 关闭连续滚动模式，使用单分类模式
+    categorySelected: null, // 当前选中的分类
     scrollTop: 0, // 当前滚动位置
-    currentCategoryIndex: 0, // 当前滚动到的分类索引
+    goods: [], // 商品列表
+    categories: [], // 分类列表
+    loadedCategories: {}, // 已加载过数据的分类，避免重复请求
+    showLoading: true, // 是否显示加载框，仅第一次加载时显示
   },  
   onLoad: function (e) {
     getApp().initLanguage(this)
@@ -274,9 +276,8 @@ Page({
       page: 1,
       categories: res.data,
       categorySelected: res.data[0],
-      categoryIndex: 0,
-      currentCategoryIndex: 0, // 初始化为第一个分类
-      goodsByCategory: []
+      loadedCategories: {}, // 重置已加载分类
+      goods: [] // 重置商品列表
     })
     if (shop_goods_split == '1') {
       wx.setStorageSync('shopIds', shopInfo.id)
@@ -299,20 +300,34 @@ Page({
 
   // 原有的单分类商品加载逻辑
   async _getGoodsListSingleCategory() {
-    wx.showLoading({
-      title: '',
-    })
+    const categoryId = this.data.categorySelected.id
+    
+    // 只有在第一次加载时显示加载框
+    if (this.data.showLoading) {
+      wx.showLoading({
+        title: '',
+      })
+    }
     // https://www.yuque.com/apifm/nu0f75/wg5t98
     const res = await WXAPI.goodsv2({
       page: this.data.page,
-      categoryId: this.data.categorySelected.id,
-      pageSize: 10000
+      categoryId: categoryId,
+      pageSize: 5 // 每次加载5个商品
     })
-    wx.hideLoading()
+    
+    // 只有在第一次加载时隐藏加载框
+    if (this.data.showLoading) {
+      wx.hideLoading()
+      // 第一次加载完成后，设置showLoading为false
+      this.setData({
+        showLoading: false
+      })
+    }
+    
     if (res.code == 700) {
       if (this.data.page == 1) {
         this.setData({
-          goods: null
+          goods: []
         })
       }
       return
@@ -336,6 +351,8 @@ Page({
       this.setData({
         goods: res.data.result
       })
+      // 标记该分类已加载（仅用于记录，不阻止后续分页加载）
+      this.data.loadedCategories[categoryId] = true
     } else {
       this.setData({
         goods: this.data.goods.concat(res.data.result)
@@ -560,7 +577,7 @@ Page({
       this.setData({
         page: 1,
         categorySelected,
-        scrolltop: 0
+        scrollTop: 0 // 重置滚动位置到顶部
       })
       this.getGoodsList()
       return

@@ -22,12 +22,16 @@
   </view>
   <view class="distance-bar">
     <view class="distance">{{shopInfo.distance}}km</view>
-    <navigator url="/pages/shop/detail?id={{shopInfo.id}}" hover-class="none">
+    <navigator wx:if="{{shopInfo && shopInfo.id}}" url="/pages/shop/detail?id={{shopInfo.id}}" hover-class="none">
       <view class="shop-message">
         <view class="message">{{ $t.index.shopDetail }}</view>
         <van-icon name="arrow" />
       </view>
     </navigator>
+    <view wx:else class="shop-message">
+      <view class="message">{{ $t.index.shopDetail }}</view>
+      <van-icon name="arrow" />
+    </view>
   </view>
 </view>
 <view class="box1">
