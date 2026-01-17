@@ -158,6 +158,11 @@ Page({
   async getshopInfo(){
     let shopInfo = wx.getStorageSync('shopInfo')
     if (shopInfo) {
+      // 检查店铺是否发生变化
+      if (this.data.shopInfo && this.data.shopInfo.id && this.data.shopInfo.id !== shopInfo.id) {
+        // 店铺发生变化，清除购物车
+        await this.clearCart()
+      }
       this.setData({
         shopInfo: shopInfo,
         shopIsOpened: this.checkIsOpened(shopInfo.openingHours)
@@ -219,11 +224,19 @@ Page({
     res.data.forEach(ele => {
       ele.distance = ele.distance.toFixed(1) // 距离保留3位小数
     })
+    
+    const newShopInfo = res.data[0]
+    // 检查店铺是否发生变化
+    if (this.data.shopInfo && this.data.shopInfo.id && this.data.shopInfo.id !== newShopInfo.id) {
+      // 店铺发生变化，清除购物车
+      await this.clearCart()
+    }
+    
     this.setData({
-      shopInfo: res.data[0],
-      shopIsOpened: this.checkIsOpened(res.data[0].openingHours)
+      shopInfo: newShopInfo,
+      shopIsOpened: this.checkIsOpened(newShopInfo.openingHours)
     })
-    wx.setStorageSync('shopInfo', res.data[0])
+    wx.setStorageSync('shopInfo', newShopInfo)
     this.categories()
   },
   async _showCouponPop() {
@@ -935,6 +948,20 @@ Page({
       this.shippingCarInfo()
     }
   },
+  async clearCart() {
+    const token = wx.getStorageSync('token')
+    if (!token) {
+      return
+    }
+    const res = await WXAPI.shippingCarInfoRemoveAll(token)
+    if (res.code == 0 || res.code == 700) {
+      this.setData({
+        shippingCarInfo: null,
+        showCartPop: false
+      })
+      this.processBadge()
+    }
+  },
   goodsStepChange(e) {
     const curGoodsMap = this.data.curGoodsMap
     curGoodsMap.number = e.detail
@@ -1298,6 +1325,21 @@ Page({
     wx.navigateTo({
       url: '/pages/shop/select?type=index',
     })
+  },
+  goShopDetail() {
+    const shopId = this.data.shopInfo.id
+    if (shopId) {
+      wx.navigateTo({
+        url: `/pages/shop/detail?id=${shopId}`,
+        success: function(res) {
+          // 跳转成功
+        },
+        fail: function(res) {
+          // 跳转失败
+          console.error('跳转失败:', res)
+        }
+      })
+    }
   },
   goGoodsDetail(e) {
     const index = e.currentTarget.dataset.idx

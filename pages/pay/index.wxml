@@ -1,6 +1,6 @@
 <!-- 店铺信息卡片 -->
-<view class="shop-card">
-  <navigator class="shop-header" url="/pages/shop/select?type=pay">
+<view class="shop-card shop-header">
+  <!-- <navigator class="shop-header" url="/pages/shop/select?type=pay"> -->
     <view class="shop-icon">
       <van-icon name="shop-o" size="36rpx" color="#8B5A3C" />
     </view>
@@ -8,10 +8,10 @@
       <view class="shop-name">{{shopInfo.name}}<text wx:if="{{shopInfo.distance}}" class="distance">{{shopInfo.distance}}km</text></view>
       <view class="shop-address">{{shopInfo.address}}</view>
     </view>
-    <view class="arrow-icon">
+    <!-- <view class="arrow-icon">
       <van-icon name="arrow" size="32rpx" color="#999" />
-    </view>
-  </navigator>
+    </view> -->
+  <!-- </navigator> -->
 </view>
 
 <!-- 配送方式卡片 -->
