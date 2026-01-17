@@ -16,7 +16,7 @@
 
 <!-- 配送方式卡片 -->
 <view class="delivery-card">
-  <view class="card-title">配送方式</view>
+  <view class="card-title">配送方式{{shopInfo.openWaimai ? '':'('+$t.index.pickup+')'}}</view>
   <view wx:if="{{ shopInfo.openWaimai && shopInfo.openZiqu }}" class="delivery-options">
     <view class="delivery-option {{peisongType == 'zq' ? 'active' : ''}}" bindtap="selected" data-pstype="zq">
       <view class="option-icon">
