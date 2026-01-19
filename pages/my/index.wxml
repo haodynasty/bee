@@ -22,7 +22,7 @@
             <text class="uid-label">{{ $t.my.uid }}</text>
             <text class="uid-value">{{ apiUserInfoMap.base.id }}</text>
           </view>
-          <view class="vip-badge hidden" bindtap="govip">
+          <view class="vip-badge" bindtap="govip">
             <text wx:if="{{apiUserInfoMap.userLevel}}" class="vip-text">{{apiUserInfoMap.userLevel.name}}</text>
             <text wx:else class="vip-text">{{ $t.vip.notVIP }}</text>
           </view>
