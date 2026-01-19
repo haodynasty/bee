@@ -116,7 +116,14 @@
     </view>
     
     <view class="goods-divider"></view>
-    
+
+    <view wx:if="{{ orderDetail.orderAdditionalPrices && orderDetail.orderAdditionalPrices.length > 0 }}">
+      <view class="fee-item" wx:for="{{ orderDetail.orderAdditionalPrices }}" wx:key="name">
+        <text class="goods-name">{{ item.name }}</text>
+        <text class="goods-price">¥{{ item.amount }}</text>
+      </view>
+    </view>
+
     <view class="goods-total">
       <view class="total-label">{{ $t.PickingUp.total }}</view>
       <view class="total-price">¥{{orderDetail.orderInfo.amountReal}}</view>

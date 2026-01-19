@@ -18,6 +18,8 @@ module.exports = {
     noNetwork: '当前无网络',
     networkDown: '网络已断开',
     privacyPermission: '未同意用户隐私协议保护协议，暂时无法使用',
+    locationServiceOff: '请开启手机定位服务，以便获取附近门店信息，打开后请点击确定',
+    locationFail:'位置授权失败，请允许小程序获取您的位置信息，以使用此功能'
   },
   auth: {
     needLogin: '登陆后才能访问',
@@ -310,6 +312,8 @@ module.exports = {
     remarkPlaceholder: '如需备注请输入',
     qisong: '起送',
     login: '授权登陆',
+    additionPrice: '其他项目',
+    goodsList: '商品清单',
   },
   scoreLogs: {
     title: '积分明细',

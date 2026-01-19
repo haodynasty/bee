@@ -170,6 +170,8 @@ Page({
       this.categories()
       return
     }
+    // this.fetchShops(39.907082, 116.429314, '')
+    // return
     wx.getLocation({
       type: 'wgs84', //wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
       success: (res) => {
@@ -180,8 +182,32 @@ Page({
       },      
       fail: (e) => {
         console.log(e);
-        if (e.errMsg.indexOf('fail auth deny') != -1) {
-          AUTH.checkAndAuthorize('scope.userLocation')
+        if (e.errMsg.indexOf('ERROR_NOCELL&WIFI_LOCATIONSWITCHOFF') != -1) {
+          // 手机系统定位被关闭，需要提示用户手动打开
+          wx.showModal({
+            confirmText: this.data.$t.common.confirm,
+            cancelText: this.data.$t.common.cancel,
+            content: this.data.$t.common.locationServiceOff,
+            showCancel: false,
+            success: () => {
+              this.getshopInfo()
+            }
+          })
+        } else if (e.errMsg.indexOf('fail auth deny') != -1) {
+          // 微信授权被拒绝，使用统一的授权检查函数
+          AUTH.checkAndAuthorize('scope.userLocation').then(() => {
+            // 授权成功，重新获取位置
+            this.getshopInfo()
+          }).catch(() => {
+            // 授权失败，可以添加失败处理逻辑
+            console.log('位置授权失败')
+            wx.showModal({
+              confirmText: this.data.$t.common.confirm,
+              cancelText: this.data.$t.common.cancel,
+              content: this.data.$t.common.locationFail,
+              showCancel: false
+            })
+          })
         } else if (e.errMsg.indexOf('fail privacy permission is not authorized') != -1) {
           wx.showModal({
             confirmText: this.data.$t.common.confirm,

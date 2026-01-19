@@ -109,7 +109,7 @@
 <!-- 商品清单卡片 -->
 <view class="goods-card">
   <view class="card-title">
-    <text>商品清单</text>
+    <text>{{ $t.pay.goodsList }}</text>
     <view class="title-decoration"></view>
   </view>
   <view class="goods-list">
@@ -192,6 +192,18 @@
   <view class="fee-item" wx:if="{{ peisongfee && peisongfee.amount3 }}">
     <text class="fee-label">{{ peisongfee.fwf3Name }}</text>
     <text class="fee-value">¥{{ peisongfee.amount3 }}</text>
+  </view>
+</view>
+
+<!-- 附加收费卡片 -->
+<view class="fee-card" wx:if="{{hasGoodsAdd}}">
+  <view class="card-title">
+    <text>{{ $t.pay.additionPrice }}</text>
+    <view class="title-decoration"></view>
+  </view>
+  <view class="fee-item" wx:for="{{ goodsAdditionalPrice }}" wx:key="name">
+    <text class="fee-label">{{ item.name }}</text>
+    <text class="fee-value">¥{{ item.value }}</text>
   </view>
 </view>
 

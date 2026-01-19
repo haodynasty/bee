@@ -358,6 +358,15 @@ Page({
             }
           })
         }
+        //附加收费
+        let rawData = res.data.goodsAdditionalPriceMap
+        let feeList = []
+        if(Object.keys(rawData).length != 0){
+          feeList = Object.keys(rawData).map(key => ({
+            name: key,
+            value: rawData[key]
+          }));
+        }
         that.setData({
           totalScoreToPay: res.data.score,
           allGoodsNumber: res.data.goodsNumber,
@@ -366,6 +375,8 @@ Page({
           yunPrice: res.data.amountLogistics,
           peisongfee: res.data.peisongfee,
           amountReal: res.data.amountReal,
+          goodsAdditionalPrice: feeList,
+          hasGoodsAdd: feeList.length > 0,
           coupons
         });
         return;
