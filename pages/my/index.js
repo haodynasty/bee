@@ -23,7 +23,7 @@ Page({
     this.setData({
       myBg: wx.getStorageSync('myBg'),
       version: CONFIG.version,
-      customerServiceType: CONFIG.customerServiceType
+      customerServiceType: "xiaochengxukefu"//CONFIG.customerServiceType
     })
     getApp().getUserDetailOK = (apiUserInfoMap) => {
       this.processGotUserDetail(apiUserInfoMap)
@@ -201,5 +201,9 @@ Page({
     wx.setClipboardData({
       data: this.data.apiUserInfoMap.base.id + ''
     })
+  },
+  handleContact (e) {
+    console.log(e.detail.path)
+    console.log(e.detail.query)
   },
 })

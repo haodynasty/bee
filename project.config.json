@@ -28,10 +28,11 @@
     "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": true,
-    "packNpmRelationList": [{
-      "packageJsonPath": "./package.json",
-      "miniprogramNpmDistDir": "./"
-    }
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./package.json",
+        "miniprogramNpmDistDir": "./"
+      }
     ],
     "minifyWXSS": true,
     "disableUseStrict": false,
@@ -69,7 +70,7 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "appid": "wx6938644fbaaac3c0",
+  "appid": "wx4aac3569c2a2d2a7",
   "packOptions": {
     "ignore": [],
     "include": []
