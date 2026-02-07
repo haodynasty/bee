@@ -175,6 +175,18 @@
   </van-radio-group>
 </view>
 
+<!-- 附加收费卡片 -->
+<view class="fee-card" wx:if="{{hasGoodsAdd}}">
+  <view class="card-title">
+    <text>{{ $t.pay.additionPrice }}</text>
+    <view class="title-decoration"></view>
+  </view>
+  <view class="fee-item" wx:for="{{ goodsAdditionalPrice }}" wx:key="name">
+    <text class="fee-label">{{ item.name }}</text>
+    <text class="fee-value">¥{{ item.value }}</text>
+  </view>
+</view>
+
 <!-- 费用明细卡片 -->
 <view class="fee-card" wx:if="{{ yunPrice || peisongfee }}">
   <view class="fee-item" wx:if="{{ yunPrice }}">
@@ -195,17 +207,7 @@
   </view>
 </view>
 
-<!-- 附加收费卡片 -->
-<view class="fee-card" wx:if="{{hasGoodsAdd}}">
-  <view class="card-title">
-    <text>{{ $t.pay.additionPrice }}</text>
-    <view class="title-decoration"></view>
-  </view>
-  <view class="fee-item" wx:for="{{ goodsAdditionalPrice }}" wx:key="name">
-    <text class="fee-label">{{ item.name }}</text>
-    <text class="fee-value">¥{{ item.value }}</text>
-  </view>
-</view>
+
 
 <!-- 备注卡片 -->
 <view class="remark-card">

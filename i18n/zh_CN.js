@@ -312,7 +312,7 @@ module.exports = {
     remarkPlaceholder: '如需备注请输入',
     qisong: '起送',
     login: '授权登陆',
-    additionPrice: '其他项目',
+    additionPrice: '附加收费',
     goodsList: '商品清单',
   },
   scoreLogs: {
