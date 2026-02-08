@@ -82,6 +82,7 @@ module.exports = {
     stausClosed: '当前订单已关闭',
     stausNoPay: '等待付款',
     stausSuccess: '交易完成',
+    cancelOrder: '取消订单',
   },
   cashLog: {
     title: '资金明细',

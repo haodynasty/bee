@@ -64,6 +64,9 @@
 					</view>
 				</view>
 				<view class="action-btns">
+					<view wx:if="{{item.status == 1 && item.isCancelable && !item.hasRefund}}" class="order-btn btn-cancel" bindtap="cancelOrder" data-id="{{item.id}}">
+						<text>{{ $t.order.cancelOrder }}</text>
+					</view>
 					<view wx:if="{{item.status > 0}}" class="order-btn btn-secondary" bindtap="callShop" data-shopid="{{item.shopIdZt}}">
 						<text class="btn-icon">📞</text>
 						<text>{{ $t.order.callShop }}</text>
