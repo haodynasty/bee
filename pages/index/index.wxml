@@ -58,7 +58,7 @@
       centered="true"
       lazy-load="true"
       origin-price="{{ (item.originalPrice > 0 && item.originalPrice != item.minPrice) ? item.originalPrice : '' }}"
-      price="{{item.minPrice}}"
+      price="{{item.minPrice}}{{item.unit ? ' /' + item.unit : ''}}"
       thumb-mode="aspectFill"
       tag="{{ item.badge ? item.badge : '' }}"
       title="{{item.name}}"

@@ -18,6 +18,7 @@
       <view class="current-price">
         <text class="currency">¥</text>
         <text class="price-num">{{selectSizePrice}}</text>
+        <text class="currency" space="ensp">{{goodsDetail.basicInfo.unit ? ' /' + goodsDetail.basicInfo.unit : ''}}</text>
       </view>
       <view wx:if="{{goodsDetail.basicInfo.originalPrice && goodsDetail.basicInfo.originalPrice > 0}}"
         class="original-price">

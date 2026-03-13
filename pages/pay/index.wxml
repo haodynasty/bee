@@ -130,7 +130,7 @@
             </block>
           </view>
         </view>
-        <view class="goods-quantity">×{{item.number}}</view>
+        <view class="goods-quantity">×{{item.number}}{{item.unit ? ' ' + item.unit : ''}}</view>
         <view class="goods-price">¥{{item.price}}</view>
       </view>
     </view>
