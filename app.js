@@ -2,6 +2,30 @@ const WXAPI = require('apifm-wxapi')
 const CONFIG = require('config.js')
 const AUTH = require('utils/auth')
 const i18n = require("i18n/index")
+// 初始化事件总线
+wx.eventEmitter = {
+  events: {},
+  on: function(event, fn) {
+    if (!this.events[event]) {
+      this.events[event] = []
+    }
+    this.events[event].push(fn)
+  },
+  off: function(event, fn) {
+    if (!this.events[event]) return
+    if (!fn) {
+      this.events[event] = []
+      return
+    }
+    this.events[event] = this.events[event].filter(item => item !== fn)
+  },
+  emit: function(event, data) {
+    if (!this.events[event]) return
+    this.events[event].forEach(fn => {
+      fn(data)
+    })
+  }
+}
 App({
   onLaunch: function() {
     i18n.getLanguage()
@@ -144,6 +168,8 @@ App({
       shopInfo = res.data.info
       shopInfo.distance = distance
       wx.setStorageSync('shopInfo',  shopInfo)
+      // 触发自定义事件，通知页面更新店铺信息
+      wx.eventEmitter.emit('shopInfoUpdated', shopInfo)
     }
   },
   initLanguage(_this) {

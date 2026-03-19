@@ -125,6 +125,8 @@ Page({
     this.noticeLastOne()
     this.getshopInfo()
     this.banners()
+    // 监听店铺信息更新事件
+    wx.eventEmitter.on('shopInfoUpdated', this.handleShopInfoUpdated.bind(this))
   },
   onShow: function(){
     const peisongType = wx.getStorageSync('peisongType')
@@ -139,6 +141,19 @@ Page({
       this.getshopInfo()
       wx.removeStorageSync('refreshIndex')
     }
+  },
+  // 处理店铺信息更新事件
+  handleShopInfoUpdated: function(shopInfo) {
+    if (shopInfo) {
+      this.setData({
+        shopInfo: shopInfo,
+        shopIsOpened: this.checkIsOpened(shopInfo.openingHours)
+      })
+    }
+  },
+  // 页面卸载时移除事件监听
+  onUnload: function() {
+    wx.eventEmitter.off('shopInfoUpdated')
   },
   async cyTableToken(tableId, key) {
     const res = await WXAPI.cyTableToken(tableId, key)
@@ -1178,26 +1193,64 @@ Page({
   },
   checkIsOpened(openingHours) {
     if (!openingHours) {
-      return true
-    }
-    const date = new Date();
-    const startTime = openingHours.split('-')[0]
-    const endTime = openingHours.split('-')[1]
-    const dangqian=date.toLocaleTimeString('chinese',{hour12:false})
-    
-    const dq=dangqian.split(":")
-    const a = startTime.split(":")
-    const b = endTime.split(":")
-
-    const dqdq=date.setHours(dq[0],dq[1])
-    const aa=date.setHours(a[0],a[1])
-    const bb=date.setHours(b[0],b[1])
-
-    if (a[0]*1 > b[0]*1) {
-      // 说明是到第二天
-      return !this.checkIsOpened(endTime + '-' + startTime)
-    }
-    return aa<dqdq && dqdq<bb
+        return true
+      }
+      
+      // 支持的分隔符：，；;，
+      const timeRanges = openingHours.split(/[，；;、,]/).filter(function(range) {
+        return range.trim() !== ''
+      })
+      
+      // 如果没有有效的时间段，返回true
+      if (timeRanges.length === 0) {
+        return true
+      }
+      
+      const date = new Date()
+      const dangqian = date.toLocaleTimeString('chinese', { hour12: false })
+      const dq = dangqian.split(":")
+      const dqdq = date.setHours(dq[0], dq[1])
+      
+      // 遍历所有时间段
+      for (let i = 0; i < timeRanges.length; i++) {
+        const range = timeRanges[i]
+        const timeParts = range.split('-')
+        if (timeParts.length !== 2) {
+          continue // 跳过格式不正确的时间段
+        }
+        
+        const startTime = timeParts[0].trim()
+        const endTime = timeParts[1].trim()
+        
+        const a = startTime.split(":")
+        const b = endTime.split(":")
+        
+        // 检查时间格式是否正确
+        if (a.length !== 2 || b.length !== 2) {
+          continue
+        }
+        
+        const aa = new Date(date).setHours(a[0], a[1])
+        const bb = new Date(date).setHours(b[0], b[1])
+        
+        // 处理跨天的情况
+        if (parseInt(a[0]) > parseInt(b[0])) {
+          // 如果是跨天的时间段，检查当前时间是否在开始时间到当天结束，或者当天开始到结束时间
+          const dayEnd = new Date(date).setHours(23, 59, 59, 999)
+          const dayStart = new Date(date).setHours(0, 0, 0, 0)
+          if ((aa <= dqdq && dqdq <= dayEnd) || (dayStart <= dqdq && dqdq <= bb)) {
+            return true
+          }
+        } else {
+          // 正常时间段，检查当前时间是否在开始和结束时间之间
+          if (aa <= dqdq && dqdq <= bb) {
+            return true
+          }
+        }
+      }
+      
+      // 所有时间段都不包含当前时间
+      return false
   },
   yuanjiagoumai() {
     this.setData({
